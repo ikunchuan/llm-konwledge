@@ -10,13 +10,13 @@ import java.util.Date;
 public class Community {
     
     @TableId(type = IdType.AUTO)
-    Integer communityId;
-    Integer categoryId;
-    String communityName;
-    String CommunityDescription;
-    Integer createdBy;
+    private Integer communityId;
+    private Integer categoryId;
+    private String communityName;
+    private String CommunityDescription;
+    private Integer createdBy;
     
    @TableField(fill= FieldFill.INSERT)
-    Date createdTime;
+   private Date createdTime;
     
 }

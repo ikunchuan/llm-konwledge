@@ -9,9 +9,9 @@ import java.util.Date;
 @TableName("community_join")
 public class UserCommunity {
     @TableId(type = IdType.AUTO)
-    Integer communityJoinId;
-    Integer userId;
-    Integer communityId;
+    private Integer communityJoinId;
+    private Integer userId;
+    private Integer communityId;
     @TableField(fill= FieldFill.INSERT)
-    Date createdTime;
+    private Date createdTime;
 }
