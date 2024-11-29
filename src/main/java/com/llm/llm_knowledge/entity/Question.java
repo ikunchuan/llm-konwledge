@@ -1,9 +1,6 @@
 package com.llm.llm_knowledge.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,16 +11,23 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Question {
-    @TableId( type = IdType.AUTO)
+    //自增字段
+    @TableId(type = IdType.AUTO)
     private Integer questionId;
+
     private Integer categoryId;
-    private  String questionTitle;
+    private String questionTitle;
     private String questionText;
-    private  String correctAnswer;
+    private String correctAnswer;
 
+    //自动填充创建时间
     @TableField(fill = FieldFill.INSERT)
-   private Date createdTime;
+    private Date createdTime;
 
+    //自动填充更新时间
     @TableField(fill = FieldFill.INSERT_UPDATE)
-   private Date updatedTime;
+    private Date updatedTime;
+
+//  @TableLogic(value = "0",delval = "1") //逻辑删除，默认是0，删除的值为1
+//    private Integer isActive;
 }
