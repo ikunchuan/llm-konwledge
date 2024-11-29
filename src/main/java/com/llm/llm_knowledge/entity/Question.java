@@ -10,6 +10,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("question")
 public class Question {
     //自增字段
     @TableId(type = IdType.AUTO)
