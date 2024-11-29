@@ -11,17 +11,19 @@ public class CompetitionServicempl implements CompetitionService {
     @Autowired
     private CompetitionMapper competitionMapper;
     @Override
-    public List<Competition> getAllCompetitions() {return competitionMapper.selectList(null);}
+    public List<Competition> allCompe() {return competitionMapper.selectList(null);}
 
     @Override
-    public Competition getCompetitionById(Integer id) {return competitionMapper.selectById(id);}
+    public Competition compeById(Integer compeid) {return competitionMapper.selectById(compeid);}
 
     @Override
-    public Integer addCompetition(Competition competition) {return competitionMapper.insert(competition);}
+    public Integer addCompe(Competition competition) {return competitionMapper.insert(competition);}
 
     @Override
-    public Integer updateCompetition(Competition competition) {return competitionMapper.updateById(competition);}
+    public Integer delCompe(Integer compeid) {return competitionMapper.deleteById(compeid);}
 
     @Override
-    public Integer deleteCompetition(Integer id) {return competitionMapper.deleteById(id);}
+    public Integer updateCompe(Competition competition) {return competitionMapper.updateById(competition);}
+
+
 }

@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface CompetitionService {
 
-    public List<Competition> getAllCompetitions();
+    public List<Competition> allCompe();
 
-    public Competition getCompetitionById(Integer id);
+    public Competition compeById(Integer compeid);
 
-    public Integer addCompetition(Competition competition);
+    public Integer addCompe(Competition competition);
 
-    public Integer deleteCompetition(Integer id);
+    public Integer delCompe(Integer compeid);
 
-    public Integer updateCompetition(Competition competition);
+    public Integer updateCompe(Competition competition);
 
 
 
