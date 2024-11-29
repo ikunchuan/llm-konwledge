@@ -15,7 +15,7 @@ public interface UserInfoService {
     Integer updateUserInfoById(UserInfo userInfo);
 
     //根据id查询
-    List<UserInfo> findUserInfoById(UserInfo userInfo);
+    List<UserInfo> findUserInfoById(Integer userId);
 
     //根据id批量查询
     List<UserInfo> findUserInfoByIds(List<UserInfo> ids);
