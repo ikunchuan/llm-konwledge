@@ -1,5 +1,6 @@
 package com.llm.llm_knowledge.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.mapper.QuestionMapper;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -49,9 +52,10 @@ public class QuestionServiceImpl implements QuestionService {
     //条件删除
     @Override
     public Integer criteriaDeleteQuestion(Question question) {
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("question_title","两数之和1");
-        questionMapper.deleteByMap(map);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("question_title", question.getQuestionTitle());
+        queryWrapper.eq("question_type", "");
+        questionMapper.delete(queryWrapper);
         return null;
     }
 
@@ -76,15 +80,18 @@ public class QuestionServiceImpl implements QuestionService {
             ids_.add(questionId);
         }
         List<Question> questions = questionMapper.selectByIds(ids_);
-        questions.
-        return i;
         return null;
     }
 
     //条件查询
     @Override
     public List<Question> criteriaFindQuestion(Question question) {
-        return null;
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("question_title", "java");
+        queryWrapper.gt("question_id", 1);
+        queryWrapper.lt("question_id", 10);
+        queryWrapper.like("question_title", "java");
+        return questionMapper.selectList(queryWrapper);
     }
 
     //分页查询全部记录
