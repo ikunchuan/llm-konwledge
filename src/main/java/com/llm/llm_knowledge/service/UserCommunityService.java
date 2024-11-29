@@ -3,6 +3,7 @@ package com.llm.llm_knowledge.service;
 import com.llm.llm_knowledge.entity.UserCommunity;
 
 import java.util.List;
+import java.util.stream.BaseStream;
 
 public interface UserCommunityService {
     
