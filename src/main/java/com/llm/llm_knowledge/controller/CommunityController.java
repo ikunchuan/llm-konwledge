@@ -24,6 +24,7 @@ public class CommunityController {
         return communityService.cmnById(cmnid);
     }
     
+    //localhost:8080/cmns/v1/cmn
     @PostMapping("cmn")                 //新增一个社区,传入的是一个community实体
     public Integer addCmn(Community community){
         return communityService.addCmn(community);

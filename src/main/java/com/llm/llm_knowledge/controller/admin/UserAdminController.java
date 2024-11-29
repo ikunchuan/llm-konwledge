@@ -6,6 +6,7 @@ import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.service.UserAdminInfoService;
 import com.llm.llm_knowledge.vo.UserAdminInfoVO;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,29 @@ public class UserAdminController {
         // 执行注销
         StpUtil.logout();
         return "注销成功";
+    }
+    
+    @PostMapping("/registery")
+    public String register(@RequestBody UserAdminInfoVO userAdminInfoVO) throws UserException {
+        if(null == userAdminInfoVO){
+            throw new UserException("请输入用户名和密码");
+        }
+        if(null == userAdminInfoVO.getUserName()){
+            throw new UserException("请输入用户名");
+        }
+        if(null == userAdminInfoVO.getPassword()){
+            throw new UserException("请输入密码");
+        }
+        //对用户的密码进行加密
+        String md5 = DigestUtils.md5Hex(userAdminInfoVO.getPassword());
+        //创建userAdminInfo;
+        UserAdminInfo userAdminInfo = new UserAdminInfo();
+        //把用户名和密码放到创建userAdminInfo里面
+        userAdminInfo.setUserName(userAdminInfoVO.getUserName());
+        userAdminInfo.setPassword(md5);
+        //调用userAdminInfoService里面的方法
+        userAdminInfoService.addUserAdminInfo(userAdminInfo);
+        
+        return "注册成功";
     }
 }

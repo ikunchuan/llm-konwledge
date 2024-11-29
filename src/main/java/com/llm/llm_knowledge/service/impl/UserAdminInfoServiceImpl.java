@@ -46,4 +46,7 @@ public class UserAdminInfoServiceImpl implements UserAdminInfoService {
     public Integer addUserAdminInfo(UserAdminInfo userAdminInfo) {
         return userAdminInfoMapper.insert(userAdminInfo);
     }
+    
+    
+    
 }
