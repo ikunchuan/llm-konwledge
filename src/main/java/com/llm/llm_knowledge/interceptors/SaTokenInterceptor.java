@@ -1,4 +1,4 @@
-package com.llm.llm_knowledge.config;
+package com.llm.llm_knowledge.interceptors;
 
 import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.interceptor.SaInterceptor;
@@ -14,7 +14,7 @@ import java.util.List;
  * 该方法用于校验用户登录
  */
 @Configuration
-public class SaTokenConfigure implements WebMvcConfigurer {
+public class SaTokenInterceptor implements WebMvcConfigurer {
     // 注册 Sa-Token 拦截器，打开注解式鉴权功能 
     // 注册拦截器
     @Override
