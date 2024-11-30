@@ -23,8 +23,8 @@ public class BookServiceImpl implements BookService {
     
     @Override
     public Page<Book> allPageBook(Integer currentNum, Integer currentSize) {
-        Page<Book> pagebook = new Page<>(currentNum,currentSize);
-        return (Page<Book>) bookMapper.selectPage(pagebook,null);
+        Page<Book> pageBook = new Page<>(currentNum,currentSize);
+        return (Page<Book>) bookMapper.selectPage(pageBook,null);
     }
     
     
