@@ -1,4 +1,4 @@
 package com.llm.llm_knowledge.service;
 
-public class CompetitionService {
+public interface CompetitionService {
 }

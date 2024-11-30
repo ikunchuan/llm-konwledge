@@ -1,9 +1,10 @@
-package com.llm.llm_knowledge.service;
+package com.llm.llm_knowledge.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.mapper.QuestionMapper;
+import com.llm.llm_knowledge.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

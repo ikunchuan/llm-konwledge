@@ -1,4 +1,4 @@
 package com.llm.llm_knowledge.mapper;
 
-public class CompetitionMapper {
+public interface CompetitionMapper {
 }

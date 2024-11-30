@@ -1,13 +1,14 @@
-package com.llm.llm_knowledge.service;
+package com.llm.llm_knowledge.service.impl;
 
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.mapper.CommunityMapper;
+import com.llm.llm_knowledge.service.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class CommunityServiceImpl implements CommunityService{
+public class CommunityServiceImpl implements CommunityService {
     
     @Autowired
     private CommunityMapper communityMapper;
