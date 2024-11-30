@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.exception.UserException;
+import com.llm.llm_knowledge.pojo.ResultEntity;
 import com.llm.llm_knowledge.service.UserAdminInfoService;
 import com.llm.llm_knowledge.vo.UserAdminInfoVO;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -32,7 +33,7 @@ public class UserAdminController {
      * @throws Exception
      */
     @PostMapping("/login")
-    public String login(@RequestBody UserAdminInfoVO userAdminInfoVO) throws Exception {
+    public ResultEntity login(@RequestBody UserAdminInfoVO userAdminInfoVO) throws Exception {
         // 如果用户同时没有输入用户名或密码，抛出异常
         if (null == userAdminInfoVO) {
             throw new UserException("参数不能为空");
@@ -48,11 +49,11 @@ public class UserAdminController {
 
         UserAdminInfo userAdminInfo = new UserAdminInfo();
         BeanUtils.copyProperties(userAdminInfoVO, userAdminInfo);
-        UserAdminInfo userAdmin = userAdminInfoService.findUserAdminInfo(userAdminInfo);
+        UserAdminInfo userAdmin = userAdminInfoService.login(userAdminInfo);
         Integer userId = userAdmin.getUserId();
         // 执行登录
         StpUtil.login(userId, new SaLoginModel().setTimeout(60 * 60 * 24));
-        return "登录成功";
+        return ResultEntity.success();
     }
 
     /**
@@ -60,14 +61,20 @@ public class UserAdminController {
      * @return
      */
     @PostMapping("/logout")
-    public String logout() {
+    public ResultEntity logout() {
         // 执行注销
         StpUtil.logout();
-        return "注销成功";
+        return ResultEntity.success("注销成功");
     }
-    
-    @PostMapping("/registery")
-    public String register(@RequestBody UserAdminInfoVO userAdminInfoVO) throws UserException {
+
+    /**
+     * 用户注册
+     * @param userAdminInfoVO
+     * @return
+     * @throws UserException
+     */
+    @PostMapping("/register")
+    public ResultEntity register(@RequestBody UserAdminInfoVO userAdminInfoVO) throws UserException {
         if(null == userAdminInfoVO){
             throw new UserException("请输入用户名和密码");
         }
@@ -77,16 +84,13 @@ public class UserAdminController {
         if(null == userAdminInfoVO.getPassword()){
             throw new UserException("请输入密码");
         }
-        //对用户的密码进行加密
-        String md5 = DigestUtils.md5Hex(userAdminInfoVO.getPassword());
-        //创建userAdminInfo;
         UserAdminInfo userAdminInfo = new UserAdminInfo();
-        //把用户名和密码放到创建userAdminInfo里面
-        userAdminInfo.setUserName(userAdminInfoVO.getUserName());
-        userAdminInfo.setPassword(md5);
-        //调用userAdminInfoService里面的方法
-        userAdminInfoService.addUserAdminInfo(userAdminInfo);
-        
-        return "注册成功";
+        BeanUtils.copyProperties(userAdminInfoVO, userAdminInfo);
+        Integer register = userAdminInfoService.register(userAdminInfo);
+        if (1 == register.intValue()) {
+            return ResultEntity.success("注册成功");
+        } else {
+            return ResultEntity.fail("注册失败");
+        }
     }
 }
