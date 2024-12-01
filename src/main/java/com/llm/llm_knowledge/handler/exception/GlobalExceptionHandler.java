@@ -27,8 +27,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(UserException.class)
     public ResponseEntity<ResultEntity> handlerUserException(Exception ex, WebRequest request) {
-        ResultEntity error = new ResultEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), "error", null);
-        return new ResponseEntity<ResultEntity>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(ResultEntity.fail(ex.getMessage(), HttpStatus.UNAUTHORIZED));
     }
 
     /**
@@ -39,8 +38,18 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NotLoginException.class)
     public ResponseEntity<ResultEntity> handleNotLoginException(Exception ex, WebRequest request) {
-        ResultEntity resultEntity = new ResultEntity(HttpStatus.UNAUTHORIZED.value(), "用户未登录", "not login", null);
-        return new ResponseEntity<ResultEntity>(resultEntity, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(ResultEntity.fail("用户未登录", HttpStatus.UNAUTHORIZED));
+    }
+
+    /**
+     * 其他异常
+     * @param ex
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ResultEntity> handleException(Exception ex, WebRequest request) {
+        return ResponseEntity.ok(ResultEntity.fail("系统异常", HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
 }

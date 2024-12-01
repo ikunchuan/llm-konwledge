@@ -13,9 +13,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public class ResultEntity {
 
-    private Integer code;
     private String message;
-    private String status;
+    private Integer code;
     private Object data;
 
     /**
@@ -23,24 +22,24 @@ public class ResultEntity {
      * @return
      */
     public static ResultEntity success() {
-        return new ResultEntity(HttpStatus.OK.value(), "success", "success", null);
+        return new ResultEntity("success", HttpStatus.OK.value(), null);
     }
 
     public static ResultEntity success(Object data) {
-        return new ResultEntity(HttpStatus.OK.value(), "success", "success", data);
+        return new ResultEntity("success", HttpStatus.OK.value(), data);
     }
 
 
     public static ResultEntity success(String message) {
-        return new ResultEntity(HttpStatus.OK.value(), message, "success", null);
+        return new ResultEntity(message, HttpStatus.OK.value(), null);
     }
 
     public static ResultEntity success(String message, String status) {
-        return new ResultEntity(HttpStatus.OK.value(), message, status, null);
+        return new ResultEntity(message, HttpStatus.OK.value(), null);
     }
 
     public static ResultEntity success(String message, String status, Object data) {
-        return new ResultEntity(HttpStatus.OK.value(), message, status, data);
+        return new ResultEntity(message, HttpStatus.OK.value(), data);
     }
 
     /**
@@ -48,15 +47,15 @@ public class ResultEntity {
      * @return
      */
     public static ResultEntity fail() {
-        return new ResultEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(), "fail", "fail", null);
+        return new ResultEntity("系统异常", HttpStatus.INTERNAL_SERVER_ERROR.value(), null);
     }
 
     public static ResultEntity fail(String message) {
-        return new ResultEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(), message, "fail", null);
+        return new ResultEntity(message, HttpStatus.INTERNAL_SERVER_ERROR.value(), null);
     }
 
-    public static ResultEntity fail(String message, String status) {
-        return new ResultEntity(HttpStatus.INTERNAL_SERVER_ERROR.value(), message, status, null);
+    public static ResultEntity fail(String message, HttpStatus code) {
+        return new ResultEntity(message, code.value(), null);
     }
 
 }
