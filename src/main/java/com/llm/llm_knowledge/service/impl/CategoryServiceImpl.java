@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     //更新
     @Override
-    public Integer updateCategory(Category category) {
+    public Integer updateCategoryById(Category category) {
         Integer i = categoryMapper.updateById(category);
         System.out.println(i);
         return i;
