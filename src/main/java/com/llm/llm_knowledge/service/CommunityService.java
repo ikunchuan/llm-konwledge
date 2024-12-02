@@ -8,7 +8,7 @@ import java.util.List;
 public interface CommunityService {
     
     //查询所有社区
-    public IPage<Community> allCmn(Integer currentSize, Integer currentNum);
+    public IPage<Community> allCmn(Integer pageNum, Integer pageSize);
     
     //根据cmnid查询社区
     public Community cmnById(Integer cmnid);
@@ -23,5 +23,5 @@ public interface CommunityService {
     public Integer updateCmn(Community community);
     
     //模糊查询社区
-    IPage<Community> cmnByCondi(Integer categoryId,String cmnName,Integer  currentNum,Integer currentSize);
+    IPage<Community> cmnByCondi(Integer categoryId,String cmnName,Integer  pageNum,Integer pageSize);
 }
