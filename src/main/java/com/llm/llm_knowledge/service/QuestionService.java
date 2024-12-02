@@ -22,7 +22,7 @@ public interface QuestionService {
     Integer updateQuestionById(Question question);
 
     //根据id查询
-    List<Question> findQuestionById(Question question);
+    Question findQuestionById(Integer id);
 
     //根据id批量查询
     List<Question> findQuestionByIds(List<Question> ids);
