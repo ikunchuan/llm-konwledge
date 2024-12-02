@@ -1,8 +1,10 @@
 package com.llm.llm_knowledge.service.impl;
 
+import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.UserCommunity;
-import com.llm.llm_knowledge.mapper.CommunityMapper;
+import com.llm.llm_knowledge.mapper.CompetitionMapper;
 import com.llm.llm_knowledge.mapper.UserCommunityMapper;
+import com.llm.llm_knowledge.service.CompetitionService;
 import com.llm.llm_knowledge.service.UserCommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,6 @@ public class UserCommunityServiceImpl implements UserCommunityService {
     public Integer updateUcmn(UserCommunity userCommunity) {
         return userCommunityMapper.updateById(userCommunity);
     }
-    
-    
+
+
 }

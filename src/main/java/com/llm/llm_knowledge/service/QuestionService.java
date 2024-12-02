@@ -10,7 +10,7 @@ public interface QuestionService {
     Integer insertQuestion(Question question);
 
     //根据id删除
-    Integer deleteQuestionById(Question question);
+    Integer deleteQuestionById(Integer id);
 
     //根据id批量删除
     Integer deleteQuestionByIds(List<Question> ids);
@@ -22,7 +22,7 @@ public interface QuestionService {
     Integer updateQuestionById(Question question);
 
     //根据id查询
-    List<Question> findQuestionById(Question question);
+    Question findQuestionById(Integer id);
 
     //根据id批量查询
     List<Question> findQuestionByIds(List<Question> ids);
@@ -31,5 +31,5 @@ public interface QuestionService {
     List<Question> criteriaFindQuestion(Question question);
 
     //分页查询全部记录
-    Page<Question> findAllPageQuestion(Question question);
+    Page<Question> findAllPageQuestion(Integer pageNum, Integer pageSize);
 }
