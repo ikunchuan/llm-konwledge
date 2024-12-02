@@ -10,7 +10,7 @@ public interface QuestionService {
     Integer insertQuestion(Question question);
 
     //根据id删除
-    Integer deleteQuestionById(Question question);
+    Integer deleteQuestionById(Integer id);
 
     //根据id批量删除
     Integer deleteQuestionByIds(List<Question> ids);

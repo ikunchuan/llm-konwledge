@@ -30,8 +30,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     //根据id删除
     @Override
-    public Integer deleteQuestionById(Question question) {
-        Integer i = questionMapper.deleteById(question);
+    public Integer deleteQuestionById(Integer id) {
+        Integer i = questionMapper.deleteById(id);
         System.out.println(i);
         return i;
     }
@@ -91,7 +91,7 @@ public class QuestionServiceImpl implements QuestionService {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.like("question_title", question.getQuestionTitle());
         queryWrapper.eq("question_id", question.getQuestionId());
-        queryWrapper.eq("question_id", question.getQuestionId());
+        queryWrapper.eq("question_category_id", question.getCategoryId());
         return questionMapper.selectList(queryWrapper);
     }
 
