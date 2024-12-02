@@ -1,5 +1,6 @@
 package com.llm.llm_knowledge.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.entity.Category;
 import com.llm.llm_knowledge.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,11 @@ public class categoryController {
     @GetMapping("v1")
     public Category findCategoryById(@RequestParam Integer id){
         return categoryService.findCategoryById(id);
+    }
+
+    //分页查全
+    @GetMapping("v1")
+    public Page<Category> allPageCategory(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
+        return categoryService.allPageCategory(pageNum,pageSize);
     }
 }
