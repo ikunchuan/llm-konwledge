@@ -32,14 +32,14 @@ public class CategoryController {
     }
 
     //查询
-    @GetMapping("v1")
-    public Category findCategoryById(@RequestParam Integer id){
+    @GetMapping("v1/{id}")
+    public Category findCategoryById(@PathVariable Integer id){
         return categoryService.findCategoryById(id);
     }
 
     //分页查全
-    @GetMapping("v1")
-    public Page<Category> allPageCategory(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
+    @GetMapping("v1/page")
+    public Page<Category> allPageCategory(Integer pageNum,Integer pageSize){
         return categoryService.allPageCategory(pageNum,pageSize);
     }
 }
