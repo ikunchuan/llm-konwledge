@@ -21,4 +21,6 @@ public interface CommunityService {
     //更新社区
     public Integer updateCmn(Community community);
     
+    //模糊查询社区
+    List<Community> cmnByCondi(String condi);
 }

@@ -21,11 +21,20 @@ public class CommunityController {
         return communityService.allCmn();
     }
     
-    /**根据社区的id来查询社区
+    
+    /**根据社区id查询社区
      * @return Community*/
     @GetMapping("cmn/{cmnid}")
     public Community cmnById(@PathVariable Integer cmnid){
         return communityService.cmnById(cmnid);
+    }
+    
+    
+    /**根据管理员输入的社区名模糊查询
+     * @return List*/
+    @GetMapping("cmn/search")
+    public List<Community> cmnByCondi(@RequestParam String condi){
+        return communityService.cmnByCondi(condi);
     }
     
     
@@ -36,6 +45,7 @@ public class CommunityController {
         return communityService.addCmn(community);
     }
     
+    
     /**根据cmnid删除社区
      * @return Integer*/
     @DeleteMapping("cmn/{cmnid}")
@@ -43,7 +53,8 @@ public class CommunityController {
         return communityService.delCmn(cmnid);
     }
     
-    /**新根据cmnid删除社区
+    
+    /**根据cmnid更新社区
      * @return Integer*/
     @PutMapping("cmn")
     public Integer updateCmn(Community community){
