@@ -1,5 +1,6 @@
 package com.llm.llm_knowledge.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.service.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("cmns/v1")
 public class CommunityController {
@@ -17,8 +19,8 @@ public class CommunityController {
     /**管理员查看所有已注册的社区
      * @return List<Community>*/
     @GetMapping("cmn")
-    public List<Community> allCmn(){
-        return communityService.allCmn();
+    public IPage<Community> allCmn(@RequestParam Integer currentNum,@RequestParam Integer currentSize){
+        return communityService.allCmn(currentNum,currentSize);
     }
     
     
@@ -30,11 +32,15 @@ public class CommunityController {
     }
     
     
-    /**根据管理员输入的社区名模糊查询
+    /**根据社区标签和社区名字进行模糊查询
      * @return List*/
     @GetMapping("cmn/search")
-    public List<Community> cmnByCondi(@RequestParam String condi){
-        return communityService.cmnByCondi(condi);
+    public IPage<Community> searchCommunities(
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) String cmnName,
+            @RequestParam(defaultValue = "1") Integer currentNum,
+            @RequestParam(defaultValue = "3") Integer currentSize) {
+        return communityService.cmnByCondi(categoryId, cmnName, currentNum, currentSize);
     }
     
     

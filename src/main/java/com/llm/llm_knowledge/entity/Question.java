@@ -20,6 +20,7 @@ public class Question {
     private String questionTitle;
     private String questionText;
     private String correctAnswer;
+    private String reMark;
 
     //自动填充创建时间
     @TableField(fill = FieldFill.INSERT)
@@ -30,5 +31,5 @@ public class Question {
     private Date updatedTime;
 
 //  @TableLogic(value = "0",delval = "1") //逻辑删除，默认是0，删除的值为1
-//    private Integer isActive;
+//    private Integer deleted;
 }

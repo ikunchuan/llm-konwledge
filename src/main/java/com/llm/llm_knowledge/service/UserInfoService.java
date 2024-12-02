@@ -7,19 +7,18 @@ import java.util.List;
 
 public interface UserInfoService {
 
-
-    //分页查询全部记录
-    Page<UserInfo> findAllPageUserInfo(UserInfo userInfo);
-
     //更新用户
     Integer updateUserInfoById(UserInfo userInfo);
 
-    //根据id查询
-    List<UserInfo> findUserInfoById(Integer userId);
+//    //根据id查询
+//    UserInfo findUserInfoById(Integer userId);
 
-    //根据id批量查询
-    List<UserInfo> findUserInfoByIds(List<UserInfo> ids);
+//    //根据id批量查询
+//    List<UserInfo> findUserInfoByIds(List<UserInfo> ids);
 
     //条件查询
     List<UserInfo> criteriaFindUserInfo(UserInfo userInfo);
+
+    //分页查询全部记录
+    Page<UserInfo> findAllPageUserInfo(Integer pageNum, Integer pageSize);
 }
