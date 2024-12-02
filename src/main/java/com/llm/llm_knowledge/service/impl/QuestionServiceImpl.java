@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -45,7 +44,7 @@ public class QuestionServiceImpl implements QuestionService {
             Integer questionId = question.getQuestionId();
             ids_.add(questionId);
         }
-        int i = questionMapper.deleteByIds(ids_);
+        Integer i = questionMapper.deleteByIds(ids_);
         System.out.println(i);
         return i;
     }
@@ -55,21 +54,24 @@ public class QuestionServiceImpl implements QuestionService {
     public Integer criteriaDeleteQuestion(Question question) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("question_title", question.getQuestionTitle());
-        queryWrapper.eq("question_type", "");
-        questionMapper.delete(queryWrapper);
-        return null;
+        queryWrapper.eq("category", question.getCategoryId());
+        Integer i = questionMapper.delete(queryWrapper);
+        System.out.println(i);
+        return i;
     }
 
     //更新题目
     @Override
     public Integer updateQuestionById(Question question) {
-        return null;
+        Integer i = questionMapper.updateById(question);
+        System.out.println(i);
+        return i;
     }
 
     //根据id查询
     @Override
-    public List<Question> findQuestionById(Question question) {
-        return null;
+    public Question findQuestionById(Integer id) {
+        return questionMapper.selectById(id);
     }
 
     //根据id批量查询
@@ -80,24 +82,22 @@ public class QuestionServiceImpl implements QuestionService {
             Integer questionId = question.getQuestionId();
             ids_.add(questionId);
         }
-        List<Question> questions = questionMapper.selectByIds(ids_);
-        return null;
+        return questionMapper.selectByIds(ids_);
     }
 
     //条件查询
     @Override
     public List<Question> criteriaFindQuestion(Question question) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("question_title", "java");
-        queryWrapper.gt("question_id", 1);
-        queryWrapper.lt("question_id", 10);
-        queryWrapper.like("question_title", "java");
+        queryWrapper.like("question_title", question.getQuestionTitle());
+        queryWrapper.eq("question_id", question.getQuestionId());
+        queryWrapper.eq("question_id", question.getQuestionId());
         return questionMapper.selectList(queryWrapper);
     }
 
     //分页查询全部记录
     @Override
     public Page<Question> findAllPageQuestion(Question question) {
-        return null;
+        return new Page<>(1, 5);
     }
 }
