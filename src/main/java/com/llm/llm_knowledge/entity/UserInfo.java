@@ -15,6 +15,7 @@ public class UserInfo {
     @TableId(type = IdType.AUTO)
     private Integer userId;//用户id
     private String userName;//用户
+    private String userSex;
     private String userPassword;
     private String userPhone;
     private String userEmail;
