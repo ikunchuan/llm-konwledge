@@ -1,5 +1,6 @@
 package com.llm.llm_knowledge.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserInfo;
@@ -19,38 +20,54 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-    //分页查询全部记录
-    @Override
-    public Page<UserInfo> findAllPageUserInfo(UserInfo userInfo) {
-        return null;
-    }
-
     //更新用户
     @Override
     public Integer updateUserInfoById(UserInfo userInfo) {
-        int result = userInfoMapper.updateById(userInfo);//会自动插入ID
-        System.out.println(result);
-        System.out.println(userInfo);
-        return result;
-    }
-
-    //根据id查询
-    @Override
-    public List<UserInfo> findUserInfoById(Integer userId) {
-        UserInfo i = userInfoMapper.selectById(userId);
+        int i = userInfoMapper.updateById(userInfo);//会自动插入ID
         System.out.println(i);
-        return null;
+        return i;
     }
 
-    //根据id批量查询
-    @Override
-    public List<UserInfo> findUserInfoByIds(List<UserInfo> ids) {
-        return List.of();
-    }
+//    //根据id查询
+//    @Override
+//    public UserInfo findUserInfoById(Integer userId) {return userInfoMapper.selectById(userId);}
 
     //条件查询
     @Override
     public List<UserInfo> criteriaFindUserInfo(UserInfo userInfo) {
-        return List.of();
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.like("user_name", userInfo.getUserName());
+        queryWrapper.eq("user_id", userInfo.getUserId());
+        return userInfoMapper.selectList(queryWrapper);
     }
+
+    //分页查询全部记录
+    @Override
+    public Page<UserInfo> findAllPageUserInfo(Integer pageNum, Integer pageSize) {
+        return new Page<>(pageNum, pageSize);
+    }
+
+
+//    //根据id批量查询
+//    @Override
+//    public List<UserInfo> findUserInfoByIds(List<UserInfo> ids) {
+//        List<Integer> ids_ = new ArrayList<>();
+//        for (UserInfo userInfo : ids) {
+//            Integer questionId = userInfo.getUserId();
+//            ids_.add(questionId);
+//        }
+//        return userInfoMapper.selectByIds(ids_);
+
+//    //条件查询
+//    @Override
+//    public List<UserInfo> criteriaFindUserInfo(UserInfo userInfo) {
+//        QueryWrapper queryWrapper = new QueryWrapper();
+//        queryWrapper.like("question_title", userInfo.getQuestionTitle());
+//        queryWrapper.eq("question_id", userInfo.getQuestionId());
+//        queryWrapper.eq("question_id", userInfo.getQuestionId());
+//        return questionMapper.selectList(queryWrapper);
+//    }
+
+
+
 }
