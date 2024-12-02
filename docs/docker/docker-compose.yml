@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  llm-knowledge:
+    image: llm-knowledge:latest
+    ports:
+      - "10086:10086"
+    working_dir: /app
+    volumes:
+      - /home/llm-knowledge/logs:/app/logs
+    deploy:
+      resources:
+        limits:
+          memory: 150M
