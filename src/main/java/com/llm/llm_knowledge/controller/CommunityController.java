@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("cmns/v1")
 public class CommunityController {
@@ -18,8 +19,8 @@ public class CommunityController {
     /**管理员查看所有已注册的社区
      * @return List<Community>*/
     @GetMapping("cmn")
-    public IPage<Community> allCmn(@RequestParam Integer currentSize,@RequestParam Integer currentNum){
-        return communityService.allCmn(currentSize,currentNum);
+    public IPage<Community> allCmn(@RequestParam Integer currentNum,@RequestParam Integer currentSize){
+        return communityService.allCmn(currentNum,currentSize);
     }
     
     
