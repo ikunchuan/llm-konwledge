@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("cat")
-public class categoryController {
+public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
