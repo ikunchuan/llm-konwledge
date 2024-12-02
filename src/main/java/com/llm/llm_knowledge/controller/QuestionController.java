@@ -38,7 +38,7 @@ public class QuestionController{
     }
 
     //分页查全
-    @GetMapping("v1")
+    @GetMapping("v1/page")
     public Page<Question> findAllPageQuestion(Integer pageNum, Integer pageSize){
         return questionService.findAllPageQuestion(pageNum,pageSize);
     }
