@@ -98,6 +98,9 @@ public class QuestionServiceImpl implements QuestionService {
     //分页查询全部记录
     @Override
     public Page<Question> findAllPageQuestion(Integer pageNum, Integer pageSize) {
-        return new Page<>(pageNum, pageSize);
+        Page<Question> questionPage = new Page<>(pageNum, pageSize);
+        Page<Question> questionPageVar = questionMapper.selectPage(questionPage, null);
+        questionPageVar.getRecords().forEach(System.out::println);
+        return questionPageVar;
     }
 }
