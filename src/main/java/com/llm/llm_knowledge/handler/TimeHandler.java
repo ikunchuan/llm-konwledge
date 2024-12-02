@@ -15,7 +15,7 @@ public class TimeHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         log.info("start insert info");
 //        setFieldValByName(String fieldName, Object fieldVal, MetaObject metaObject)
-//        this.setFieldValByName("deleted",0,metaObject);
+        this.setFieldValByName("deleted",0,metaObject);
         this.setFieldValByName("createdTime",new Date(),metaObject);
         this.setFieldValByName("updatedTime",new Date(),metaObject);
     }
