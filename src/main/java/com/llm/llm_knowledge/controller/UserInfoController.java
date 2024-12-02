@@ -23,8 +23,9 @@ public class UserInfoController {
 
     //查询全部
     @GetMapping("/ui")
-    public IPage<UserInfo> allUser(@RequestParam Integer currentNum,@RequestParam Integer currentSize){
-        return userInfoService.allUser(currentNum,currentSize);
+    public IPage<UserInfo> allUser(@RequestParam (value = "pageNum") Integer pageNum,
+                                   @RequestParam(value = "pageSize") Integer pageSize){
+        return userInfoService.allUser(pageNum,pageSize);
     }
     //更新用户
 //    @PutMapping("/ui/id")
@@ -44,9 +45,9 @@ public class UserInfoController {
     public IPage<UserInfo> searchUserInfo(
             @RequestParam(required = false) Integer userId,
             @RequestParam(required = false) String userName,
-            @RequestParam(defaultValue = "1") Integer currentNum,
-            @RequestParam(defaultValue = "3") Integer currentSize) {
-        return userInfoService.uiByUserid(userId, userName, currentNum, currentSize);
+            Integer pageNum,
+            Integer pageSize) {
+        return userInfoService.uiByUserid(userId, userName, pageNum, pageSize);
     }
 
 

@@ -24,14 +24,16 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     //查询所有用户
     @Override
-    public IPage<UserInfo> allUser(Integer currentSize, Integer currentNum) {
-        Page<UserInfo> page = new Page<>(currentSize,currentNum);
+    public IPage<UserInfo> allUser(Integer pageNum, Integer pageSize) {
+        Page<UserInfo> page = new Page<>(pageNum,pageSize);
         return userInfoMapper.selectPage(page,null);
     }
 
     //更新用户
     @Override
-    public Integer updateUserInfoById(UserInfo userInfo) {return userInfoMapper.updateById(userInfo);}
+    public Integer updateUserInfoById(UserInfo userInfo) {
+        return userInfoMapper.updateById(userInfo);
+    }
 
 //    //根据id查询
 //    @Override
@@ -49,23 +51,26 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     //分页查询全部记录
     @Override
-    public IPage<UserInfo> uiByUserid(Integer userId, String userName, Integer currentNum, Integer currentSize) {
-        // 创建分页对象
-        Page<UserInfo> page = new Page<>(currentNum, currentSize);
+    public IPage<UserInfo> uiByUserid(Integer userId, String userName, Integer pageNum, Integer pageSize) {
+
 
         // 创建查询条件
-        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
 
         // 根据 userId 和 userName 条件进行查询
         if (userId != null) {
-            queryWrapper.eq("user_id", userId);  // 假设 userId 是 UserInfo 表中的字段
+            wrapper.eq("user_id", userId);  // 假设 userId 是 UserInfo 表中的字段
         }
-        if (userName != null && !userName.trim().isEmpty()) {
-            queryWrapper.like("user_name", userName);  // 假设 userName 是 UserInfo 表中的字段
+        if (userName != null && !userName.isEmpty()) {
+            wrapper.like("user_name", userName);  // 假设 userName 是 UserInfo 表中的字段
         }
 
+        // 创建分页对象
+        Page<UserInfo> page = new Page<>(pageNum, pageSize);
+        Page<UserInfo> userPageVar = userInfoMapper.selectPage(page, null);
+
         // 执行分页查询
-        return userInfoMapper.selectPage(page, queryWrapper);
+        return userPageVar;
     }
 
 

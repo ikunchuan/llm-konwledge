@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserInfoService {
 
     //查询所有社区
-    public IPage<UserInfo> allUser(Integer currentSize, Integer currentNum);
+    public IPage<UserInfo> allUser(Integer pageNum, Integer pageSize);
 
     //更新用户
     Integer updateUserInfoById(UserInfo userInfo);
@@ -25,5 +25,5 @@ public interface UserInfoService {
 //    List<UserInfo> criteriaFindUserInfo(UserInfo userInfo);
 
     //分页查询全部记录
-    IPage<UserInfo> uiByUserid(Integer userId, String userName, Integer  currentNum, Integer currentSize);
+    IPage<UserInfo> uiByUserid(Integer userId, String userName, Integer  pageNum, Integer pageSize);
 }
