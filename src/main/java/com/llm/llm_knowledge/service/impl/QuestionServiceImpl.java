@@ -97,7 +97,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     //分页查询全部记录
     @Override
-    public Page<Question> findAllPageQuestion(Question question) {
-        return new Page<>(1, 5);
+    public Page<Question> findAllPageQuestion(Integer pageNum, Integer pageSize) {
+        return new Page<>(pageNum, pageSize);
     }
 }

@@ -14,10 +14,10 @@ public class QuestionController{
     private QuestionService questionService;
 
     //插入
-    @PostMapping("v1")
-    public Integer updateQuestionById(@RequestBody Question question){
-        return questionService.updateQuestionById(question);
-    }
+     @PostMapping("v1")
+        public Integer insertQuestion(@RequestBody Question question){
+            return questionService.insertQuestion(question);
+        }
 
     //id删除
     @DeleteMapping("v1/{id}")
@@ -25,6 +25,11 @@ public class QuestionController{
         return questionService.deleteQuestionById(id);
     }
 
+    //更新
+    @PutMapping("v1")
+    public Integer updateQuestionById(@RequestBody Question question){
+        return questionService.updateQuestionById(question);
+    }
 
     //id查询
     @GetMapping("v1/{id}")
@@ -32,10 +37,9 @@ public class QuestionController{
         return questionService.findQuestionById(id);
     }
 
-    //分页查询
+    //分页查全
     @GetMapping("v1")
-    public Page<Question> findAllPageQuestion(Question question){
-        return questionService.findAllPageQuestion(question);
+    public Page<Question> findAllPageQuestion(Integer pageNum,Integer pageSize){
+        return questionService.findAllPageQuestion(pageNum,pageSize);
     }
-
 }
