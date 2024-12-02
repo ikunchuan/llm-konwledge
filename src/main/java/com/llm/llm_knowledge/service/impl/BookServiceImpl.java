@@ -21,10 +21,31 @@ public class BookServiceImpl implements BookService {
         return bookMapper.selectList(null);
     }
     
+    
     @Override
     public Page<Book> allPageBook(Integer currentNum, Integer currentSize) {
-        Page<Book> pageBook = new Page<>(currentNum,currentSize);
-        return (Page<Book>) bookMapper.selectPage(pageBook,null);
+        Page<Book> pageBook = new Page<>(currentNum, currentSize);
+        return bookMapper.selectPage(pageBook, null);
+    }
+    
+    @Override
+    public Integer addBook(Book book) {
+        return bookMapper.insert(book);
+    }
+    
+    @Override
+    public Integer updateBook(Book book) {
+        return bookMapper.updateById(book);
+    }
+    
+    @Override
+    public Integer deleteBook(Integer bookId) {
+        return bookMapper.deleteById(bookId);
+    }
+    
+    @Override
+    public Integer muldeleteBook(List<Integer> bookIds) {
+        return bookMapper.deleteByIds(bookIds);
     }
     
     

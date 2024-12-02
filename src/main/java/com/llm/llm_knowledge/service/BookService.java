@@ -14,4 +14,11 @@ public interface BookService {
     
     Page<Book> allPageBook(Integer currentNum, Integer currentSize);
     
+    Integer addBook(Book book);
+    
+    Integer updateBook(Book book);
+    
+    Integer deleteBook(Integer bookId);
+    
+    Integer muldeleteBook(List<Integer> bookIds);
 }
