@@ -6,6 +6,8 @@ import com.llm.llm_knowledge.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("cat")
@@ -23,6 +25,13 @@ public class CategoryController {
     @DeleteMapping("v1/{id}")
     public Integer deleteCategoryById(@PathVariable Integer id){
         return categoryService.deleteCategoryById(id);
+    }
+
+    //批量删除
+    @DeleteMapping("v1")
+    public Integer deleteQuestionByIds(@RequestBody List<Integer> ids){
+        System.out.println("Received IDs: " + ids);
+        return categoryService.deleteCategoryByIds(ids);
     }
 
     //更新

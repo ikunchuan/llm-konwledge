@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
@@ -29,6 +31,18 @@ public class CategoryServiceImpl implements CategoryService {
         Integer i = categoryMapper.deleteById(id);
         System.out.println(i);
         return i;
+    }
+
+    //批量删除
+    @Override
+    public Integer deleteCategoryByIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return 0; // 如果没有传入 ids，则返回 0
+        }
+        // 调用 Mapper 层进行批量删除
+        int result = categoryMapper.deleteByIds(ids);
+        System.out.println("删除的记录数: " + result);
+        return result;
     }
 
     //更新

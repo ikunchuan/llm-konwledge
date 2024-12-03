@@ -29,17 +29,15 @@ public class QuestionController {
         return questionService.deleteQuestionById(id);
     }
 
+    //批量删除
     @DeleteMapping("v1")
     public Integer deleteQuestionByIds(@RequestBody List<Integer> ids){
         System.out.println("Received IDs: " + ids);
-//        List<Integer> idList = Arrays.stream(ids.split(","))
-//                .map(Integer::parseInt) // 将字符串转换为 Integer
-//                .collect(Collectors.toList());
         return questionService.deleteQuestionByIds(ids);
     }
 
     //更新
-    @PutMapping("v1/")
+    @PutMapping("v1")
     public Integer updateQuestionById(@RequestBody Question question) {
         return questionService.updateQuestionById(question);
     }
