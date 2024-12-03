@@ -1,6 +1,8 @@
 package com.llm.llm_knowledge.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.mapper.PostMapper;
 import com.llm.llm_knowledge.service.PostService;
@@ -17,8 +19,9 @@ public class PostServiceImpl implements PostService {
     
     //查询所有帖子
     @Override
-    public List<Post> allPost() {
-        return postMapper.selectList(null);
+    public IPage<Post> allPost(Integer pageNum,Integer pageSize) {
+        Page<Post> page = new Page<>(pageNum,pageSize);
+        return postMapper.selectPage(page,null);
     }
     
     
@@ -47,6 +50,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public Integer update(Post post) {
         return postMapper.updateById(post);
+    }
+    
+    @Override
+    public Post postById(Integer postId) {
+        return postMapper.selectById(postId);
     }
     
     
