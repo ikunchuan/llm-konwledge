@@ -27,8 +27,8 @@ public class CategoryController {
 
     //更新
     @PutMapping("v1")
-    public Integer updateCategory(@RequestBody Category category){
-        return categoryService.updateCategory(category);
+    public Integer updateCategoryById(@RequestBody Category category){
+        return categoryService.updateCategoryById(category);
     }
 
     //查询

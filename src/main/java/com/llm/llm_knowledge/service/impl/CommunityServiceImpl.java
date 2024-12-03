@@ -18,8 +18,8 @@ public class CommunityServiceImpl implements CommunityService {
     
     //查询所有社区
     @Override
-    public IPage<Community> allCmn(Integer currentSize, Integer currentNum) {
-        Page<Community> page = new Page<>(currentSize,currentNum);
+    public IPage<Community> allCmn(Integer pageNum, Integer pageSize) {
+        Page<Community> page = new Page<>(pageNum,pageSize);
         return communityMapper.selectPage(page,null);
     }
     
@@ -51,20 +51,20 @@ public class CommunityServiceImpl implements CommunityService {
     
     //根据社区的种类标签输入的社区的名字来模糊查询
     @Override
-    public IPage<Community> cmnByCondi(Integer categoryId, String cmnName, Integer currentNum, Integer currentSize) {
+    public IPage<Community> cmnByCondi(Integer categoryId, String cmnName, Integer pageNum, Integer pageSize) {
         QueryWrapper<Community> wrapper = new QueryWrapper<>();
         
         // 添加 category_id 条件
         if (categoryId != null) {
-            wrapper.eq("category_id", categoryId); // 假设你要用 category_id 查询
+            wrapper.eq("category_id", categoryId);       // 假设要用 category_id 查询
         }
         
         // 添加模糊查询条件
         if (cmnName != null && !cmnName.isEmpty()) {
-            wrapper.like("community_name", cmnName);
+            wrapper.like("community_name", cmnName);        // 假设要用 cmnName 查询
         }
         
-        Page<Community> page = new Page<>(currentNum, currentSize);
+        Page<Community> page = new Page<>(pageNum, pageSize);
         
         return communityMapper.selectPage(page, wrapper);
     }
