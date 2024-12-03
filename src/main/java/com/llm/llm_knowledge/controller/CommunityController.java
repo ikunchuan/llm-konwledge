@@ -60,7 +60,7 @@ public class CommunityController {
      * @return Integer<Community>
      */
     @PostMapping("cmn")
-    public Integer addCmn(Community community) {
+    public Integer addCmn(@RequestBody Community community) {
         return communityService.addCmn(community);
     }
     
@@ -82,7 +82,7 @@ public class CommunityController {
      * @return Integer
      */
     @PutMapping("cmn")
-    public Integer updateCmn(Community community) {
+    public Integer updateCmn(@RequestBody Community community) {
         return communityService.updateCmn(community);
     }
     

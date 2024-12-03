@@ -1,6 +1,7 @@
 package com.llm.llm_knowledge.controller;
 
 import com.llm.llm_knowledge.entity.UserCommunity;
+import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.service.UserCommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,12 @@ public class UserCommunityController {
         return userCommunityService.allUcmn();
     }
     
+    /**根据社区id查询所有加入这个社区的用户
+     * @return List*/
+    @GetMapping("ucmn/user/{cmnid}")
+    public List<UserCommunity> allUsers(@PathVariable Integer cmnid){
+        return userCommunityService.allUsers(cmnid);
+    }
     
     /**根据表的主键查询表
      * @return UserCommunity*/
