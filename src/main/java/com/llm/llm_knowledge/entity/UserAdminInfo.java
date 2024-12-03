@@ -1,8 +1,6 @@
 package com.llm.llm_knowledge.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
 
 import java.util.Date;
@@ -14,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserAdminInfo {
 
+    @TableId(type = IdType.AUTO)
     private Integer userId;
 
     private String userName;
