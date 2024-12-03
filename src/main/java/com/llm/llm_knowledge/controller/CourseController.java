@@ -6,9 +6,12 @@ import com.llm.llm_knowledge.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin("http://localhost:5173")
 
 @RestController
-@RequestMapping("crs/v1")
+@RequestMapping("crs")
 public class CourseController {
 
     @Autowired
@@ -26,6 +29,16 @@ public class CourseController {
         return courseService.deleteCourseById(id);
     }
 
+    //批量删除
+    @DeleteMapping("v1")
+    public Integer deleteCourseById(@RequestBody List<Integer> ids){
+        System.out.println("Received IDs: " + ids);
+//        List<Integer> idList = Arrays.stream(ids.split(","))
+//                .map(Integer::parseInt) // 将字符串转换为 Integer
+//                .collect(Collectors.toList());
+        return courseService.deleteCourseByIds(ids);
+    }
+
     //更新
     @PutMapping("v1")
     public Integer updateCourseById(@RequestBody Course course){
@@ -39,8 +52,9 @@ public class CourseController {
     }
 
     //分页查全
-    @GetMapping("v1")
+    @GetMapping("v1/page")
     public Page<Course> findAllPageCourse(Integer pageNum, Integer pageSize){
         return courseService.findAllPageCourse(pageNum,pageSize);
     }
+
 }
