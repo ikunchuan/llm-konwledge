@@ -38,23 +38,22 @@ public class QuestionServiceImpl implements QuestionService {
 
     //根据id批量删除
     @Override
-    public Integer deleteQuestionByIds(List<Question> ids) {
-        List<Integer> ids_ = new ArrayList<>();
-        for (Question question : ids) {
-            Integer questionId = question.getQuestionId();
-            ids_.add(questionId);
+    public Integer deleteQuestionByIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return 0; // 如果没有传入 ids，则返回 0
         }
-        Integer i = questionMapper.deleteByIds(ids_);
-        System.out.println(i);
-        return i;
+        // 调用 Mapper 层进行批量删除
+        int result = questionMapper.deleteByIds(ids);
+        System.out.println("删除的记录数: " + result);
+        return result;
     }
 
     //条件删除
     @Override
     public Integer criteriaDeleteQuestion(Question question) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("question_title", question.getQuestionTitle());
-        queryWrapper.eq("category", question.getCategoryId());
+        queryWrapper.eq("question_id", question.getQuestionId());
+        queryWrapper.eq("category_id", question.getCategoryId());
         Integer i = questionMapper.delete(queryWrapper);
         System.out.println(i);
         return i;
