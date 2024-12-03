@@ -1,9 +1,10 @@
 package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CommunityDTO;
 import com.llm.llm_knowledge.entity.Community;
-
-import java.util.List;
+import com.llm.llm_knowledge.vo.CommunitySearch;
 
 public interface CommunityService {
     
@@ -23,5 +24,7 @@ public interface CommunityService {
     public Integer updateCmn(Community community);
     
     //模糊查询社区
-    IPage<Community> cmnByCondi(Integer categoryId,String cmnName,Integer  pageNum,Integer pageSize);
+    PageInfo<CommunityDTO> search(CommunitySearch communitySearch, Integer  pageNum, Integer pageSize);
+    
+    void test();
 }

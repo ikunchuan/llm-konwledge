@@ -18,5 +18,7 @@ public class Community {
     
    @TableField(fill= FieldFill.INSERT)
    private Date createdTime;
+    @TableField(fill= FieldFill.INSERT_UPDATE)
+   private Date updatedTime;
     
 }
