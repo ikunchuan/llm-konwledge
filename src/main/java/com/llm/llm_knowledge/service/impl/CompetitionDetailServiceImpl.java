@@ -1,6 +1,5 @@
 package com.llm.llm_knowledge.service.impl;
 
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.entity.CompetitionDetail;
 import com.llm.llm_knowledge.mapper.CompetitionDetailMapper;
@@ -23,7 +22,7 @@ public class CompetitionDetailServiceImpl implements CompetitionDetailService {
     public List<CompetitionDetail> allCompeDetail () {return competitionDetailMapper.selectList(null); }
     //根据ID进行查询
     @Override
-    public CompetitionDetail compeDetailById(Integer id) { return competitionDetailMapper.selectById(id); }
+    public CompetitionDetail compeDetailById(Integer compeid) { return competitionDetailMapper.selectById(compeid); }
     //添加插入
     @Override
     public Integer addCompeDetail(CompetitionDetail competitionDetail) {
@@ -34,8 +33,8 @@ public class CompetitionDetailServiceImpl implements CompetitionDetailService {
     }
     //进行删除--根据ID进行删除
     @Override
-    public Integer deleteCompeDetail(Integer id) {
-        Integer i = competitionDetailMapper.deleteById(id);
+    public Integer deleteCompeDetail(Integer compeid) {
+        Integer i = competitionDetailMapper.deleteById(compeid);
         System.out.println(i);
         return i;
     }
@@ -49,7 +48,7 @@ public class CompetitionDetailServiceImpl implements CompetitionDetailService {
     //分页查询
     @Override
     public Page<CompetitionDetail> compeDetailByPage (Integer pageNum, Integer pageSize) {
-        Page<CompetitionDetail> page = new Page(pageNum, pageSize);
+        Page<CompetitionDetail> page = new Page<>(pageNum, pageSize);
         Page<CompetitionDetail> competitionDetailPage = competitionDetailMapper.selectPage(page, null);
         competitionDetailPage.getRecords().forEach(System.out::println);
         return competitionDetailPage;

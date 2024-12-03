@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("competitionDetail")
+@TableName("competition_detail")
 public class  CompetitionDetail {
 
     @TableId(type = IdType.AUTO)

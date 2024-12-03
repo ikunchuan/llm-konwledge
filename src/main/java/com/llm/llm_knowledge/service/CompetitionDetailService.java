@@ -9,11 +9,11 @@ public interface CompetitionDetailService {
     //查询竞赛详情信息
     List<CompetitionDetail> allCompeDetail();
     //条件查询
-    CompetitionDetail compeDetailById(Integer compedetailid);
+    CompetitionDetail compeDetailById(Integer compeid);
     //增加竞赛详情信息
     Integer addCompeDetail(CompetitionDetail competitionDetail);
     //删除竞赛详情信息
-    Integer deleteCompeDetail(Integer compedetailid);
+    Integer deleteCompeDetail(Integer compeid);
     //更新竞赛详情信息
     Integer updateCompeDetail(CompetitionDetail competitionDetail);
     //分页查询

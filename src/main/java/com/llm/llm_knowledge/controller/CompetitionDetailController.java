@@ -2,6 +2,7 @@ package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.entity.CompetitionDetail;
+
 import com.llm.llm_knowledge.service.CompetitionDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ import java.util.List;
             return competitionDetailService.addCompeDetail(competitionDetail);}
 
         //根据ID删除比赛
-        @PutMapping("detail")
+        @DeleteMapping ("detail")
         public Integer deleteCompeDetail(@PathVariable Integer compeid) {return competitionDetailService.deleteCompeDetail(compeid);}
 
         //修改比赛详情信息
