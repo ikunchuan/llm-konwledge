@@ -19,6 +19,7 @@ public class Category {
     private Integer parentId;
     private String categoryName;
     private String description;
+    private Integer sortOrder;
 
     @TableField(fill = FieldFill.INSERT)
     private Date createdTime;
