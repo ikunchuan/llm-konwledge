@@ -12,54 +12,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
-@Transactional
+
 public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-    //查询所有用户
+
+
+    // 查询所有用户
     @Override
     public IPage<UserInfo> allUser(Integer pageNum, Integer pageSize) {
-        Page<UserInfo> page = new Page<>(pageNum,pageSize);
-        return userInfoMapper.selectPage(page,null);
+        Page<UserInfo> page = new Page<>(pageNum, pageSize);
+        return userInfoMapper.selectPage(page, null);
+    }
+    //根据id查询
+    @Override
+    public UserInfo userInfoById(Integer userid) {
+        return userInfoMapper.selectById(userid);
     }
 
-    //更新用户
+    //增加用户
     @Override
-    public Integer updateUserInfoById(UserInfo userInfo) {
+    public Integer addUserInfo(UserInfo userInfo) {
+        return userInfoMapper.insert(userInfo);
+    }
+
+    //根据id删除用户
+    @Override
+    public Integer delUserInfo(Integer userid) {
+        return userInfoMapper.deleteById(userid);
+    }
+    //更新社区用户信息
+    @Override
+    public Integer updateUserInfo(UserInfo userInfo) {
         return userInfoMapper.updateById(userInfo);
     }
 
-//    //根据id查询
-//    @Override
-//    public UserInfo findUserInfoById(Integer userId) {return userInfoMapper.selectById(userId);}
 
-//    //条件查询
-//    @Override
-//    public List<UserInfo> criteriaFindUserInfo(UserInfo userInfo) {
-//        QueryWrapper queryWrapper = new QueryWrapper();
-//        queryWrapper.like("user_name", userInfo.getUserName());
-//        queryWrapper.eq("user_id", userInfo.getUserId());
-//        return userInfoMapper.selectList(queryWrapper);
-//    }
-
-
-    //分页查询全部记录
+    // 根据 userId 和 userName 分页查询用户
     @Override
-    public IPage<UserInfo> uiByUserid(Integer userId, String userName, Integer pageNum, Integer pageSize) {
-
-
+    public IPage<UserInfo> uiByCondi(Integer userSex, String userName, Integer pageNum, Integer pageSize) {
         // 创建查询条件
         QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
 
         // 根据 userId 和 userName 条件进行查询
-        if (userId != null) {
-            wrapper.eq("user_id", userId);  // 假设 userId 是 UserInfo 表中的字段
+        if (userSex != null) {
+            wrapper.eq("user_id", userSex);  // 假设 userId 是 UserInfo 表中的字段
         }
         if (userName != null && !userName.isEmpty()) {
             wrapper.like("user_name", userName);  // 假设 userName 是 UserInfo 表中的字段
@@ -67,33 +67,17 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         // 创建分页对象
         Page<UserInfo> page = new Page<>(pageNum, pageSize);
-        Page<UserInfo> userPageVar = userInfoMapper.selectPage(page, null);
 
         // 执行分页查询
-        return userPageVar;
+        return userInfoMapper.selectPage(page, wrapper);
     }
-
-
-//    //根据id批量查询
-//    @Override
-//    public List<UserInfo> findUserInfoByIds(List<UserInfo> ids) {
-//        List<Integer> ids_ = new ArrayList<>();
-//        for (UserInfo userInfo : ids) {
-//            Integer questionId = userInfo.getUserId();
-//            ids_.add(questionId);
-//        }
-//        return userInfoMapper.selectByIds(ids_);
-
-//    //条件查询
-//    @Override
-//    public List<UserInfo> criteriaFindUserInfo(UserInfo userInfo) {
-//        QueryWrapper queryWrapper = new QueryWrapper();
-//        queryWrapper.like("question_title", userInfo.getQuestionTitle());
-//        queryWrapper.eq("question_id", userInfo.getQuestionId());
-//        queryWrapper.eq("question_id", userInfo.getQuestionId());
-//        return questionMapper.selectList(queryWrapper);
-//    }
 
 
 
 }
+
+
+
+
+
+

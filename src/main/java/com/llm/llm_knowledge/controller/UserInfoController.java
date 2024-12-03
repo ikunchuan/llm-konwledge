@@ -1,16 +1,14 @@
 package com.llm.llm_knowledge.controller;
 
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.entity.Community;
+import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserInfo;
-import com.llm.llm_knowledge.service.CommunityService;
 import com.llm.llm_knowledge.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -20,53 +18,74 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
-
-    //查询全部
-    @GetMapping("/ui")
-    public IPage<UserInfo> allUser(@RequestParam (value = "pageNum") Integer pageNum,
-                                   @RequestParam(value = "pageSize") Integer pageSize){
-        return userInfoService.allUser(pageNum,pageSize);
-    }
-    //更新用户
-//    @PutMapping("/ui/id")
-//    public Integer updateUserInfoById(@RequestBody UserInfo userInfo){
-//        return userInfoService.updateUserInfoById(userInfo);
-//    };
-
-    @PutMapping("/ui/{id}")
-    public Integer updateUserInfoById(@PathVariable Integer id, @RequestBody UserInfo userInfo){
-        userInfo.setUserId(id);  // 设置ID
-        return userInfoService.updateUserInfoById(userInfo);
+    // 查询所有用户（分页）
+    /**
+     * 管理员查看所有已注册的用户
+     *
+     * @return List<Community>
+     */
+    @GetMapping("ui")
+    public IPage<UserInfo> allUser(@RequestParam(value = "pageNum") Integer pageNum,
+                                   @RequestParam(value = "pageSize") Integer pageSize) {
+        return userInfoService.allUser(pageNum, pageSize);
     }
 
+    /**
+     * 根据用户id查询用户
+     *
+     * @return Community
+     */
+    @GetMapping("ui/{userid}")
+    public UserInfo userInfoById(@PathVariable Integer userid) {
+        return userInfoService.userInfoById(userid);
+    }
 
-    //分页查询全部记录
-    @GetMapping("/pages")
-    public IPage<UserInfo> searchUserInfo(
-            @RequestParam(required = false) Integer userId,
+
+    /**
+     * 根据用户性别和用户名字进行模糊查询
+     *
+     * @return List
+     */
+    @GetMapping("ui/search")
+    public IPage<UserInfo> searchUsers(
+            @RequestParam(required = false) Integer userSex,
             @RequestParam(required = false) String userName,
-            Integer pageNum,
-            Integer pageSize) {
-        return userInfoService.uiByUserid(userId, userName, pageNum, pageSize);
+            @RequestParam(value = "pageNum") Integer pageNum,
+            @RequestParam(value = "pageSize") Integer pageSize) {
+        return userInfoService.uiByCondi(userSex, userName, pageNum, pageSize);
     }
 
 
+    /**
+     * 新增一个社区,传入的是一个community实体
+     *
+     * @return Integer<Community>
+     */
+    @PostMapping("ui")
+    public Integer addUserInfo(UserInfo userInfo) {
+        return userInfoService.addUserInfo(userInfo);
+    }
 
-//    //条件查询
-//    @GetMapping("/ui/details")
-//    public List<UserInfo> criteriaFindUserInfo(UserInfo userInfo){
-//        return userInfoService.criteriaFindUserInfo(userInfo);
-//    };
 
-    //    //根据id批量查询
-//    @GetMapping("ui/{uiid}")
-//    public List<UserInfo> findUserInfoByIds(List<UserInfo> ids){
-//        return userInfoService.findUserInfoByIds(ids);
-//    };
-    //    //根据id查询
-//    @GetMapping("ui/{uiid}")
-//    public UserInfo findUserInfoById(Integer userId){
-//        return userInfoService.findUserInfoById(userId);
-//    };
+    /**
+     * 根据cmnid删除社区
+     *
+     * @return Integer
+     */
+    @DeleteMapping("ui/{userid}")
+    public Integer delUserInfo(@PathVariable Integer userid) {
+        return userInfoService.delUserInfo(userid);
+    }
+
+
+    /**
+     * 根据cmnid更新社区
+     *
+     * @return Integer
+     */
+    @PutMapping("ui")
+    public Integer updateUserInfo(@RequestBody UserInfo userInfo) {
+        return userInfoService.updateUserInfo(userInfo);
+    }
 
 }
