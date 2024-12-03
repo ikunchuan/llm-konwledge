@@ -1,5 +1,6 @@
 package com.llm.llm_knowledge.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.entity.Category;
 import com.llm.llm_knowledge.mapper.CategoryMapper;
@@ -15,6 +16,16 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Override
+    public List<Category> getParentCategories() {
+        return categoryMapper.selectList(new QueryWrapper<Category>().eq("parent_id", 0));
+    }
+
+    @Override
+    public List<Category> getSubCategoriesByParentId(Integer parentId) {
+        return categoryMapper.selectList(new QueryWrapper<Category>().eq("parent_id", parentId));
+    }
 
     //添加
     @Override

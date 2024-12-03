@@ -15,6 +15,18 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+//    // 获取所有父类类别
+//    @GetMapping("/parent")
+//    public List<Category> getParentCategories() {
+//        return categoryService.getParentCategories();  // 返回所有 parent_id 为 null 或 0 的类别
+//    }
+//    // 获取指定父类的子类
+//    @GetMapping("/subs/{parentId}")
+//    public List<Category> getSubCategoriesByParentId(@PathVariable Integer parentId) {
+//        return categoryService.getSubCategoriesByParentId(parentId);  // 返回指定 parentId 的所有子类
+//    }
+
+
     //插入
     @PostMapping("v1")
     public Integer addCategory(@RequestBody Category category){
