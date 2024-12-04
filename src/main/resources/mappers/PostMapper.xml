@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.PostMapper">
+
+    <select id="selectPostsWithFilters" resultType="com.llm.llm_knowledge.dto.PostDTO">
+        SELECT
+        post.post_id,
+        post.post_title,
+        post.post_content,
+        cmn.community_id,
+        cmn.community_name,
+        `user`.user_name,
+        post.created_time,
+        post.updated_time
+        FROM
+        post
+        INNER JOIN community AS cmn ON post.community_id = cmn.community_id
+        INNER JOIN user_info AS `user` ON post.user_id = `user`.user_id
+        <where>
+            <if test="postTitle != null and postTitle != ''">
+                AND post.post_title LIKE CONCAT('%', #{postTitle}, '%')
+            </if>
+            <if test="postContent != null and postContent != ''">
+                AND post.post_content LIKE CONCAT('%', #{postContent}, '%')
+            </if>
+            <if test="communityName != null and communityName != ''">
+                AND cmn.community_name LIKE CONCAT('%', #{communityName}, '%')
+            </if>
+            <if test="userName != null and userName != ''">
+                AND `user`.user_name LIKE CONCAT('%', #{userName}, '%')
+            </if>
+        </where>
+        ORDER BY post.created_time DESC
+    </select>
+
+</mapper>

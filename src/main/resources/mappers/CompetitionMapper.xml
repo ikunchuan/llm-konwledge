@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.CompetitionMapper">
+
+    <select id="selectCompetitionWithFilters" resultType="com.llm.llm_knowledge.dto.CompetitionDTO">
+        SELECT
+        cg.category_name,
+        cp.competition_id,
+        cp.competition_img_url,
+        cp.competition_name,
+        cp.competition_status,
+        cp.created_time,
+        cp.updated_time,
+        cp.is_active,
+        cpl.level_name
+        FROM
+        competition AS cp
+        INNER JOIN category AS cg ON cp.category_id = cg.category_id
+        INNER JOIN competition_level AS cpl ON cp.level_id = cpl.level_id
+        <where>
+            <if test="competitionName != null and competitionName != ''">
+                AND cp.competition_name LIKE CONCAT('%', #{competitionName}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND cp.category_id = #{categoryId}
+            </if>
+            <if test="levelId != null">
+                AND cp.level_id = #{levelId}
+            </if>
+            <if test="isActive != null">
+                AND cp.is_active = #{isActive}
+            </if>
+        </where>
+        ORDER BY cp.created_time DESC
+    </select>
+
+</mapper>
