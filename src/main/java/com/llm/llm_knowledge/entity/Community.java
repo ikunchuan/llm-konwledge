@@ -15,6 +15,7 @@ public class Community {
     private String communityName;
     private String CommunityDescription;
     private Integer createdBy;
+    private Integer communityUnderview;
     
    @TableField(fill= FieldFill.INSERT)
    private Date createdTime;

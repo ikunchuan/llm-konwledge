@@ -28,7 +28,9 @@
             <if test="communityDescription !=null and communityDescription != ''">
                 AND cmn.community_description LIKE CONCAT( '%', '#{communityDescription}', '%' )
             </if>
+            AND cmn.community_underview = 1
         </where>
+        ORDER BY cmn.created_time DESC
     </select>
 
 </mapper>
