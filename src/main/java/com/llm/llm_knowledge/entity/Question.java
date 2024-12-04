@@ -17,6 +17,7 @@ public class Question {
     private Integer questionId;
 
     private Integer categoryId;
+    private Integer questionLevel;
     private String questionTitle;
     private String questionText;
     private String correctAnswer;
@@ -30,6 +31,6 @@ public class Question {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updatedTime;
 
-//  @TableLogic(value = "0",delval = "1") //逻辑删除，默认是0，删除的值为1
-//    private Integer deleted;
+    @TableLogic(value = "0",delval = "1") //逻辑删除，默认是0，删除的值为1
+    private Integer deleted;
 }

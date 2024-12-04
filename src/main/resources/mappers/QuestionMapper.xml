@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.QuestionMapper">
+
+    <select id="selectQuestionsWithFilters" resultType="com.llm.llm_knowledge.dto.QuestionDTO">
+        SELECT
+        qst.*,
+        cg.category_name,
+        FROM question AS qst
+        INNER JOIN category AS cg ON qst.category_id = cg.category_id
+        <where>
+            <if test="categoryName != null and categoryName != ''">
+                AND cg.category_name LIKE CONCAT('%', #{categoryName}, '%')
+            </if>
+            <if test="questionTitle != null and questionTitle != ''">
+                AND qst.question_title LIKE CONCAT('%', #{qusetionTitle}, '%')
+            </if>
+            <if test="questionText != null and questionText != ''">
+                AND qst.question_text LIKE CONCAT('%', #{questionText}, '%')
+            </if>
+            <if test="questionLevel !=null and questionLevel != ''">
+                AND qst.question_level LIKE CONCAT( '%', #{questionLevel}, '%' )
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -2,9 +2,15 @@ package com.llm.llm_knowledge.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CommunityDTO;
+import com.llm.llm_knowledge.dto.QuestionDTO;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.mapper.QuestionMapper;
 import com.llm.llm_knowledge.service.QuestionService;
+import com.llm.llm_knowledge.vo.CommunitySearch;
+import com.llm.llm_knowledge.vo.QuestionSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,5 +107,13 @@ public class QuestionServiceImpl implements QuestionService {
         Page<Question> questionPageVar = questionMapper.selectPage(questionPage, null);
         questionPageVar.getRecords().forEach(System.out::println);
         return questionPageVar;
+    }
+
+    //根据题目的种类标签输入的内容来模糊查询
+    @Override
+    public PageInfo<QuestionDTO> search(QuestionSearch questionSearch, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<QuestionDTO> questionDTOS = questionMapper.selectQuestionsWithFilters(questionSearch);
+        return new PageInfo<>(questionDTOS);
     }
 }

@@ -1,8 +1,14 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CommunityDTO;
+import com.llm.llm_knowledge.dto.QuestionDTO;
 import com.llm.llm_knowledge.entity.Question;
+import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.QuestionService;
+import com.llm.llm_knowledge.vo.CommunitySearch;
+import com.llm.llm_knowledge.vo.QuestionSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,5 +58,14 @@ public class QuestionController {
     @GetMapping("v1/page")
     public Page<Question> findAllPageQuestion(Integer pageNum, Integer pageSize) {
         return questionService.findAllPageQuestion(pageNum, pageSize);
+    }
+
+    //模糊联表查询
+    @PostMapping("v1/search")
+    public PageInfo<QuestionDTO> search(
+            @RequestBody QuestionSearch questionSearch,
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
+        return questionService.search(questionSearch, pageNum, pageSize);
     }
 }
