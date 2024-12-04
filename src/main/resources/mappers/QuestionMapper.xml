@@ -6,7 +6,7 @@
     <select id="selectQuestionsWithFilters" resultType="com.llm.llm_knowledge.dto.QuestionDTO">
         SELECT
         qst.*,
-        cg.category_name,
+        cg.category_name
         FROM question AS qst
         INNER JOIN category AS cg ON qst.category_id = cg.category_id
         <where>

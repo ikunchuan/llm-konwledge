@@ -11,5 +11,5 @@ public class QuestionSearch {
     private String questionTitle;
     private  String questionText;
     private Integer questionLevel;
-    private Integer categoryName;
+    private String categoryName;
 }

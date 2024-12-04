@@ -14,7 +14,7 @@ public class QuestionDTO {
     private String questionTitle;
     private String questionText;
     private Integer questionLevel;
-    private Integer categoryName;
+    private String categoryName;
     private Date createdTime;
     private Date updatedTime;
 }
