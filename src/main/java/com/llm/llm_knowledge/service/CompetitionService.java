@@ -1,7 +1,10 @@
 package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CompetitionDTO;
 import com.llm.llm_knowledge.entity.Competition;
+import com.llm.llm_knowledge.vo.CompetitionSearch;
 
 import java.util.List;
 
@@ -18,7 +21,8 @@ public interface CompetitionService {
     Integer updateCompe(Competition competition);
     //分页查询
     Page<Competition> compePage(Integer pageNum, Integer pageSize);
-
-
+    
+    
+    PageInfo<CompetitionDTO> search(CompetitionSearch competitionSearch,Integer pageNum,Integer pageSize);
 }
 

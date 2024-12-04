@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -59,29 +60,15 @@ public class CommunityServiceImpl implements CommunityService {
     
     //根据社区的种类标签输入的社区的名字来模糊查询
     @Override
-    public PageInfo<CommunityDTO> search(CommunitySearch communitySearch, Integer pageNum, Integer pageSize) {
-        log.info("查询社区: {},当前页: {},本页数:{}",communitySearch.toString(),pageNum,pageSize);
-        log.warn("查询社区: {},当前页: {},本页数:{}",communitySearch.toString(),pageNum,pageSize);
-        log.error("查询社区: {},当前页: {},本页数:{}",communitySearch.toString(),pageNum,pageSize);
+    public PageInfo<CommunityDTO> search(@RequestBody CommunitySearch communitySearch, Integer pageNum, Integer pageSize) {
+//        log.info("查询社区: {},当前页: {},本页数:{}",communitySearch.toString(),pageNum,pageSize);
+//        log.warn("查询社区: {},当前页: {},本页数:{}",communitySearch.toString(),pageNum,pageSize);
+//        log.error("查询社区: {},当前页: {},本页数:{}",communitySearch.toString(),pageNum,pageSize);
         PageHelper.startPage(pageNum,pageSize);
         List<CommunityDTO> communityDTOS = communityMapper.selectCommunitiesWithFilters(communitySearch);
         return new PageInfo<>(communityDTOS);
     }
     
-    @Override
-    public void test() {
-        Community community1 = new Community();
-        community1.setCommunityName("myc1");
-        community1.setCommunityDescription("desc1");
-        community1.setCategoryId(1);
-        int insert1 = communityMapper.insert(community1);
-        int i = 1/0;
-        Community community2 = new Community();
-        community2.setCommunityName("myc2");
-        community2.setCommunityDescription("desc1");
-        community2.setCategoryId(1);
-        int insert2 = communityMapper.insert(community2);
-    }
     
     
 }

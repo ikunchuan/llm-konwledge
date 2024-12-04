@@ -1,12 +1,17 @@
 package com.llm.llm_knowledge.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CompetitionDTO;
 import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.mapper.CompetitionMapper;
 import com.llm.llm_knowledge.service.CompetitionService;
+import com.llm.llm_knowledge.vo.CompetitionSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -59,7 +64,14 @@ public  class CompetitionServiceImpl implements CompetitionService {
         competitionPage.getRecords().forEach(System.out::println);
         return competitionPage;
     }
-
-
-
+    
+    @Override
+    public PageInfo<CompetitionDTO> search(@RequestBody CompetitionSearch competitionSearch, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<CompetitionDTO> competitionDTOS = competitionMapper.selectCompetitionWithFilters(competitionSearch);
+        
+        return new PageInfo<>(competitionDTOS);
+    }
+    
+    
 }

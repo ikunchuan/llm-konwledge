@@ -3,11 +3,16 @@ package com.llm.llm_knowledge.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.mapper.PostMapper;
 import com.llm.llm_knowledge.service.PostService;
+import com.llm.llm_knowledge.vo.PostSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -28,10 +33,10 @@ public class PostServiceImpl implements PostService {
     
     //条件查询帖子 可以根据社区名,帖子名
     @Override
-    public List<Post> searchPost(String postTitle){
-        QueryWrapper<Post> wrapper =  new QueryWrapper<Post>();
-        wrapper.like("post_title",postTitle);
-        return postMapper.selectList(wrapper);
+    public PageInfo<PostDTO> searchPost(@RequestBody PostSearch postSearch, Integer pageNum, Integer pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<PostDTO> postDTOS = postMapper.selectPostsWithFilters(postSearch);
+        return new PageInfo<>(postDTOS);
     }
     
     //根据帖子id删除帖子

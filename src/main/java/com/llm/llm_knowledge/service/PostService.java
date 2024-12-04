@@ -1,7 +1,10 @@
 package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
+import com.llm.llm_knowledge.vo.PostSearch;
 
 import java.util.List;
 
@@ -9,7 +12,7 @@ public interface PostService {
     
     IPage<Post> allPost(Integer pageNum,Integer pageSize);
     
-    List<Post> searchPost(String postTitle);
+    PageInfo<PostDTO> searchPost(PostSearch postSearch, Integer pageNum, Integer pageSize);
     
     Integer delPost(Integer postId);
     
@@ -18,4 +21,6 @@ public interface PostService {
     Integer update(Post post);
     
     Post postById(Integer postId);
+    
+    
 }

@@ -1,9 +1,13 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Post;
+import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.PostService;
+import com.llm.llm_knowledge.vo.PostSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,18 +15,20 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("posts/v1")
+@RequestMapping("v1/posts")
 public class PostController {
     
     @Autowired
     private PostService postService;
     
     /**查询所有帖子*/
-    @GetMapping("postall")
-    public IPage<Post> allPost(@RequestParam(value = "pageNum") Integer pageNum,
-                                   @RequestParam(value = "pageSize") Integer pageSize) {
-        return postService.allPost(pageNum, pageSize);
+    @PostMapping("/search")
+    public PageInfo<PostDTO> allPost(@RequestBody PostSearch postSearch,
+                                     @RequestParam(defaultValue = "1") Integer pageNum,
+                                     @RequestParam(defaultValue = "10") Integer pageSize) throws BizException {
+        return postService.searchPost(postSearch,pageNum, pageSize);
     }
+    
     
     @GetMapping("post/{postId}")
     public Post postById(@PathVariable Integer postId){
@@ -30,11 +36,7 @@ public class PostController {
     }
     
     
-    /**根据帖子标题查询帖子*/
-    @GetMapping("post/search")
-    public List<Post> searchPostTitle(@RequestParam String postTitle){
-        return postService.searchPost(postTitle);
-    }
+
     
     /**删除帖子*/
     @DeleteMapping("post")

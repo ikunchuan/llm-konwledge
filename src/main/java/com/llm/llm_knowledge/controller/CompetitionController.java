@@ -1,9 +1,13 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CompetitionDTO;
 import com.llm.llm_knowledge.entity.Competition;
 
+import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CompetitionService;
+import com.llm.llm_knowledge.vo.CompetitionSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +47,12 @@ public class CompetitionController {
         return competitionService.compePage(pageNum, pageSize);
     }
 
-
+    //多表联查并分页
+    @PostMapping("search")
+    public PageInfo<CompetitionDTO> search(@RequestBody CompetitionSearch competitionSearch,
+                                           @RequestParam(defaultValue = "1") Integer pageNum,
+                                           @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
+        return competitionService.search(competitionSearch,pageNum,pageSize);
+    }
 
 }
