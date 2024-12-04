@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.CourseMapper">
+
+    <select id="selectCoursesWithFilters" resultType="com.llm.llm_knowledge.dto.CourseDTO">
+        SELECT
+        cr.course_id,
+        cr.course_description,
+        cr.course_name,
+        cr.course_rating,
+        cr.course_duration,
+        cr.created_time,
+        cr.updated_time,
+        cr.course_difficulty_level,
+        cg.category_name
+        FROM
+        course AS cr
+        INNER JOIN category AS cg ON cr.category_id = cg.category_id
+        <where>
+            <if test="courseName != null and courseName != ''">
+                AND cr.course_name LIKE CONCAT('%', #{courseName}, '%')
+            </if>
+            <if test="courseDescription != null and courseDescription != ''">
+                AND cr.course_description LIKE CONCAT('%', #{courseDescription}, '%')
+            </if>
+            <if test="courseDifficultyLevel != null and courseDifficultyLevel != ''">
+                AND cr.course_difficulty_level LIKE CONCAT('%', #{courseDifficultyLevel}, '%')
+            </if>
+            <if test="courseRating != null and courseRating != ''">
+                AND cr.course_rating LIKE CONCAT('%', #{courseRating}, '%')
+            </if>
+        </where>
+        ORDER BY cr.created_time DESC
+    </select>
+
+</mapper>
