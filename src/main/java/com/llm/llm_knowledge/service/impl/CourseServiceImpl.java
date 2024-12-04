@@ -1,13 +1,19 @@
 package com.llm.llm_knowledge.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CourseDTO;
+import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Course;
 
 import com.llm.llm_knowledge.mapper.CourseMapper;
 import com.llm.llm_knowledge.service.CourseService;
+import com.llm.llm_knowledge.vo.CourseSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -80,6 +86,12 @@ public class CourseServiceImpl implements CourseService {
         return coursePageVar;
     }
 
+    @Override
+    public PageInfo<CourseDTO> search(@RequestBody CourseSearch courseSearch, Integer pageNum, Integer pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<CourseDTO> courseDTOS = courseMapper.selectCoursesWithFilters(courseSearch);
+        return new PageInfo<>(courseDTOS);
+    };
 
 
 

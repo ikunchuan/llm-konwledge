@@ -1,8 +1,11 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CourseDTO;
 import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.service.CourseService;
+import com.llm.llm_knowledge.vo.CourseSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,6 +57,14 @@ public class CourseController {
     @GetMapping("v1/page")
     public Page<Course> findAllPageCourse(Integer pageNum, Integer pageSize){
         return courseService.findAllPageCourse(pageNum,pageSize);
+    }
+    
+    //多表联查
+    @PostMapping("/search")
+    public PageInfo<CourseDTO> search(@RequestBody CourseSearch courseSearch,
+                                      @RequestParam(defaultValue = "1") Integer pageNum,
+                                      @RequestParam(defaultValue = "10") Integer pageSize){
+        return courseService.search(courseSearch,pageNum,pageSize);
     }
 
 }
