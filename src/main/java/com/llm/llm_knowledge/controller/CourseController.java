@@ -74,5 +74,7 @@ public class CourseController {
     public List<CourseChapterDTO> searchChapter(@RequestBody CourseChapterSearch courseChapterSearch){
         return courseService.searchChapter(courseChapterSearch);
     }
+    
+    //
 
 }

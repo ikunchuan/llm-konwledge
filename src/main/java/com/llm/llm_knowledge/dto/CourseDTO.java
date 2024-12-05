@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +17,8 @@ public class CourseDTO {
     private String courseName;
     private String courseRating;
     private String courseDuration;
-    private String createdTime;
-    private String updatedTime;
+    private Date createdTime;
+    private Date updatedTime;
     private String courseDifficultyLevel;
     private String categoryName;
 
