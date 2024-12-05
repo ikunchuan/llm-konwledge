@@ -2,6 +2,7 @@ package com.llm.llm_knowledge.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.llm.llm_knowledge.entity.AdminLoginLog;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.mapper.UserAdminInfoMapper;
@@ -11,11 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * @author : symao
- */
+
 @Service
 @Transactional
 public class UserAdminInfoServiceImpl implements UserAdminInfoService {
@@ -55,5 +55,7 @@ public class UserAdminInfoServiceImpl implements UserAdminInfoService {
         //调用userAdminInfoService里面的方法
         return userAdminInfoMapper.insert(userAdminInfo);
     }
+    
 
+    
 }

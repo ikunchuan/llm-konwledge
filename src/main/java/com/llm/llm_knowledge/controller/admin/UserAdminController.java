@@ -5,6 +5,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.pojo.ResultEntity;
+import com.llm.llm_knowledge.service.AdminLoginLogService;
 import com.llm.llm_knowledge.service.UserAdminInfoService;
 import com.llm.llm_knowledge.vo.UserAdminInfoVO;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,9 +14,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author : symao
- */
 
 @RestController
 @RequestMapping("/admin/user")
@@ -24,7 +22,10 @@ public class UserAdminController {
 
     @Autowired
     private UserAdminInfoService userAdminInfoService;
-
+    
+    @Autowired
+    private AdminLoginLogService adminLoginLogService;
+    
     /**
      * 用户登录
      * @param userAdminInfoVO
@@ -47,11 +48,19 @@ public class UserAdminController {
         }
 
         UserAdminInfo userAdminInfo = new UserAdminInfo();
+        // 将userAdminInfoVO的对象属性复制到userAdminInfo中
         BeanUtils.copyProperties(userAdminInfoVO, userAdminInfo);
         UserAdminInfo userAdmin = userAdminInfoService.login(userAdminInfo);
         Integer userId = userAdmin.getUserId();
+        
         // 执行登录
+        // 设置用户的登录时间
         StpUtil.login(userId, new SaLoginModel().setTimeout(60 * 60 * 24));
+        
+        // 记录日志,调用logService里面的logAdminLogin方法,传入的参数从前面登录的地方过来,
+        // 因为如果执行到这一步,一定是登录成功,就可以直接存储登录日志
+        adminLoginLogService.logAdminLogin(userAdminInfoVO.getUserName(), userAdminInfoVO.getPassword());
+        
         return ResultEntity.success();
     }
 

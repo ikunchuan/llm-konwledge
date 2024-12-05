@@ -20,5 +20,6 @@ public interface UserAdminInfoService {
      * @throws UserException
      */
     Integer register(UserAdminInfo userAdminInfo) throws UserException;
+    
 
 }
