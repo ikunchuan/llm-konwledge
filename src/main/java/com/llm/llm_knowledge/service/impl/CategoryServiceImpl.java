@@ -78,4 +78,12 @@ public class CategoryServiceImpl implements CategoryService {
         categoryPageVar.getRecords().forEach(System.out::println);
         return categoryPageVar;
     }
+
+    //条件查询id和name
+    @Override
+    public List<Category> allIdAndName() {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.select("category_id","parent_id","category_name");
+        return categoryMapper.selectList(queryWrapper);
+    }
 }

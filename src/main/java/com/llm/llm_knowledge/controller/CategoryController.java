@@ -58,6 +58,12 @@ public class CategoryController {
         return categoryService.findCategoryById(id);
     }
 
+    //查询id和name
+    @GetMapping("v1/all")
+    public List<Category> allIdAndName(){
+        return categoryService.allIdAndName();
+    }
+
     //分页查全
     @GetMapping("v1/page")
     public Page<Category> allPageCategory(Integer pageNum,Integer pageSize){

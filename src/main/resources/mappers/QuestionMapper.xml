@@ -14,7 +14,7 @@
                 AND cg.category_name LIKE CONCAT('%', #{categoryName}, '%')
             </if>
             <if test="questionTitle != null and questionTitle != ''">
-                AND qst.question_title LIKE CONCAT('%', #{qusetionTitle}, '%')
+                AND qst.question_title LIKE CONCAT('%', #{questionTitle}, '%')
             </if>
             <if test="questionText != null and questionText != ''">
                 AND qst.question_text LIKE CONCAT('%', #{questionText}, '%')
