@@ -67,7 +67,15 @@ public class UserInfoController {
             @RequestParam(value = "pageSize") Integer pageSize) {
         return userInfoService.uiByCondi(userSex, userName, pageNum, pageSize);
     }
-
+    
+    @GetMapping("ui/search2")
+    public IPage<UserInfo> searchUsers2(
+            @RequestParam(required = false) Integer userSex,
+            @RequestParam(required = false) String userName,
+            @RequestParam(value = "pageNum") Integer pageNum,
+            @RequestParam(value = "pageSize") Integer pageSize) {
+        return userInfoService.uiByCondi2(userSex, userName, pageNum, pageSize);
+    }
 
     /**
      * 新增一个社区,传入的是一个community实体

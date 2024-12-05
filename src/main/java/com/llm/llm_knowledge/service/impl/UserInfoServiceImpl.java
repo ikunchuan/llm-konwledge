@@ -105,6 +105,19 @@ public class UserInfoServiceImpl implements UserInfoService {
         
     }
     
+    @Override
+    public IPage<UserInfo> uiByCondi2(Integer userSex, String userName, Integer pageNum, Integer pageSize) {
+        // 创建查询条件
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_underview",0);
+        
+        // 创建分页对象
+        Page<UserInfo> page = new Page<>(pageNum, pageSize);
+        
+        // 执行分页查询
+        return userInfoMapper.selectPage(page, wrapper);
+    }
+    
     
 }
 
