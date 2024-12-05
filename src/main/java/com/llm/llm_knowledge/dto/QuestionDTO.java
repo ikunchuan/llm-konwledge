@@ -14,6 +14,8 @@ public class QuestionDTO {
     private String questionTitle;
     private String questionText;
     private Integer questionLevel;
+    private String correctAnswer;
+    private String reMark;
     private String categoryName;
     private Date createdTime;
     private Date updatedTime;
