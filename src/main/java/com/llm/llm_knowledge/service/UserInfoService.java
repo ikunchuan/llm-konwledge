@@ -2,6 +2,7 @@ package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserInfo;
@@ -34,7 +35,8 @@ public interface UserInfoService {
 
     //模糊查询社区
     IPage<UserInfo> uiByCondi(Integer userSex,String userName,Integer pageNum,Integer pageSize);
-
-
+    
+    
+    List<UserCourseProgressDTO> progressDTO();
 }
 

@@ -1,6 +1,7 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,4 +101,9 @@ public class UserInfoController {
         return userInfoService.updateUserInfo(userInfo);
     }
 
+    //多表联查
+    @GetMapping("ui/watch")
+    public List<UserCourseProgressDTO> progressDTOS(){
+        return userInfoService.progressDTO();
+    }
 }

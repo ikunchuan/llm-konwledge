@@ -1,6 +1,7 @@
 package com.llm.llm_knowledge.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -19,4 +20,6 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     // 获取用户总数
     @Select("SELECT COUNT(*) AS total FROM user_info")
     int getUserTotalCount();
+    
+    List<UserCourseProgressDTO> selectProgressWithFilters();
 }
