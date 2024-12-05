@@ -22,4 +22,11 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     int getUserTotalCount();
     
     List<UserCourseProgressDTO> selectProgressWithFilters();
+    
+    @Select("SELECT u.user_name, COUNT(*) AS completed_count " +
+            "FROM course_progress cp " +
+            "JOIN user_info u ON cp.user_id = u.user_id " +
+            "WHERE cp.is_completed = 1 " +
+            "GROUP BY u.user_name")
+    List<Map<String, Object>> countCompletedCoursesByUser();
 }

@@ -106,4 +106,9 @@ public class UserInfoController {
     public List<UserCourseProgressDTO> progressDTOS(){
         return userInfoService.progressDTO();
     }
+    
+    @GetMapping("ui/countCourseAll")
+    public List<Map<String, Object>> getCompletedCoursesCount(){
+        return userInfoService.getCompletedCoursesCount();
+    }
 }

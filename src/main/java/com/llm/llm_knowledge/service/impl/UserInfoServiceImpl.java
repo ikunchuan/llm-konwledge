@@ -98,6 +98,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
     
     
+    @Override
+    public List<Map<String, Object>> getCompletedCoursesCount() {
+        List<Map<String, Object>> result = userInfoMapper.countCompletedCoursesByUser();
+        return result;
+        
+    }
+    
+    
 }
 
 

@@ -38,5 +38,8 @@ public interface UserInfoService {
     
     
     List<UserCourseProgressDTO> progressDTO();
+    
+    
+    List<Map<String, Object>> getCompletedCoursesCount();
 }
 
