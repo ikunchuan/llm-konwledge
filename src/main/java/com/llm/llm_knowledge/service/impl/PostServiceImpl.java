@@ -14,10 +14,12 @@ import com.llm.llm_knowledge.service.PostService;
 import com.llm.llm_knowledge.vo.PostSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class PostServiceImpl implements PostService {
     
