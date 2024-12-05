@@ -10,7 +10,7 @@ import com.llm.llm_knowledge.vo.CompetitionSearch;
 import java.util.List;
 
 public interface CompetitionMapper  extends BaseMapper<Competition> {
-    
+
     List<CompetitionDTO> selectCompetitionWithFilters(CompetitionSearch competitionSearch);
-    
+
 }

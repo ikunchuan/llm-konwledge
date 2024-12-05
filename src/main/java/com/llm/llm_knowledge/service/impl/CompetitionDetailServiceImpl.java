@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 @Transactional
 public class CompetitionDetailServiceImpl implements CompetitionDetailService {
-
     @Autowired
     private CompetitionDetailMapper competitionDetailMapper;
 

@@ -11,8 +11,10 @@ import java.util.List;
 @Repository
 public interface CommunityMapper extends BaseMapper<Community> {
     
+    //通过审核
     List<CommunityDTO> selectCommunitiesWithFilters(CommunitySearch communitySearch);
     
+    //
     List<CommunityDTO> selectCommunitiesWithFilters2(CommunitySearch communitySearch);
 
 }

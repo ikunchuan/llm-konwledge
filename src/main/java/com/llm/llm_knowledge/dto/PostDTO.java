@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,8 +17,8 @@ public class PostDTO {
     private String postContent;
     private String communityName;
     private String userName;
-    private String createdTime;
-    private String updatedTime;
+    private Date createdTime;
+    private Date updatedTime;
     
     
 }

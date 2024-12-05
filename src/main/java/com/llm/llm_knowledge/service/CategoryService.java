@@ -19,4 +19,5 @@ public interface CategoryService {
     Integer updateCategoryById(Category category);
     Category findCategoryById(Integer id);
     Page<Category> allPageCategory(Integer pageNum, Integer pageSize);
+    List<Category> allIdAndName();
 }

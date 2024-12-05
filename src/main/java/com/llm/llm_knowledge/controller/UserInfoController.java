@@ -1,14 +1,15 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.llm.llm_knowledge.entity.Community;
-import com.llm.llm_knowledge.entity.Question;
+import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -17,6 +18,18 @@ public class UserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+    //获取男女人数
+    @GetMapping("ui/sex-distribution")
+    public List<Map<String, Object>> getUserSexDistribution() {
+        return userInfoService.getUserSexDistribution();
+    }
+    //获取用户总数
+    @GetMapping("ui/user-total-count")
+    public ResponseEntity<Integer> getUserTotalCount() {
+        int total = userInfoService.getUserTotalCount();
+        return ResponseEntity.ok(total);
+    }
+
 
     // 查询所有用户（分页）
     /**
@@ -54,7 +67,15 @@ public class UserInfoController {
             @RequestParam(value = "pageSize") Integer pageSize) {
         return userInfoService.uiByCondi(userSex, userName, pageNum, pageSize);
     }
-
+    
+    @GetMapping("ui/search2")
+    public IPage<UserInfo> searchUsers2(
+            @RequestParam(required = false) Integer userSex,
+            @RequestParam(required = false) String userName,
+            @RequestParam(value = "pageNum") Integer pageNum,
+            @RequestParam(value = "pageSize") Integer pageSize) {
+        return userInfoService.uiByCondi2(userSex, userName, pageNum, pageSize);
+    }
 
     /**
      * 新增一个社区,传入的是一个community实体
@@ -79,7 +100,7 @@ public class UserInfoController {
 
 
     /**
-     * 根据cmnid更新社区
+     * 更新用户
      *
      * @return Integer
      */
@@ -88,4 +109,15 @@ public class UserInfoController {
         return userInfoService.updateUserInfo(userInfo);
     }
 
+    //多表联查
+    @GetMapping("ui/watch")
+    public List<UserCourseProgressDTO> progressDTOS(){
+        return userInfoService.progressDTO();
+    }
+
+    //获取用户观看视频总数
+    @GetMapping("ui/countCourseAll")
+    public List<Map<String, Object>> getCompletedCoursesCount(){
+        return userInfoService.getCompletedCoursesCount();
+    }
 }

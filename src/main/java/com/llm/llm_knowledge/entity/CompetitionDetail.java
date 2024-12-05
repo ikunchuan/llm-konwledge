@@ -15,8 +15,8 @@ import java.util.Date;
 public class  CompetitionDetail {
 
     @TableId(type = IdType.AUTO)
-
-private Integer competitionId;
+    private Integer competitionId;
+    private String competitionName;
 private String competitionDescription;
 private String competitionOrganizer;
 private Date startDate;
