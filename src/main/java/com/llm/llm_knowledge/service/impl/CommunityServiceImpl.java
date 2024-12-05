@@ -69,6 +69,12 @@ public class CommunityServiceImpl implements CommunityService {
         return new PageInfo<>(communityDTOS);
     }
     
+    @Override
+    public PageInfo<CommunityDTO> search2(CommunitySearch communitySearch, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<CommunityDTO> communityDTOS = communityMapper.selectCommunitiesWithFilters2(communitySearch);
+        return new PageInfo<>(communityDTOS);
+    }
     
     
 }

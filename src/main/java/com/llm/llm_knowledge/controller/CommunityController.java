@@ -55,6 +55,15 @@ public class CommunityController {
     }
     
     
+    @PostMapping("/search2")
+    public PageInfo<CommunityDTO> search2(
+            @RequestBody CommunitySearch communitySearch,
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "10") Integer pageSize) throws BizException {
+        return communityService.search2(communitySearch, pageNum, pageSize);
+    }
+    
+    
     /**
      * 新增一个社区,传入的是一个community实体
      *

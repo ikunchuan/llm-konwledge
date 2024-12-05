@@ -12,5 +12,7 @@ import java.util.List;
 public interface CommunityMapper extends BaseMapper<Community> {
     
     List<CommunityDTO> selectCommunitiesWithFilters(CommunitySearch communitySearch);
+    
+    List<CommunityDTO> selectCommunitiesWithFilters2(CommunitySearch communitySearch);
 
 }

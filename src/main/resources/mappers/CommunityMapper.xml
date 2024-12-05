@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.llm.llm_knowledge.mapper.CommunityMapper">
 
+    <!--    查询已经审核的-->
     <select id="selectCommunitiesWithFilters" resultType="com.llm.llm_knowledge.dto.CommunityDTO">
         SELECT
             cmn.community_id,
@@ -29,6 +30,38 @@
                 AND cmn.community_description LIKE CONCAT( '%', '#{communityDescription}', '%' )
             </if>
             AND cmn.community_underview = 1
+        </where>
+        ORDER BY cmn.created_time DESC
+    </select>
+
+    <!--    查看未审核的-->
+    <select id="selectCommunitiesWithFilters2" resultType="com.llm.llm_knowledge.dto.CommunityDTO">
+        SELECT
+        cmn.community_id,
+        cmn.community_name,
+        cmn.community_description,
+        `user`.user_name,
+        cg.category_name,
+        cmn.community_underview,
+        cmn.created_time,
+        cmn.updated_time
+        FROM community AS cmn
+        INNER JOIN category AS cg ON cmn.category_id = cg.category_id
+        INNER JOIN user_info AS `user` ON cmn.created_by = `user`.user_id
+        <where>
+            <if test="categoryName != null and categoryName != ''">
+                AND cg.category_name LIKE CONCAT('%', #{categoryName}, '%')
+            </if>
+            <if test="communityName != null and communityName != ''">
+                AND cmn.community_name LIKE CONCAT('%', #{communityName}, '%')
+            </if>
+            <if test="userName != null and userName != ''">
+                AND `user`.user_name LIKE CONCAT('%', #{userName}, '%')
+            </if>
+            <if test="communityDescription !=null and communityDescription != ''">
+                AND cmn.community_description LIKE CONCAT( '%', '#{communityDescription}', '%' )
+            </if>
+            AND cmn.community_underview = 0
         </where>
         ORDER BY cmn.created_time DESC
     </select>

@@ -26,5 +26,5 @@ public interface CommunityService {
     //模糊查询社区
     PageInfo<CommunityDTO> search(CommunitySearch communitySearch, Integer  pageNum, Integer pageSize);
     
-
+    PageInfo<CommunityDTO> search2(CommunitySearch communitySearch, Integer pageNum, Integer pageSize);
 }
