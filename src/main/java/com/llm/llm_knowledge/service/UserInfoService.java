@@ -38,8 +38,8 @@ public interface UserInfoService {
     
     
     List<UserCourseProgressDTO> progressDTO();
-    
-    
+
+    //获取用户观看视频总数
     List<Map<String, Object>> getCompletedCoursesCount();
 }
 

@@ -97,7 +97,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userCourseProgressDTOS;
     }
     
-    
+    //获取用户观看视频总数
     @Override
     public List<Map<String, Object>> getCompletedCoursesCount() {
         List<Map<String, Object>> result = userInfoMapper.countCompletedCoursesByUser();
