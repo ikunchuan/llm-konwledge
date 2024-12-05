@@ -64,14 +64,14 @@ public  class CompetitionServiceImpl implements CompetitionService {
         competitionPage.getRecords().forEach(System.out::println);
         return competitionPage;
     }
-    
+
     @Override
     public PageInfo<CompetitionDTO> search(@RequestBody CompetitionSearch competitionSearch, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<CompetitionDTO> competitionDTOS = competitionMapper.selectCompetitionWithFilters(competitionSearch);
-        
+
         return new PageInfo<>(competitionDTOS);
     }
-    
-    
+
+
 }

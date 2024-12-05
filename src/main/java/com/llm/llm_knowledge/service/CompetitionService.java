@@ -21,8 +21,8 @@ public interface CompetitionService {
     Integer updateCompe(Competition competition);
     //分页查询
     Page<Competition> compePage(Integer pageNum, Integer pageSize);
-    
-    
+
+
     PageInfo<CompetitionDTO> search(CompetitionSearch competitionSearch,Integer pageNum,Integer pageSize);
 }
 
