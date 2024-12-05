@@ -8,17 +8,34 @@ import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.mapper.UserInfoMapper;
 import com.llm.llm_knowledge.service.UserInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+@Slf4j
+@Service
+@Transactional
 public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
 
+
+    //获取男女人数
+    @Override
+    public List<Map<String, Object>>getUserSexDistribution() {
+        return userInfoMapper.findUserSexDistribution();
+    }
+    //获取用户总数
+    @Override
+    public int getUserTotalCount() {
+        return userInfoMapper.getUserTotalCount();
+    }
 
 
     // 查询所有用户

@@ -1,14 +1,14 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.llm.llm_knowledge.entity.Community;
-import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -17,6 +17,18 @@ public class UserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+    //获取男女人数
+    @GetMapping("ui/sex-distribution")
+    public List<Map<String, Object>> getUserSexDistribution() {
+        return userInfoService.getUserSexDistribution();
+    }
+    //获取用户总数
+    @GetMapping("ui/user-total-count")
+    public ResponseEntity<Integer> getUserTotalCount() {
+        int total = userInfoService.getUserTotalCount();
+        return ResponseEntity.ok(total);
+    }
+
 
     // 查询所有用户（分页）
     /**

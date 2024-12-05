@@ -8,9 +8,14 @@ import com.llm.llm_knowledge.entity.UserInfo;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserInfoService {
 
+    // 获取用户性别分布
+    List<Map<String, Object>> getUserSexDistribution();
+    //获取用户总数
+    public int getUserTotalCount();
     // 查询所有用户（分页）
     IPage<UserInfo> allUser(Integer pageNum, Integer pageSize);
 
