@@ -1,10 +1,10 @@
 package com.llm.llm_knowledge.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseDTO;
-import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Course;
 
 import com.llm.llm_knowledge.mapper.CourseMapper;
@@ -91,7 +91,16 @@ public class CourseServiceImpl implements CourseService {
         PageHelper.startPage(pageNum,pageSize);
         List<CourseDTO> courseDTOS = courseMapper.selectCoursesWithFilters(courseSearch);
         return new PageInfo<>(courseDTOS);
-    };
+    }
+
+    @Override
+    public List<Course> searchparagraph(String courseName) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("course_name", courseName);
+        return courseMapper.selectList(queryWrapper);
+    }
+
+    ;
 
 
 
