@@ -92,7 +92,7 @@ public class UserInfoController {
 
 
     /**
-     * 根据cmnid更新社区
+     * 更新用户
      *
      * @return Integer
      */
@@ -106,7 +106,8 @@ public class UserInfoController {
     public List<UserCourseProgressDTO> progressDTOS(){
         return userInfoService.progressDTO();
     }
-    
+
+    //获取用户观看视频总数
     @GetMapping("ui/countCourseAll")
     public List<Map<String, Object>> getCompletedCoursesCount(){
         return userInfoService.getCompletedCoursesCount();
