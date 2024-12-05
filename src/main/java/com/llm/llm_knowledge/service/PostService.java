@@ -2,8 +2,10 @@ package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.PostCommentDTO;
 import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
+import com.llm.llm_knowledge.entity.PostComment;
 import com.llm.llm_knowledge.vo.PostSearch;
 
 import java.util.List;
@@ -23,4 +25,5 @@ public interface PostService {
     Post postById(Integer postId);
     
     
+    List<PostCommentDTO> allPostComment(Integer postID);
 }

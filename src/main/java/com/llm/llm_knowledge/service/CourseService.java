@@ -2,8 +2,10 @@ package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
 import com.llm.llm_knowledge.entity.Course;
+import com.llm.llm_knowledge.vo.CourseChapterSearch;
 import com.llm.llm_knowledge.vo.CourseSearch;
 
 import java.util.List;
@@ -30,4 +32,6 @@ public interface CourseService {
     PageInfo<CourseDTO> search(CourseSearch courseSearch, Integer pageNum, Integer pageSize);
 
     List<Course> searchparagraph(String courseName);
+    
+    List<CourseChapterDTO> searchChapter(CourseChapterSearch courseChapterSearch);
 }

@@ -77,9 +77,6 @@ public class CourseController {
     
     //
 
-    @GetMapping("/searchParagraph/{queryStr}")
-    public List<Course> searchParagraph(@PathVariable String queryStr){
-        return courseService.searchparagraph(queryStr);
-    }
+
 
 }

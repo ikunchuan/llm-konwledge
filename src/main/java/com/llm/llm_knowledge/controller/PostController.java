@@ -2,9 +2,11 @@ package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.PostCommentDTO;
 import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Post;
+import com.llm.llm_knowledge.entity.PostComment;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.PostService;
 import com.llm.llm_knowledge.vo.PostSearch;
@@ -30,12 +32,11 @@ public class PostController {
     }
     
     
+    /**根据id查看帖子,一般在点击详细之后调用这个方法*/
     @GetMapping("post/{postId}")
     public Post postById(@PathVariable Integer postId){
         return postService.postById(postId);
     }
-    
-    
 
     
     /**删除帖子*/
@@ -44,16 +45,26 @@ public class PostController {
         return postService.delPost(postId);
     }
     
+    
     /**增加帖子*/
     @PostMapping("post")
     public Integer addPost(@RequestBody Post post){
         return postService.addPost(post);
     }
     
+    
     /**更新帖子*/
     @PutMapping("post")
     public Integer updatePost(@RequestBody Post post){
         return postService.update(post);
+    }
+    
+    
+    /**查看帖子的评论,前端点击某一个帖子的评论,右边弹出一个抽屉,上方是帖子标题,下面是关于这条帖子所有的评论
+     * @return PostCommentDTO */
+    @GetMapping("post/comment/{postID}")
+    public List<PostCommentDTO> allPostComment(@PathVariable Integer postID){
+        return postService.allPostComment(postID);
     }
     
 }

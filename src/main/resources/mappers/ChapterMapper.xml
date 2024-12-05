@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.CourseMapper">
+
+    <select id="selectChaptersWithFilters" resultType="com.llm.llm_knowledge.dto.CourseChapterDTO">
+        SELECT
+        crscp.*,
+        crs.course_name
+        FROM
+        course_chapter AS crscp
+        INNER JOIN course AS crs ON crscp.course_id = crs.course_id
+        <where>
+            <if test="courseName != null and courseName != ''">
+                AND crs.course_name LIKE CONCAT('%', #{courseName}, '%')
+            </if>
+
+        </where>
+        ORDER BY crscp.created_time DESC
+    </select>
+
+</mapper>

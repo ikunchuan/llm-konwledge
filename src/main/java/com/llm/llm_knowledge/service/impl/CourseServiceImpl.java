@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
 import com.llm.llm_knowledge.entity.Course;
 
 import com.llm.llm_knowledge.mapper.CourseMapper;
 import com.llm.llm_knowledge.service.CourseService;
+import com.llm.llm_knowledge.vo.CourseChapterSearch;
 import com.llm.llm_knowledge.vo.CourseSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,8 +101,12 @@ public class CourseServiceImpl implements CourseService {
         queryWrapper.eq("course_name", courseName);
         return courseMapper.selectList(queryWrapper);
     }
-
-    ;
+    
+    @Override
+    public List<CourseChapterDTO> searchChapter(CourseChapterSearch courseChapterSearch) {
+        return courseMapper.selectChaptersWithFilters(courseChapterSearch);
+    }
+    
 
 
 
