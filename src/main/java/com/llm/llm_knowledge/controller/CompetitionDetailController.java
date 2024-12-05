@@ -29,7 +29,7 @@ import java.util.List;
             return competitionDetailService.addCompeDetail(competitionDetail);}
 
         //根据ID删除比赛
-        @DeleteMapping ("detail")
+        @DeleteMapping ("detail/{compeid}")
         public Integer deleteCompeDetail(@PathVariable Integer compeid) {return competitionDetailService.deleteCompeDetail(compeid);}
 
         //修改比赛详情信息
