@@ -1,8 +1,14 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CategoryDTO;
+import com.llm.llm_knowledge.dto.QuestionDTO;
 import com.llm.llm_knowledge.entity.Category;
+import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CategoryService;
+import com.llm.llm_knowledge.vo.CategorySearch;
+import com.llm.llm_knowledge.vo.QuestionSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,18 +20,6 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-
-//    // 获取所有父类类别
-//    @GetMapping("/parent")
-//    public List<Category> getParentCategories() {
-//        return categoryService.getParentCategories();  // 返回所有 parent_id 为 null 或 0 的类别
-//    }
-//    // 获取指定父类的子类
-//    @GetMapping("/subs/{parentId}")
-//    public List<Category> getSubCategoriesByParentId(@PathVariable Integer parentId) {
-//        return categoryService.getSubCategoriesByParentId(parentId);  // 返回指定 parentId 的所有子类
-//    }
-
 
     //插入
     @PostMapping("v1")
@@ -64,9 +58,30 @@ public class CategoryController {
         return categoryService.allIdAndName();
     }
 
+    //查全
+    @GetMapping("v1/all_a")
+    public List<Category> allCategory(){
+        return categoryService.allCategory();
+    }
+
     //分页查全
     @GetMapping("v1/page")
     public Page<Category> allPageCategory(Integer pageNum,Integer pageSize){
         return categoryService.allPageCategory(pageNum,pageSize);
     }
+
+    //模糊联表查询
+    @PostMapping("v1/search")
+    public PageInfo<CategoryDTO> search(
+            @RequestBody CategorySearch categorySearch,
+            @RequestParam(defaultValue = "1") Integer pageNum,
+            @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
+        return categoryService.search(categorySearch, pageNum, pageSize);
+    }
+
+    @GetMapping("v1/subcategories/{parentId}")
+    public List<Category> getSubCategoriesByParentId(@PathVariable Integer parentId) {
+        return categoryService.getSubCategoriesByParentId(parentId);
+    }
+
 }

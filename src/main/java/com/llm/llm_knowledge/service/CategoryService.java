@@ -1,7 +1,10 @@
 package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CategoryDTO;
 import com.llm.llm_knowledge.entity.Category;
+import com.llm.llm_knowledge.vo.CategorySearch;
 
 import java.util.List;
 
@@ -19,5 +22,9 @@ public interface CategoryService {
     Integer updateCategoryById(Category category);
     Category findCategoryById(Integer id);
     Page<Category> allPageCategory(Integer pageNum, Integer pageSize);
+    PageInfo<CategoryDTO> search(CategorySearch categorySearch, Integer pageNum, Integer pageSize);
     List<Category> allIdAndName();
+    List<Category> allCategory();
+
+    List<Category> getSubCategoriesByParentId(Integer parentId);
 }

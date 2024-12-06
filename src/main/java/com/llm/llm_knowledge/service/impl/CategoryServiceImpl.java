@@ -2,9 +2,13 @@ package com.llm.llm_knowledge.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.CategoryDTO;
 import com.llm.llm_knowledge.entity.Category;
 import com.llm.llm_knowledge.mapper.CategoryMapper;
 import com.llm.llm_knowledge.service.CategoryService;
+import com.llm.llm_knowledge.vo.CategorySearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,6 +83,13 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryPageVar;
     }
 
+    @Override
+    public PageInfo<CategoryDTO> search(CategorySearch categorySearch, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<CategoryDTO> categoryDTOS = categoryMapper.selectCategoryWithFilters(categorySearch);
+        return new PageInfo<>(categoryDTOS);
+    }
+
     //条件查询id和name
     @Override
     public List<Category> allIdAndName() {
@@ -86,4 +97,17 @@ public class CategoryServiceImpl implements CategoryService {
         queryWrapper.select("category_id","parent_id","category_name");
         return categoryMapper.selectList(queryWrapper);
     }
+
+    //查全
+    @Override
+    public List<Category> allCategory() {
+        return categoryMapper.selectList(null);
+    }
+
+    @Override
+    public List<Category> getSubCategoriesByParentId(Integer parentId) {
+        return categoryMapper.getSubCategoriesByParentId(parentId);
+    }
+
+
 }
