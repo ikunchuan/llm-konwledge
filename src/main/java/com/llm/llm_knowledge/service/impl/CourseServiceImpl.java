@@ -96,7 +96,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> searchparagraph(String courseName) {
+    public List<Course> searchParagraph(String courseName) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("course_name", courseName);
         return courseMapper.selectList(queryWrapper);

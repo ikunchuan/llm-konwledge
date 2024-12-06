@@ -75,7 +75,11 @@ public class CourseController {
         return courseService.searchChapter(courseChapterSearch);
     }
     
-    //
+    //根据课程的名字查询课程所有数据
+    @GetMapping("/searchParagraph/{courseName}")
+    public List<Course> searchParagraph(@PathVariable String courseName){
+        return courseService.searchParagraph(courseName);
+    }
 
 
 
