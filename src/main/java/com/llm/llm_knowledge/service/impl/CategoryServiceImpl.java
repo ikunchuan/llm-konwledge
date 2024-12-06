@@ -1,7 +1,6 @@
 package com.llm.llm_knowledge.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CategoryDTO;
@@ -20,16 +19,6 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
-
-//    @Override
-//    public List<Category> getParentCategories() {
-//        return categoryMapper.selectList(new QueryWrapper<Category>().eq("parent_id", 0));
-//    }
-//
-//    @Override
-//    public List<Category> getSubCategoriesByParentId(Integer parentId) {
-//        return categoryMapper.selectList(new QueryWrapper<Category>().eq("parent_id", parentId));
-//    }
 
     //添加
     @Override
@@ -74,20 +63,12 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.selectById(id);
     }
 
-    //分页查询
-    @Override
-    public Page<Category> allPageCategory(Integer pageNum, Integer pageSize) {
-        Page<Category> categoryPage = new Page<>(pageNum, pageSize);
-        Page<Category> categoryPageVar = categoryMapper.selectPage(categoryPage, null);
-        categoryPageVar.getRecords().forEach(System.out::println);
-        return categoryPageVar;
-    }
-
+    //父类别分页查询
     @Override
     public PageInfo<CategoryDTO> search(CategorySearch categorySearch, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<CategoryDTO> categoryDTOS = categoryMapper.selectCategoryWithFilters(categorySearch);
-        return new PageInfo<>(categoryDTOS);
+        List<CategoryDTO> category = categoryMapper.selectCategoryWithFilters(categorySearch);
+        return new PageInfo<>(category);
     }
 
     //条件查询id和name
@@ -98,16 +79,8 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.selectList(queryWrapper);
     }
 
-    //查全
     @Override
-    public List<Category> allCategory() {
-        return categoryMapper.selectList(null);
+    public List<Category> getSubCategoriesByParentId(Integer categoryId) {
+        return categoryMapper.getSubCategoriesByParentId(categoryId);
     }
-
-    @Override
-    public List<Category> getSubCategoriesByParentId(Integer parentId) {
-        return categoryMapper.getSubCategoriesByParentId(parentId);
-    }
-
-
 }

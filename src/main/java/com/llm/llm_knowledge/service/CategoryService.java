@@ -1,6 +1,5 @@
 package com.llm.llm_knowledge.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CategoryDTO;
 import com.llm.llm_knowledge.entity.Category;
@@ -21,10 +20,7 @@ public interface CategoryService {
     Integer deleteCategoryByIds(List<Integer> ids);
     Integer updateCategoryById(Category category);
     Category findCategoryById(Integer id);
-    Page<Category> allPageCategory(Integer pageNum, Integer pageSize);
     PageInfo<CategoryDTO> search(CategorySearch categorySearch, Integer pageNum, Integer pageSize);
     List<Category> allIdAndName();
-    List<Category> allCategory();
-
-    List<Category> getSubCategoriesByParentId(Integer parentId);
+    List<Category> getSubCategoriesByParentId(Integer categoryId);
 }
