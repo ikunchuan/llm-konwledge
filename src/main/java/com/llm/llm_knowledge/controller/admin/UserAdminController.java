@@ -61,7 +61,7 @@ public class UserAdminController {
         // 因为如果执行到这一步,一定是登录成功,就可以直接存储登录日志
         adminLoginLogService.logAdminLogin(userAdminInfoVO.getUserName(), userAdminInfoVO.getPassword());
         
-        return ResultEntity.success();
+        return ResultEntity.success(userAdminInfoVO.getUserName());
     }
 
     /**

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.dto.CourseChapterDTO;
+import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Question;
@@ -116,6 +117,11 @@ public class UserInfoServiceImpl implements UserInfoService {
         
         // 执行分页查询
         return userInfoMapper.selectPage(page, wrapper);
+    }
+    
+    @Override
+    public List<UserCityDTO> getCityUserCount() {
+        return userInfoMapper.getCityUserCount();
     }
     
     

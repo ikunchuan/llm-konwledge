@@ -2,6 +2,7 @@ package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Question;
@@ -43,6 +44,8 @@ public interface UserInfoService {
     List<Map<String, Object>> getCompletedCoursesCount();
     
     IPage<UserInfo> uiByCondi2(Integer userSex, String userName, Integer pageNum, Integer pageSize);
+    
+    List<UserCityDTO> getCityUserCount();
     
 }
 

@@ -1,6 +1,7 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.service.UserInfoService;
@@ -119,5 +120,12 @@ public class UserInfoController {
     @GetMapping("ui/countCourseAll")
     public List<Map<String, Object>> getCompletedCoursesCount(){
         return userInfoService.getCompletedCoursesCount();
+    }
+    
+    
+    //呈现每个城市里面的用户总数
+    @GetMapping("ui/cityuserall")
+    public List<UserCityDTO> getCityUserCount(){
+        return userInfoService.getCityUserCount();
     }
 }

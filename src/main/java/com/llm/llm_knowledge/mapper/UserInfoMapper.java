@@ -1,9 +1,12 @@
 package com.llm.llm_knowledge.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -29,4 +32,11 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
             "WHERE cp.is_completed = 1 " +
             "GROUP BY u.user_name")
     List<Map<String, Object>> countCompletedCoursesByUser();
+    
+    @Select("SELECT user_local, COUNT(*) as `user_num` FROM user_info GROUP BY user_local")
+    @Results({
+            @Result(property = "userLocal", column = "user_local"),
+            @Result(property = "userNum", column = "user_num")
+    })
+    List<UserCityDTO> getCityUserCount();
 }
