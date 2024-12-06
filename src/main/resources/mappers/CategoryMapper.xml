@@ -2,26 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.llm.llm_knowledge.mapper.CategoryMapper">
-    <!-- 查询带过滤条件的二级类别 -->
-    <select id="selectCategoryWithFilters" resultType="com.llm.llm_knowledge.dto.CategoryDTO">
+
+    <!-- 递归查询所有子类别 -->
+    <select id="getSubCategoriesByParentId" resultType="com.llm.llm_knowledge.dto.CategoryDTO">
+        WITH RECURSIVE CategoryTree AS (
+            SELECT
+                category_id,
+                parent_id,
+                category_name,
+                description,
+                sort_order,
+                created_time,
+                updated_time
+            FROM
+                category
+            WHERE
+                category_id = #{categoryId}
+
+            UNION ALL
+
+            SELECT
+                c.category_id,
+                c.parent_id,
+                c.category_name,
+                c.description,
+                c.sort_order,
+                c.created_time,
+                c.updated_time
+            FROM
+                category c
+                    INNER JOIN
+                CategoryTree ct ON c.parent_id = ct.category_id
+        )
         SELECT
-        cg1.*,  <!-- 获取子类别信息 -->
-        cg2.category_name AS parent_category_name  <!-- 获取父类别名称 -->
-        FROM category AS cg1
-        LEFT JOIN category AS cg2 ON cg1.parent_id = cg2.category_id
-        <where>
-            <!-- 查询条件 -->
-            <if test="categoryName != null and categoryName != ''">
-                AND cg1.category_name LIKE CONCAT('%', #{categoryName}, '%')
-            </if>
-            <if test="categoryName != null and categoryName != ''">
-                AND cg1.category_name LIKE CONCAT('%', #{description}, '%')
-            </if>
-<!--            <if test="parentCategoryName != null and parentCategoryName != ''">-->
-<!--                AND cg2.category_name LIKE CONCAT('%', #{parentCategoryName}, '%')-->
-<!--            </if>-->
-        </where>
-        ORDER BY cg1.updated_time DESC
+            *
+        FROM
+            CategoryTree;
     </select>
 
 </mapper>

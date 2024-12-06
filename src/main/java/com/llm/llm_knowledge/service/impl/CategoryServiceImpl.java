@@ -106,7 +106,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getSubCategoriesByParentId(Integer parentId) {
-        return List.of();
+        return categoryMapper.getSubCategoriesByParentId(parentId);
     }
 
 

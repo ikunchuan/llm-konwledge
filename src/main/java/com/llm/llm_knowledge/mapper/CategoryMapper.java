@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface CategoryMapper extends BaseMapper<Category> {
     List<CategoryDTO> selectCategoryWithFilters(CategorySearch categorySearch);
+
+    List<Category> getSubCategoriesByParentId(Integer parentId);
 }

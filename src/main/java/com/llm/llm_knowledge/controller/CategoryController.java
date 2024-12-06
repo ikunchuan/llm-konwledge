@@ -58,11 +58,11 @@ public class CategoryController {
         return categoryService.allIdAndName();
     }
 
+    //查全
     @GetMapping("v1/all_a")
     public List<Category> allCategory(){
         return categoryService.allCategory();
     }
-
 
     //分页查全
     @GetMapping("v1/page")
@@ -78,4 +78,10 @@ public class CategoryController {
             @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
         return categoryService.search(categorySearch, pageNum, pageSize);
     }
+
+    @GetMapping("v1/subcategories/{parentId}")
+    public List<Category> getSubCategoriesByParentId(@PathVariable Integer parentId) {
+        return categoryService.getSubCategoriesByParentId(parentId);
+    }
+
 }
