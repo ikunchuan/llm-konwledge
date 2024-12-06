@@ -3,10 +3,7 @@ package com.llm.llm_knowledge.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.llm.llm_knowledge.dto.CourseChapterDTO;
-import com.llm.llm_knowledge.dto.UserAgeDTO;
-import com.llm.llm_knowledge.dto.UserCityDTO;
-import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
+import com.llm.llm_knowledge.dto.*;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserInfo;
@@ -128,6 +125,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public List<UserAgeDTO> getAgeUserCount() {
         return userInfoMapper.getAgeUserCount();
+    }
+    
+    @Override
+    public List<DateUserCourseCountDTO> selectDateCourseAll() {
+        return userInfoMapper.selectDateCourseAll();
     }
     
     

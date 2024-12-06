@@ -18,6 +18,13 @@ public class UserAdminInfo {
     private String userName;
 
     private String password;
+    
+    private Integer userAdminAge;
+    private String userAdminPhone;
+    private String userAdminEmail;
+    private Date userAdminBirthday;
+    private Integer userAdminSex;
+    private String userAdminLocal;
 
     //字段添加填充内容
     @TableField(fill= FieldFill.INSERT)

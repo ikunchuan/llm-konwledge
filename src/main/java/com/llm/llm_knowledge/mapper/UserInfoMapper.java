@@ -1,6 +1,7 @@
 package com.llm.llm_knowledge.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.llm.llm_knowledge.dto.DateUserCourseCountDTO;
 import com.llm.llm_knowledge.dto.UserAgeDTO;
 import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
@@ -47,4 +48,6 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
             @Result(property = "ageCount", column = "age_count")
     })
     List<UserAgeDTO> getAgeUserCount();
+    
+    List<DateUserCourseCountDTO> selectDateCourseAll();
 }

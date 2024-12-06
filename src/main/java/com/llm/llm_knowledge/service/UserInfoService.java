@@ -2,6 +2,7 @@ package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.llm.llm_knowledge.dto.DateUserCourseCountDTO;
 import com.llm.llm_knowledge.dto.UserAgeDTO;
 import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
@@ -49,5 +50,7 @@ public interface UserInfoService {
     List<UserCityDTO> getCityUserCount();
     
     List<UserAgeDTO> getAgeUserCount();
+    
+    List<DateUserCourseCountDTO> selectDateCourseAll();
 }
 

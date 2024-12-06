@@ -1,6 +1,7 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.llm.llm_knowledge.dto.DateUserCourseCountDTO;
 import com.llm.llm_knowledge.dto.UserAgeDTO;
 import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
@@ -134,5 +135,11 @@ public class UserInfoController {
     @GetMapping("ui/userageall")
     public List<UserAgeDTO> getAgeUserCount(){
         return userInfoService.getAgeUserCount();
+    }
+    
+    //selectDateCourseAll查看每天的每个课程有多少人看了
+    @GetMapping("ui/dateusercount")
+    public List<DateUserCourseCountDTO> selectDateCourseAll(){
+        return userInfoService.selectDateCourseAll();
     }
 }
