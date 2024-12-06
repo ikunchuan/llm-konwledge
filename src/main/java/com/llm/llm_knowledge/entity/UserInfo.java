@@ -20,8 +20,9 @@ public class UserInfo {
     private String userPhone;
     private String userEmail;
     private String userProfilePicture;
-
+    private String userLocal;
     private Integer userUnderview;//用户id
+    private Integer userAge;//用户id
     //字段添加填充内容
     @TableField(fill= FieldFill.INSERT)
     private Date createdTime;
