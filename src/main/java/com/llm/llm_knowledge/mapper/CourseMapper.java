@@ -14,6 +14,7 @@ public interface CourseMapper extends BaseMapper<Course> {
     List<CourseDTO> selectCoursesWithFilters(CourseSearch courseSearch);
     
     List<CourseChapterDTO> selectChaptersWithFilters(CourseChapterSearch courseChapterSearch);
-    
-    
+
+   //查询所有章节信息（我还不会写，没搞完）
+    List<CourseChapterDTO> selectAllChapters();
 }

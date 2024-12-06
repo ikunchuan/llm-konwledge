@@ -34,4 +34,8 @@ public interface CourseService {
     List<Course> searchParagraph(String courseName);
     
     List<CourseChapterDTO> searchChapter(CourseChapterSearch courseChapterSearch);
+
+    // CourseService.java
+    List<CourseChapterDTO> getAllChapters();
+
 }

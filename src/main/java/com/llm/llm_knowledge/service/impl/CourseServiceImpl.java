@@ -106,8 +106,11 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseChapterDTO> searchChapter(CourseChapterSearch courseChapterSearch) {
         return courseMapper.selectChaptersWithFilters(courseChapterSearch);
     }
-    
 
+    @Override
+    public List<CourseChapterDTO> getAllChapters() {
+        return courseMapper.selectAllChapters(); // 调用 Mapper 层方法
+    }
 
 
 }
