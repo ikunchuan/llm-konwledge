@@ -14,4 +14,18 @@
         </where>
     </select>
 
+    <select id="selectDateCourseAll" resultType="com.llm.llm_knowledge.dto.DateUserCourseCountDTO">
+        SELECT
+            DATE(curpg.created_time) AS click_date,
+            cur.course_name,
+        COUNT(DISTINCT curpg.user_id) AS course_num
+        FROM course_progress AS curpg
+        INNER JOIN course AS cur ON curpg.course_id = cur.course_id
+        GROUP BY
+            DATE(curpg.created_time), cur.course_name
+        ORDER BY
+            click_date, cur.course_name;
+
+    </select>
+
 </mapper>
