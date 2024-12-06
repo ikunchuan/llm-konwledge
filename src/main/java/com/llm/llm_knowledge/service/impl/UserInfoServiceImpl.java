@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.llm.llm_knowledge.dto.CourseChapterDTO;
+import com.llm.llm_knowledge.dto.UserAgeDTO;
 import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.Community;
@@ -122,6 +123,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public List<UserCityDTO> getCityUserCount() {
         return userInfoMapper.getCityUserCount();
+    }
+    
+    @Override
+    public List<UserAgeDTO> getAgeUserCount() {
+        return userInfoMapper.getAgeUserCount();
     }
     
     
