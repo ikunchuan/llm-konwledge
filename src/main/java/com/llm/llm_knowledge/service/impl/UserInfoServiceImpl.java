@@ -75,7 +75,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     public IPage<UserInfo> uiByCondi(Integer userSex, String userName, Integer pageNum, Integer pageSize) {
         // 创建查询条件
         QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
-
+        wrapper.eq("user_underview",1);
         // 根据 userId 和 userName 条件进行查询
         if (userSex != null) {
             wrapper.eq("user_id", userSex);  // 假设 userId 是 UserInfo 表中的字段
@@ -103,6 +103,19 @@ public class UserInfoServiceImpl implements UserInfoService {
         List<Map<String, Object>> result = userInfoMapper.countCompletedCoursesByUser();
         return result;
         
+    }
+    
+    @Override
+    public IPage<UserInfo> uiByCondi2(Integer userSex, String userName, Integer pageNum, Integer pageSize) {
+        // 创建查询条件
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_underview",0);
+        
+        // 创建分页对象
+        Page<UserInfo> page = new Page<>(pageNum, pageSize);
+        
+        // 执行分页查询
+        return userInfoMapper.selectPage(page, wrapper);
     }
     
     

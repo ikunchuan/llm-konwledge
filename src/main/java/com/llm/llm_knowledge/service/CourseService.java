@@ -30,6 +30,8 @@ public interface CourseService {
     Page<Course> findAllPageCourse(Integer pageNum, Integer pageSize);
     
     PageInfo<CourseDTO> search(CourseSearch courseSearch, Integer pageNum, Integer pageSize);
+
+    List<Course> searchparagraph(String courseName);
     
     List<CourseChapterDTO> searchChapter(CourseChapterSearch courseChapterSearch);
 }

@@ -10,9 +10,11 @@ import com.llm.llm_knowledge.service.CompetitionService;
 import com.llm.llm_knowledge.service.UserCommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class UserCommunityServiceImpl implements UserCommunityService {
     

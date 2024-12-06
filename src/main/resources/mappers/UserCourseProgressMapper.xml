@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.UserInfoMapper">
+
+    <select id="selectProgressWithFilters" resultType="com.llm.llm_knowledge.dto.UserCourseProgressDTO">
+        SELECT
+        curpg.*,
+        ui.user_name
+        FROM course_progress AS curpg
+        INNER JOIN user_info AS ui ON curpg.user_id = ui.user_id
+        <where>
+
+        </where>
+    </select>
+
+</mapper>

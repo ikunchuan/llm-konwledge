@@ -15,4 +15,5 @@ public interface CourseMapper extends BaseMapper<Course> {
     
     List<CourseChapterDTO> selectChaptersWithFilters(CourseChapterSearch courseChapterSearch);
     
+    
 }

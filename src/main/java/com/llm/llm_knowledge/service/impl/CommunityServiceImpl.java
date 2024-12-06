@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CommunityDTO;
+import com.llm.llm_knowledge.dto.UserPostCountDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.mapper.CommunityMapper;
 import com.llm.llm_knowledge.service.CommunityService;
@@ -74,6 +75,11 @@ public class CommunityServiceImpl implements CommunityService {
         PageHelper.startPage(pageNum,pageSize);
         List<CommunityDTO> communityDTOS = communityMapper.selectCommunitiesWithFilters2(communitySearch);
         return new PageInfo<>(communityDTOS);
+    }
+    
+    @Override
+    public List<UserPostCountDTO> getCommunityPostUser(Integer communityId) {
+        return communityMapper.selectCommunityUsersWithPostCount(communityId);
     }
     
     

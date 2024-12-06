@@ -1,14 +1,19 @@
 package com.llm.llm_knowledge.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CommunityDTO;
+import com.llm.llm_knowledge.dto.UserPostCountDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CommunityService;
 import com.llm.llm_knowledge.vo.CommunitySearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @CrossOrigin
 @RestController
@@ -94,6 +99,14 @@ public class CommunityController {
     @PutMapping("cmn")
     public Integer updateCmn(@RequestBody Community community) {
         return communityService.updateCmn(community);
+    }
+    
+    
+    /**这个功能是点击社区里面的所有用户,可以看到改社区的所有用户,以及用户名和在这个社区发布过的帖子的数量
+     * @return List<UserPostCountDTO> 返回用户名和发帖的数量,例如"userName": "myc","postCount": 2 */
+    @GetMapping("cmnpostuser/{communityId}")
+    public List<UserPostCountDTO> getCommunityPostUser(@PathVariable Integer communityId){
+        return communityService.getCommunityPostUser(communityId);
     }
     
     

@@ -41,5 +41,8 @@ public interface UserInfoService {
 
     //获取用户观看视频总数
     List<Map<String, Object>> getCompletedCoursesCount();
+    
+    IPage<UserInfo> uiByCondi2(Integer userSex, String userName, Integer pageNum, Integer pageSize);
+    
 }
 

@@ -3,9 +3,11 @@ package com.llm.llm_knowledge;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@MapperScan("com.llm.llm_knowledge.mapper")
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.llm.llm_knowledge.repository")
+@MapperScan(basePackages = "com.llm.llm_knowledge.mapper")
 public class LlmKnowledgeApplication {
 
 	public static void main(String[] args) {

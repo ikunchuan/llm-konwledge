@@ -34,4 +34,24 @@
         ORDER BY post.created_time DESC
     </select>
 
+    <select id="selectPostCommentsWithFilters" resultType="com.llm.llm_knowledge.dto.PostCommentDTO">
+        SELECT
+        post.post_id,
+        post.post_title,
+        postcm.comment_content,
+        `user`.user_name,
+        post.created_time,
+        post.updated_time
+        FROM
+        post
+        INNER JOIN post_comment AS postcm ON post.post_id = postcm.post_id
+        INNER JOIN user_info AS `user` ON postcm.user_id = `user`.user_id
+        <where>
+            <if test="postId != null">
+                post.post_id = #{postId}
+            </if>
+        </where>
+        ORDER BY post.created_time DESC
+    </select>
+
 </mapper>

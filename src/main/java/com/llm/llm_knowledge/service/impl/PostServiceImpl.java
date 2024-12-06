@@ -5,17 +5,21 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.dto.PostCommentDTO;
 import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
+import com.llm.llm_knowledge.entity.PostComment;
 import com.llm.llm_knowledge.mapper.PostMapper;
 import com.llm.llm_knowledge.service.PostService;
 import com.llm.llm_knowledge.vo.PostSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class PostServiceImpl implements PostService {
     
@@ -60,6 +64,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post postById(Integer postId) {
         return postMapper.selectById(postId);
+    }
+    
+    @Override
+    public List<PostCommentDTO> allPostComment(Integer postID) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("post_id",postID);
+        return postMapper.selectPostCommentsWithFilters(postID);
     }
     
     

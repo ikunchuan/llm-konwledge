@@ -6,16 +6,16 @@
     <!--    查询已经审核的-->
     <select id="selectCommunitiesWithFilters" resultType="com.llm.llm_knowledge.dto.CommunityDTO">
         SELECT
-            cmn.community_id,
-            cmn.community_name,
-            cmn.community_description,
-            `user`.user_name,
-            cg.category_name,
-            cmn.created_time,
-            cmn.updated_time
+        cmn.community_id,
+        cmn.community_name,
+        cmn.community_description,
+        `user`.user_name,
+        cg.category_name,
+        cmn.created_time,
+        cmn.updated_time
         FROM community AS cmn
-            INNER JOIN category AS cg ON cmn.category_id = cg.category_id
-            INNER JOIN user_info AS `user` ON cmn.created_by = `user`.user_id
+        INNER JOIN category AS cg ON cmn.category_id = cg.category_id
+        INNER JOIN user_info AS `user` ON cmn.created_by = `user`.user_id
         <where>
             <if test="categoryName != null and categoryName != ''">
                 AND cg.category_name LIKE CONCAT('%', #{categoryName}, '%')
@@ -65,5 +65,27 @@
         </where>
         ORDER BY cmn.created_time DESC
     </select>
+
+
+    <select id="selectCommunityUsersWithPostCount" resultType="com.llm.llm_knowledge.dto.UserPostCountDTO">
+        SELECT
+        ui.user_id,
+        ui.user_name AS username,
+        COUNT(p.post_id) AS post_count
+        FROM
+        community_join AS cj
+        JOIN
+        user_info AS ui ON cj.user_id = ui.user_id
+        LEFT JOIN
+        post AS p ON cj.user_id = p.user_id AND cj.community_id = p.community_id
+        <where>
+            cj.community_id = #{communityId}
+        </where>
+        GROUP BY
+        ui.user_id
+        ORDER BY
+        ui.user_name
+    </select>
+
 
 </mapper>
