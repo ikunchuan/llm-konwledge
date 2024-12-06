@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.CategoryMapper">
+    <!-- 查询带过滤条件的二级类别 -->
+    <select id="selectCategoryWithFilters" resultType="com.llm.llm_knowledge.dto.CategoryDTO">
+        SELECT
+        cg1.*,  <!-- 获取子类别信息 -->
+        cg2.category_name AS parent_category_name  <!-- 获取父类别名称 -->
+        FROM category AS cg1
+        LEFT JOIN category AS cg2 ON cg1.parent_id = cg2.category_id
+        <where>
+            <!-- 查询条件 -->
+            <if test="categoryName != null and categoryName != ''">
+                AND cg1.category_name LIKE CONCAT('%', #{categoryName}, '%')
+            </if>
+            <if test="categoryName != null and categoryName != ''">
+                AND cg1.category_name LIKE CONCAT('%', #{description}, '%')
+            </if>
+<!--            <if test="parentCategoryName != null and parentCategoryName != ''">-->
+<!--                AND cg2.category_name LIKE CONCAT('%', #{parentCategoryName}, '%')-->
+<!--            </if>-->
+        </where>
+        ORDER BY cg1.updated_time DESC
+    </select>
+
+</mapper>

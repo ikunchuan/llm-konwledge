@@ -23,6 +23,7 @@
                 AND qst.question_level LIKE CONCAT( '%', #{questionLevel}, '%' )
             </if>
         </where>
+        ORDER BY qst.updated_time DESC
     </select>
 
 </mapper>

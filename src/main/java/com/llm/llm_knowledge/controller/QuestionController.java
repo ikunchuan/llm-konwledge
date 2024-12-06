@@ -2,19 +2,15 @@ package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
-import com.llm.llm_knowledge.dto.CommunityDTO;
 import com.llm.llm_knowledge.dto.QuestionDTO;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.QuestionService;
-import com.llm.llm_knowledge.vo.CommunitySearch;
 import com.llm.llm_knowledge.vo.QuestionSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("http://localhost:5173")
@@ -68,4 +64,5 @@ public class QuestionController {
             @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
         return questionService.search(questionSearch, pageNum, pageSize);
     }
+
 }
