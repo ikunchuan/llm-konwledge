@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface CompetitionMapper  extends BaseMapper<Competition> {
 
+
     List<CompetitionDTO> selectCompetitionWithFilters(CompetitionSearch competitionSearch);
+
 
 }

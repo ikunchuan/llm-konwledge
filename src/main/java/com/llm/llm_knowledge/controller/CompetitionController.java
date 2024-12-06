@@ -46,7 +46,6 @@ public class CompetitionController {
     public Page<Competition> compePage( Integer pageNum, Integer pageSize) {
         return competitionService.compePage(pageNum, pageSize);
     }
-
     //多表联查并分页
     @PostMapping("search")
     public PageInfo<CompetitionDTO> search(@RequestBody CompetitionSearch competitionSearch,
@@ -54,5 +53,7 @@ public class CompetitionController {
                                            @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
         return competitionService.search(competitionSearch,pageNum,pageSize);
     }
+
+
 
 }

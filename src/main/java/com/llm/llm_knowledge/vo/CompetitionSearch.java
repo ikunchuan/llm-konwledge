@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 public class CompetitionSearch {
 
     private Integer categoryId;
-    private Integer levelId;
+    private String categoryName;
     private String competitionName;
-    private Integer isActive;
+    private String isActive;
 
 }

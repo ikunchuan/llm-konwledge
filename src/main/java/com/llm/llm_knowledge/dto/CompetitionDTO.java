@@ -15,11 +15,13 @@ import java.util.Date;
 public class CompetitionDTO {
     private Integer competitionId;
     private String competitionName;
-    private String competitionImgUrl;
-    private String competitionStatus;
-    private Integer isActive;
-    private Date createdTime;
-    private Date updatedTime;
     private String categoryName;
     private String levelName;
+    private String competitionImgUrl;
+    private String competitionStatus;
+    private String isActive;
+    private Date createdTime;
+    private Date updatedTime;
+
+
 }

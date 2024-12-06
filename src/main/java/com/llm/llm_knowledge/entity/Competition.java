@@ -19,10 +19,10 @@ public class Competition {
     private Integer competitionId;
     private String competitionName;
     private Integer categoryId;
-    private Integer levelId;
+    private String levelName;
     private String competitionImgUrl;
     private String competitionStatus;
-    private Integer isActive;
+    private String isActive;
     //自动填充创建时间
     @TableField(fill = FieldFill.INSERT)
     private Date createdTime;
