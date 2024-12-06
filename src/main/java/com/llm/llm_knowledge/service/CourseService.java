@@ -31,7 +31,7 @@ public interface CourseService {
     
     PageInfo<CourseDTO> search(CourseSearch courseSearch, Integer pageNum, Integer pageSize);
 
-    List<Course> searchparagraph(String courseName);
+    List<Course> searchParagraph(String courseName);
     
     List<CourseChapterDTO> searchChapter(CourseChapterSearch courseChapterSearch);
 }
