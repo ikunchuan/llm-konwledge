@@ -6,8 +6,8 @@
         SELECT
         cg.*
         FROM category AS cg
-        WHERE parent_id IS NULL
         <where>
+            parent_id IS NULL
             <if test="categoryName != null and categoryName != ''">
                 AND cg.category_name LIKE CONCAT('%', #{categoryName}, '%')
             </if>
