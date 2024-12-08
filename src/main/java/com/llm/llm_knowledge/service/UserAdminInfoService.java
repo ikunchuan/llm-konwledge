@@ -1,7 +1,10 @@
 package com.llm.llm_knowledge.service;
 
+import com.github.pagehelper.PageInfo;
+import com.llm.llm_knowledge.entity.AdminLoginLog;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.exception.UserException;
+import com.llm.llm_knowledge.vo.LoginLogSearch;
 
 public interface UserAdminInfoService {
 
@@ -21,5 +24,6 @@ public interface UserAdminInfoService {
      */
     Integer register(UserAdminInfo userAdminInfo) throws UserException;
     
-
+    
+    PageInfo<AdminLoginLog> getLoginLog(LoginLogSearch loginLogSearch, Integer pageNum, Integer pageSize);
 }

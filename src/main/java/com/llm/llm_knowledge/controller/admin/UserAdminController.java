@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.entity.AdminLoginLog;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
@@ -11,6 +12,7 @@ import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.pojo.ResultEntity;
 import com.llm.llm_knowledge.service.AdminLoginLogService;
 import com.llm.llm_knowledge.service.UserAdminInfoService;
+import com.llm.llm_knowledge.vo.LoginLogSearch;
 import com.llm.llm_knowledge.vo.UserAdminInfoVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/user")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UserAdminController {
-
+    
     @Autowired
     private UserAdminInfoService userAdminInfoService;
     
@@ -32,6 +34,7 @@ public class UserAdminController {
     
     /**
      * 用户登录
+     *
      * @param userAdminInfoVO
      * @return
      * @throws Exception
@@ -50,54 +53,38 @@ public class UserAdminController {
         if (StringUtils.isBlank(userAdminInfoVO.getPassword())) {
             throw new UserException("密码不能为空");
         }
-
+        
         UserAdminInfo userAdminInfo = new UserAdminInfo();
         // 将userAdminInfoVO的对象属性复制到userAdminInfo中
         BeanUtils.copyProperties(userAdminInfoVO, userAdminInfo);
         UserAdminInfo userAdmin = userAdminInfoService.login(userAdminInfo);
         Integer userId = userAdmin.getUserId();
-
-
-
+        
+        
         // 执行登录
         // 设置用户的登录时间
         StpUtil.login(userId, new SaLoginModel().setTimeout(60 * 60 * 24));
-
-
-
-
+        
+        
         // 记录日志,调用logService里面的logAdminLogin方法,传入的参数从前面登录的地方过来,
         // 因为如果执行到这一步,一定是登录成功,就可以直接存储登录日志
-        adminLoginLogService.logAdminLogin(userAdminInfoVO.getLoginboard(),userAdminInfoVO.getUserName(), userAdminInfoVO.getPassword());
+        adminLoginLogService.logAdminLogin(userAdminInfoVO.getLoginboard(), userAdminInfoVO.getUserName(), userAdminInfoVO.getPassword());
         
         return ResultEntity.success(userAdminInfoVO.getUserName());
     }
-
-
-
-
-//    @GetMapping("/login/logs")
-//    public ResultEntity getLoginLogs(@RequestParam(defaultValue = "1") Integer pageNum,
-//                                     @RequestParam(defaultValue = "5") Integer pageSize) {
-//        try {
-//            IPage<AdminLoginLog> page = adminLoginLogService.findPage(pageNum, pageSize);
-//            return ResultEntity.success(page);
-//        } catch (Exception e) {
-//            return ResultEntity.fail("获取登录日志失败");
-//        }
-//    }
-
-//    //分页查全
-//    @GetMapping("/login/logs")
-//    public IPage<AdminLoginLog> getLoginLogs(Integer pageNum, Integer pageSize) {
-//        return AdminLoginLogService.findPage(pageNum, pageSize);
-//    }
-
-
-
-
+    
+    
+    @PostMapping("/login/logs")
+    public PageInfo<AdminLoginLog> getLoginLog(@RequestBody LoginLogSearch loginLogSearch,
+                                               @RequestParam(defaultValue = "1") Integer pageNum ,
+                                               @RequestParam(defaultValue = "5") Integer pageSize ) {
+        return userAdminInfoService.getLoginLog(loginLogSearch,pageNum,pageSize);
+    }
+    
+    
     /**
      * 用户注销（退出登录）
+     *
      * @return
      */
     @PostMapping("/logout")
@@ -106,22 +93,23 @@ public class UserAdminController {
         StpUtil.logout();
         return ResultEntity.success("注销成功");
     }
-
+    
     /**
      * 用户注册
+     *
      * @param userAdminInfoVO
      * @return
      * @throws UserException
      */
     @PostMapping("/register")
     public ResultEntity register(@RequestBody UserAdminInfoVO userAdminInfoVO) throws UserException {
-        if(null == userAdminInfoVO){
+        if (null == userAdminInfoVO) {
             throw new UserException("请输入用户名和密码");
         }
-        if(null == userAdminInfoVO.getUserName()){
+        if (null == userAdminInfoVO.getUserName()) {
             throw new UserException("请输入用户名");
         }
-        if(null == userAdminInfoVO.getPassword()){
+        if (null == userAdminInfoVO.getPassword()) {
             throw new UserException("请输入密码");
         }
         UserAdminInfo userAdminInfo = new UserAdminInfo();

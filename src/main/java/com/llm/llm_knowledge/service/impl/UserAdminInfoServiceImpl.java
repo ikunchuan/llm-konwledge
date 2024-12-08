@@ -2,15 +2,20 @@ package com.llm.llm_knowledge.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.entity.AdminLoginLog;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.exception.UserException;
+import com.llm.llm_knowledge.mapper.AdminLoginLogMapper;
 import com.llm.llm_knowledge.mapper.UserAdminInfoMapper;
 import com.llm.llm_knowledge.service.UserAdminInfoService;
+import com.llm.llm_knowledge.vo.LoginLogSearch;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +27,9 @@ public class UserAdminInfoServiceImpl implements UserAdminInfoService {
 
     @Autowired
     private UserAdminInfoMapper userAdminInfoMapper;
+    
+    @Autowired
+    private AdminLoginLogMapper adminLoginLogMapper;
 
     @Override
     public UserAdminInfo login(UserAdminInfo userAdminInfo) throws UserException {
@@ -56,6 +64,14 @@ public class UserAdminInfoServiceImpl implements UserAdminInfoService {
         return userAdminInfoMapper.insert(userAdminInfo);
     }
     
-
+    
+    //查看登录日志
+    @Override
+    public PageInfo<AdminLoginLog> getLoginLog(@RequestBody LoginLogSearch loginLogSearch, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<AdminLoginLog> adminInfos = adminLoginLogMapper.selectList(null);
+        return new PageInfo<>(adminInfos);
+    }
+    
     
 }
