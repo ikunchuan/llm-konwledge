@@ -22,6 +22,7 @@ public class AdminLoginLog {
     private String userName;
     
     private String password;
+    private Integer loginboard;
     
     @TableField(fill= FieldFill.INSERT)
     private LocalDateTime loginTime;
