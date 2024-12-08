@@ -25,7 +25,40 @@
             DATE(curpg.created_time), cur.course_name
         ORDER BY
             click_date, cur.course_name;
+    </select>
 
+    <!--正常-->
+    <select id="selectUserInfoAll" resultType="com.llm.llm_knowledge.entity.UserInfo">
+        SELECT
+        *
+        FROM user_info AS ui
+
+        <where>
+            <if test="userSex != null and userSex != ''">
+                AND ui.user_sex = #{userSex}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND ui.user_name LIKE CONCAT('%',#{userName},'%')
+            </if>
+            AND ui.user_underview = 1
+        </where>
+    </select>
+
+    <!--冻结-->
+    <select id="selectUserInfoAll2" resultType="com.llm.llm_knowledge.entity.UserInfo">
+        SELECT
+        *
+        FROM user_info AS ui
+
+        <where>
+            <if test="userSex != null and userSex != ''">
+                AND ui.user_sex = #{userSex}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND ui.user_name LIKE CONCAT('%',#{userName},'%')
+            </if>
+            AND ui.user_underview = 0
+        </where>
     </select>
 
 </mapper>

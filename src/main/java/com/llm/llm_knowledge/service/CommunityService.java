@@ -26,10 +26,13 @@ public interface CommunityService {
     //更新社区
     public Integer updateCmn(Community community);
     
+    
     //模糊查询社区
     PageInfo<CommunityDTO> search(CommunitySearch communitySearch, Integer  pageNum, Integer pageSize);
     
     PageInfo<CommunityDTO> search2(CommunitySearch communitySearch, Integer pageNum, Integer pageSize);
+    
+    
     
     List<UserPostCountDTO> getCommunityPostUser(Integer communityId);
 }

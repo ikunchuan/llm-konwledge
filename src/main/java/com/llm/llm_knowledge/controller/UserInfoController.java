@@ -1,12 +1,14 @@
 package com.llm.llm_knowledge.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.DateUserCourseCountDTO;
 import com.llm.llm_knowledge.dto.UserAgeDTO;
 import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.service.UserInfoService;
+import com.llm.llm_knowledge.vo.UserInfoSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,26 +60,30 @@ public class UserInfoController {
 
 
     /**
-     * 根据用户性别和用户名字进行模糊查询
+     * 根据用户性别和用户名字进行模糊查询  这里显示的是没有被冻结的用户
      *
-     * @return List
+     * @return PageInfo
      */
-    @GetMapping("ui/search")
-    public IPage<UserInfo> searchUsers(
-            @RequestParam(required = false) Integer userSex,
-            @RequestParam(required = false) String userName,
+    @PostMapping("ui/search")
+    public PageInfo<UserInfo> searchUsers(
+            @RequestBody UserInfoSearch userInfoSearch,
             @RequestParam(value = "pageNum") Integer pageNum,
             @RequestParam(value = "pageSize") Integer pageSize) {
-        return userInfoService.uiByCondi(userSex, userName, pageNum, pageSize);
+        return userInfoService.uiByCondi(userInfoSearch, pageNum, pageSize);
     }
     
-    @GetMapping("ui/search2")
-    public IPage<UserInfo> searchUsers2(
-            @RequestParam(required = false) Integer userSex,
-            @RequestParam(required = false) String userName,
+    
+    /**
+     * 根据用户性别和用户名字进行模糊查询  这里显示的是被冻结的用户
+     *
+     * @return PageInfo
+     */
+    @PostMapping("ui/search2")
+    public PageInfo<UserInfo> searchUsers2(
+            @RequestBody UserInfoSearch userInfoSearch,
             @RequestParam(value = "pageNum") Integer pageNum,
             @RequestParam(value = "pageSize") Integer pageSize) {
-        return userInfoService.uiByCondi2(userSex, userName, pageNum, pageSize);
+        return userInfoService.uiByCondi2(userInfoSearch, pageNum, pageSize);
     }
 
     /**

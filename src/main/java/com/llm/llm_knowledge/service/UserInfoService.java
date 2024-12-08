@@ -2,6 +2,7 @@ package com.llm.llm_knowledge.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.DateUserCourseCountDTO;
 import com.llm.llm_knowledge.dto.UserAgeDTO;
 import com.llm.llm_knowledge.dto.UserCityDTO;
@@ -9,6 +10,7 @@ import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserInfo;
+import com.llm.llm_knowledge.vo.UserInfoSearch;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -36,8 +38,11 @@ public interface UserInfoService {
     //更新社区
     public Integer updateUserInfo(UserInfo userInfo);
 
-    //模糊查询社区
-    IPage<UserInfo> uiByCondi(Integer userSex,String userName,Integer pageNum,Integer pageSize);
+    //模糊查询用户 这里是未被冻结的用户
+    PageInfo<UserInfo> uiByCondi(UserInfoSearch userInfoSearch, Integer pageNum, Integer pageSize);
+    
+    //模糊查询用户 这里是被冻结的用户
+    PageInfo<UserInfo> uiByCondi2(UserInfoSearch userInfoSearch, Integer pageNum, Integer pageSize);
     
     
     List<UserCourseProgressDTO> progressDTO();
@@ -45,7 +50,6 @@ public interface UserInfoService {
     //获取用户观看视频总数
     List<Map<String, Object>> getCompletedCoursesCount();
     
-    IPage<UserInfo> uiByCondi2(Integer userSex, String userName, Integer pageNum, Integer pageSize);
     
     List<UserCityDTO> getCityUserCount();
     

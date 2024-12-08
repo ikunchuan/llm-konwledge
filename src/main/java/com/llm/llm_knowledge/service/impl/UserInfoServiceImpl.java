@@ -3,16 +3,20 @@ package com.llm.llm_knowledge.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.*;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.mapper.UserInfoMapper;
 import com.llm.llm_knowledge.service.UserInfoService;
+import com.llm.llm_knowledge.vo.UserInfoSearch;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,26 +73,32 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
 
+    
+    
+    
+    
     // 根据 userId 和 userName 分页查询用户
     @Override
-    public IPage<UserInfo> uiByCondi(Integer userSex, String userName, Integer pageNum, Integer pageSize) {
-        // 创建查询条件
-        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_underview",1);
-        // 根据 userId 和 userName 条件进行查询
-        if (userSex != null) {
-            wrapper.eq("user_id", userSex);  // 假设 userId 是 UserInfo 表中的字段
-        }
-        if (userName != null && !userName.isEmpty()) {
-            wrapper.like("user_name", userName);  // 假设 userName 是 UserInfo 表中的字段
-        }
-
-        // 创建分页对象
-        Page<UserInfo> page = new Page<>(pageNum, pageSize);
-
-        // 执行分页查询
-        return userInfoMapper.selectPage(page, wrapper);
+    public PageInfo<UserInfo> uiByCondi(@RequestBody UserInfoSearch userInfoSearch, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<UserInfo> userInfos = userInfoMapper.selectUserInfoAll(userInfoSearch);
+        
+        return new PageInfo<>(userInfos);
     }
+    
+    
+    @Override
+    public PageInfo<UserInfo> uiByCondi2(@RequestBody UserInfoSearch userInfoSearch, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<UserInfo> userInfos = userInfoMapper.selectUserInfoAll2(userInfoSearch);
+        
+        return new PageInfo<>(userInfos);
+    }
+    
+    
+    
+    
+    
     
     @Override
     public List<UserCourseProgressDTO> progressDTO() {
@@ -104,18 +114,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         
     }
     
-    @Override
-    public IPage<UserInfo> uiByCondi2(Integer userSex, String userName, Integer pageNum, Integer pageSize) {
-        // 创建查询条件
-        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_underview",0);
-        
-        // 创建分页对象
-        Page<UserInfo> page = new Page<>(pageNum, pageSize);
-        
-        // 执行分页查询
-        return userInfoMapper.selectPage(page, wrapper);
-    }
+    
+    
+    
+
     
     @Override
     public List<UserCityDTO> getCityUserCount() {

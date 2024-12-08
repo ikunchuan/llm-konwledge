@@ -59,23 +59,26 @@ public class CommunityServiceImpl implements CommunityService {
     }
     
     
+    
+    
+    
+    
     //根据社区的种类标签输入的社区的名字来模糊查询
     @Override
     public PageInfo<CommunityDTO> search(@RequestBody CommunitySearch communitySearch, Integer pageNum, Integer pageSize) {
-//        log.info("查询社区: {},当前页: {},本页数:{}",communitySearch.toString(),pageNum,pageSize);
-//        log.warn("查询社区: {},当前页: {},本页数:{}",communitySearch.toString(),pageNum,pageSize);
-//        log.error("查询社区: {},当前页: {},本页数:{}",communitySearch.toString(),pageNum,pageSize);
         PageHelper.startPage(pageNum,pageSize);
         List<CommunityDTO> communityDTOS = communityMapper.selectCommunitiesWithFilters(communitySearch);
         return new PageInfo<>(communityDTOS);
     }
     
     @Override
-    public PageInfo<CommunityDTO> search2(CommunitySearch communitySearch, Integer pageNum, Integer pageSize) {
+    public PageInfo<CommunityDTO> search2(@RequestBody CommunitySearch communitySearch, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         List<CommunityDTO> communityDTOS = communityMapper.selectCommunitiesWithFilters2(communitySearch);
         return new PageInfo<>(communityDTOS);
     }
+    
+    
     
     @Override
     public List<UserPostCountDTO> getCommunityPostUser(Integer communityId) {
