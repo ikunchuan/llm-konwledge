@@ -2,6 +2,10 @@ package com.llm.llm_knowledge.controller.admin;
 
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.llm.llm_knowledge.entity.AdminLoginLog;
+import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.pojo.ResultEntity;
@@ -52,17 +56,45 @@ public class UserAdminController {
         BeanUtils.copyProperties(userAdminInfoVO, userAdminInfo);
         UserAdminInfo userAdmin = userAdminInfoService.login(userAdminInfo);
         Integer userId = userAdmin.getUserId();
-        
+
+
+
         // 执行登录
         // 设置用户的登录时间
         StpUtil.login(userId, new SaLoginModel().setTimeout(60 * 60 * 24));
-        
+
+
+
+
         // 记录日志,调用logService里面的logAdminLogin方法,传入的参数从前面登录的地方过来,
         // 因为如果执行到这一步,一定是登录成功,就可以直接存储登录日志
-        adminLoginLogService.logAdminLogin(userAdminInfoVO.getUserName(), userAdminInfoVO.getPassword());
+        adminLoginLogService.logAdminLogin(userAdminInfoVO.getLoginboard(),userAdminInfoVO.getUserName(), userAdminInfoVO.getPassword());
         
         return ResultEntity.success(userAdminInfoVO.getUserName());
     }
+
+
+
+
+//    @GetMapping("/login/logs")
+//    public ResultEntity getLoginLogs(@RequestParam(defaultValue = "1") Integer pageNum,
+//                                     @RequestParam(defaultValue = "5") Integer pageSize) {
+//        try {
+//            IPage<AdminLoginLog> page = adminLoginLogService.findPage(pageNum, pageSize);
+//            return ResultEntity.success(page);
+//        } catch (Exception e) {
+//            return ResultEntity.fail("获取登录日志失败");
+//        }
+//    }
+
+//    //分页查全
+//    @GetMapping("/login/logs")
+//    public IPage<AdminLoginLog> getLoginLogs(Integer pageNum, Integer pageSize) {
+//        return AdminLoginLogService.findPage(pageNum, pageSize);
+//    }
+
+
+
 
     /**
      * 用户注销（退出登录）

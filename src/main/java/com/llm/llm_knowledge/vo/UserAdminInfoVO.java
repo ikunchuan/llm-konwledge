@@ -22,4 +22,6 @@ public class UserAdminInfoVO {
 
     private Date updatedTime;
 
+    private Integer loginboard;
+
 }
