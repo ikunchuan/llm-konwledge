@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.CompFavoriteMapper">
+
+    <!-- 根据竞赛名搜索收藏记录 -->
+    <select id="selectFavoritesByCompetitionName" resultType="com.llm.llm_knowledge.dto.CompFavoriteDTO">
+        SELECT
+        cf.competition_favorite_id,
+        cf.competition_id,
+        cf.user_id,
+        cf.deleted,
+        cf.created_time,
+        cf.updated_time
+        FROM competition_favorite AS cf
+        <where>
+            <!-- 逻辑删除字段，0 代表未删除 -->
+            cf.deleted = 0
+
+            <!-- 根据竞赛名过滤 -->
+            <if test="competitionName != null and competitionName != ''">
+                AND EXISTS (
+                SELECT 1
+                FROM competition c
+                WHERE c.competition_id = cf.competition_id
+                AND c.competition_name LIKE CONCAT('%', #{competitionName}, '%')
+                )
+            </if>
+
+            <!-- 根据竞赛状态过滤 -->
+            <if test="competitionStatus != null and competitionStatus != ''">
+                AND EXISTS (
+                SELECT 1
+                FROM competition c
+                WHERE c.competition_id = cf.competition_id
+                AND c.status = #{competitionStatus}
+                )
+            </if>
+
+            <!-- 根据等级名称过滤 -->
+            <if test="levelName != null and levelName != ''">
+                AND EXISTS (
+                SELECT 1
+                FROM competition c
+                WHERE c.competition_id = cf.competition_id
+                AND c.level_name LIKE CONCAT('%', #{levelName}, '%')
+                )
+            </if>
+        </where>
+        ORDER BY cf.updated_time DESC
+    </select>
+
+</mapper>
