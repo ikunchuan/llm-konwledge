@@ -19,4 +19,9 @@ public interface PostMapper extends BaseMapper<Post> {
     List<PostDTO> selectPostsWithFilters(PostSearch postSearch);
     
     List<PostCommentDTO> selectPostCommentsWithFilters(Integer postId);
+    
+    //根据传来的帖子id隐藏帖子
+    Integer delPostLogic(Integer postId);
+    
+    Integer delPostCommentLogic(Integer commentId);
 }

@@ -8,10 +8,13 @@ import com.llm.llm_knowledge.dto.UserPostCountDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CommunityService;
+import com.llm.llm_knowledge.util.FileUtil;
 import com.llm.llm_knowledge.vo.CommunitySearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -47,7 +50,7 @@ public class CommunityController {
     
     
     /**
-     * 根据社区标签和社区名字进行模糊查询
+     * 根据社区标签和名字进行模糊查询 这里查询的是已经审核过的社区
      *
      * @return List
      */
@@ -60,6 +63,11 @@ public class CommunityController {
     }
     
     
+    /**
+     * 根据社区标签和名字进行模糊查询 这里查询的是未审核过的社区
+     *
+     * @return List
+     */
     @PostMapping("/search2")
     public PageInfo<CommunityDTO> search2(
             @RequestBody CommunitySearch communitySearch,
@@ -109,6 +117,26 @@ public class CommunityController {
     public List<UserPostCountDTO> getCommunityPostUser(@PathVariable Integer communityId){
         return communityService.getCommunityPostUser(communityId);
     }
+    
+    
+    /**
+     * 图片上传*/
+    @PostMapping("/upload")
+    public String getPicFileName(MultipartFile file){
+        String oldFileName = file.getOriginalFilename();
+        System.out.println(oldFileName);
+        String typeName = oldFileName.substring(oldFileName.lastIndexOf('.'));
+        String filePath = FileUtil.getUploadFilePath();
+        System.out.println(typeName);
+        String newFileName = System.currentTimeMillis() + oldFileName;
+        try {
+            FileUtil.uploadFile(file.getBytes(),filePath,newFileName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return newFileName;
+    }
+    
     
     
 }

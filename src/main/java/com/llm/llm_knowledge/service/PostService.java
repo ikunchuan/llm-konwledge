@@ -18,6 +18,8 @@ public interface PostService {
     
     Integer delPost(Integer postId);
     
+    Integer delPostLogic(Integer postId);
+    
     Integer addPost(Post post);
     
     Integer update(Post post);
@@ -26,4 +28,6 @@ public interface PostService {
     
     
     List<PostCommentDTO> allPostComment(Integer postID);
+    
+    Integer delPostCommentLogic(Integer commentId);
 }

@@ -11,6 +11,7 @@
         cmn.community_description,
         `user`.user_name,
         cg.category_name,
+        cmn.community_image_url,
         cmn.created_time,
         cmn.updated_time
         FROM community AS cmn
@@ -43,6 +44,7 @@
         `user`.user_name,
         cg.category_name,
         cmn.community_underview,
+        cmn.community_image_url,
         cmn.created_time,
         cmn.updated_time
         FROM community AS cmn

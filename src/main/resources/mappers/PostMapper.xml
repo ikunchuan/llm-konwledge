@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.llm.llm_knowledge.mapper.PostMapper">
 
+    <!--根据条件查询帖子-->
     <select id="selectPostsWithFilters" resultType="com.llm.llm_knowledge.dto.PostDTO">
         SELECT
         post.post_id,
@@ -34,6 +35,7 @@
         ORDER BY post.created_time DESC
     </select>
 
+    <!--查询帖子的评论-->
     <select id="selectPostCommentsWithFilters" resultType="com.llm.llm_knowledge.dto.PostCommentDTO">
         SELECT
         post.post_id,
@@ -53,5 +55,21 @@
         </where>
         ORDER BY post.created_time DESC
     </select>
+
+    <!--对帖子进行逻辑删除-->
+    <update id="delPostLogic" parameterType="int">
+        UPDATE post
+        SET deleted = 1
+        WHERE post_id = #{postId}
+    </update>
+
+    <!--对帖子评论逻辑删除-->
+    <update id="delPostCommentLogic" parameterType="int">
+        UPDATE post_comment
+        SET deleted = 1
+        WHERE comment_id = #{commentId}
+    </update>
+
+
 
 </mapper>

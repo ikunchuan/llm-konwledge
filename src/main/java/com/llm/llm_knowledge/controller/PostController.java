@@ -40,9 +40,22 @@ public class PostController {
 
     
     /**删除帖子*/
-    @DeleteMapping("post")
+    @DeleteMapping("post/{postId}")
     public Integer delPost(@PathVariable Integer postId){
         return postService.delPost(postId);
+    }
+    
+    /**删除帖子(逻辑删除)*/
+    @PutMapping("post/logicdel/{postId}")
+    public Integer delPostLogic(@PathVariable Integer postId){
+        return postService.delPostLogic(postId);
+    }
+    
+    
+    /**删除评论(逻辑删除)*/
+    @DeleteMapping("post/comment/logicdel/{commentId}")
+    public Integer delPostCommentLogic(@PathVariable Integer commentId){
+        return postService.delPostCommentLogic(commentId);
     }
     
     

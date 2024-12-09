@@ -17,6 +17,7 @@ public class CommunityDTO {
     private String userName;
     private String categoryName;
     private Integer communityUnderview;
+    private String communityImageUrl;
     private Date createdTime;
     private Date updatedTime;
     

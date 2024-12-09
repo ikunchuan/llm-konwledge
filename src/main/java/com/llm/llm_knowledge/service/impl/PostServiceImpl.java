@@ -43,11 +43,30 @@ public class PostServiceImpl implements PostService {
         return new PageInfo<>(postDTOS);
     }
     
+    
+    
     //根据帖子id删除帖子
     @Override
     public Integer delPost(Integer postId) {
         return postMapper.deleteById(postId);
     }
+    
+    
+    
+    //传来帖子的id,根据id来逻辑删除(隐藏)
+    @Override
+    public Integer delPostLogic(Integer postId) {
+        return postMapper.delPostLogic(postId);
+    }
+    
+    //传来帖子评论的id,根据id来逻辑删除(隐藏)
+    @Override
+    public Integer delPostCommentLogic(Integer commentId) {
+        return postMapper.delPostCommentLogic(commentId);
+    }
+    
+    
+    
     
     //新增帖子
     @Override
@@ -73,5 +92,6 @@ public class PostServiceImpl implements PostService {
         return postMapper.selectPostCommentsWithFilters(postID);
     }
     
+
     
 }
