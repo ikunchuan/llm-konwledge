@@ -37,6 +37,13 @@ public class CompetitionController {
     @DeleteMapping("compe/{compeid}")
     public Integer delCompe(@PathVariable Integer compeid) {return competitionService.delCompe(compeid);}
 
+    //根据ID批量删除
+    @DeleteMapping("compe")
+    public Integer deleteCompes(@RequestBody List<Integer> compeids) {
+        System.out.println("received ids "+compeids);
+        return competitionService.deleteCompes(compeids);
+    }
+
     //修改（更新）比赛信息
     @PutMapping("compe")
     public Integer UpdateCompe(@RequestBody Competition competition) {return competitionService.updateCompe(competition);}

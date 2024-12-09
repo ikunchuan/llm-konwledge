@@ -47,6 +47,17 @@ public  class CompetitionServiceImpl implements CompetitionService {
         return result02;}
 
     //批量删除
+    @Override
+    public Integer deleteCompes(List<Integer> compeids) {
+        if(compeids==null||compeids.isEmpty()){
+            return 0;
+        }
+        //调用Mapper 层进行批量删除
+        int result = competitionMapper.deleteByIds(compeids);
+        System.out.println("删除的记录数：+" + result);
+        return result;
+
+    }
 
 
     //进行更新修改

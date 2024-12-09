@@ -32,6 +32,11 @@ import java.util.List;
         @DeleteMapping ("detail/{compeid}")
         public Integer deleteCompeDetail(@PathVariable Integer compeid) {return competitionDetailService.deleteCompeDetail(compeid);}
 
+        //进行批量删除
+        @DeleteMapping("detail")
+        public Integer deleteCompeDetails(@RequestBody List<Integer> compeids) {
+            System.out.println("received ids"+compeids);
+            return competitionDetailService.deleteCompeDetails(compeids);}
         //修改比赛详情信息
         @PutMapping("detail")
         public Integer updateCompeDetail(@RequestBody CompetitionDetail competitionDetail) {return competitionDetailService.updateCompeDetail(competitionDetail);}

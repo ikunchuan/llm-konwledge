@@ -37,6 +37,17 @@ public class CompetitionDetailServiceImpl implements CompetitionDetailService {
         System.out.println(i);
         return i;
     }
+    //批量删除
+    @Override
+    public Integer deleteCompeDetails(List<Integer> compeids) {
+        if (compeids == null || compeids.isEmpty()) {
+            return 0;
+        }
+        //调用Mapper层进行批量删除
+        int i = competitionDetailMapper.deleteByIds(compeids);
+        System.out.println(i);
+        return i;
+    }
     //进行更新修改
     @Override
     public Integer updateCompeDetail(CompetitionDetail competitionDetail) {

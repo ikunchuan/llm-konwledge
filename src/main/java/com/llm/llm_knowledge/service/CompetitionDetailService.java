@@ -14,6 +14,8 @@ public interface CompetitionDetailService {
     Integer addCompeDetail(CompetitionDetail competitionDetail);
     //删除竞赛详情信息
     Integer deleteCompeDetail(Integer compeid);
+    //批量删除
+    Integer deleteCompeDetails(List<Integer> compeids);
     //更新竞赛详情信息
     Integer updateCompeDetail(CompetitionDetail competitionDetail);
     //分页查询
