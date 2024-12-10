@@ -20,7 +20,7 @@ public class PostFavorite {
     private Integer postId;
     
     @TableField(fill= FieldFill.INSERT)
-    private Date createdTime;
+    private Date updatedTime;
     
     private Integer deleted;
     

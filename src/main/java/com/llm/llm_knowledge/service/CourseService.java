@@ -37,5 +37,6 @@ public interface CourseService {
 
     // CourseService.java
     List<CourseChapterDTO> getAllChapters();
-
+    
+    Integer addCourseView(Integer userId, Integer courseId);
 }

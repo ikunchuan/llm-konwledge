@@ -17,4 +17,6 @@ public interface CourseMapper extends BaseMapper<Course> {
 
    //查询所有章节信息（我还不会写，没搞完）
     List<CourseChapterDTO> selectAllChapters();
+    
+    Integer addCourseView(Integer userId, Integer courseId);
 }

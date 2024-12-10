@@ -7,6 +7,7 @@ import com.llm.llm_knowledge.dto.PostCommentDTO;
 import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.entity.PostComment;
+import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.entity.PostLike;
 import com.llm.llm_knowledge.vo.CommunitySearch;
 import com.llm.llm_knowledge.vo.PostSearch;
@@ -30,10 +31,10 @@ public interface PostMapper extends BaseMapper<Post> {
     Integer delPostCommentLogic(Integer commentId);
     
     
-    Integer addPostFavorite(Integer userId,Integer postId);
-    
+
     
     Integer addPostView(Integer userId, Integer postId);
+    
     
     
     PostLike searchPostLike(Integer userId, Integer postId);
@@ -41,4 +42,12 @@ public interface PostMapper extends BaseMapper<Post> {
     Integer addPostLike(Integer userId, Integer postId);
     
     Integer updateLikeStatus(Integer userId, Integer postId);
+    
+    
+    
+    Integer addPostFavorite(Integer userId,Integer postId);
+    
+    PostFavorite searchPostFavorite(Integer userId, Integer postId);
+    
+    Integer updateFavoriteStatus(Integer userId, Integer postId);
 }

@@ -81,12 +81,36 @@ public class CourseController {
         return courseService.searchParagraph(courseName);
     }
 
+    
     //显示章节表里所有信息
     @GetMapping("/allChapters")
     public List<CourseChapterDTO> getAllChapters() {
         return courseService.getAllChapters();
     }
 
+    
+    //课程浏览记录
+    @PostMapping("course/view")
+    public Integer addCourseView(@RequestParam Integer userId,
+                                 @RequestParam Integer courseId){
+        return courseService.addCourseView(userId,courseId);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 }

@@ -102,15 +102,25 @@ public class CourseServiceImpl implements CourseService {
         return courseMapper.selectList(queryWrapper);
     }
     
+    
     @Override
     public List<CourseChapterDTO> searchChapter(CourseChapterSearch courseChapterSearch) {
         return courseMapper.selectChaptersWithFilters(courseChapterSearch);
     }
 
+    
     @Override
     public List<CourseChapterDTO> getAllChapters() {
         return courseMapper.selectAllChapters(); // 调用 Mapper 层方法
     }
-
-
+    
+    
+    
+    //课程观看记录
+    @Override
+    public Integer addCourseView(Integer userId, Integer courseId) {
+            return courseMapper.addCourseView(userId,courseId);
+    }
+    
+    
 }
