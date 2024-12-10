@@ -5,6 +5,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CompetitionDTO;
 import com.llm.llm_knowledge.entity.Competition;
+import com.llm.llm_knowledge.entity.CompetitionFavorite;
+import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.mapper.CompetitionMapper;
 import com.llm.llm_knowledge.service.CompetitionService;
 import com.llm.llm_knowledge.vo.CompetitionSearch;
@@ -83,8 +85,18 @@ public  class CompetitionServiceImpl implements CompetitionService {
 
         return new PageInfo<>(competitionDTOS);
     }
-
-
-
-
+    
+    
+    //竞赛收藏记录,用户点击收藏后会收藏竞赛，再次点击取消收藏（逻辑删除）
+    @Override
+    public Integer addCompetitionFavorite(Integer userId, Integer competitionId) {
+        CompetitionFavorite competitionFavorite = competitionMapper.searchCompetitionFavorite(userId, competitionId);
+        if (competitionFavorite == null) {
+            return competitionMapper.addCompetitionFavorite(userId, competitionId);
+        } else {
+            return competitionMapper.updateFavoriteStatus(userId,competitionId);
+        }
+    }
+    
+    
 }

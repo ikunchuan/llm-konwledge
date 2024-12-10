@@ -78,5 +78,12 @@ public class CompetitionController {
         }
         return newFilePath;
     }
+    
+    //竞赛收藏记录,用户点击收藏后会收藏竞赛，再次点击取消收藏（逻辑删除）
+    @PostMapping("compe/favorite")
+    public Integer addCompetitionFavorite(@RequestParam Integer userId,
+                                          @RequestParam Integer competitionId){
+        return competitionService.addCompetitionFavorite(userId,competitionId);
+    }
 
 }

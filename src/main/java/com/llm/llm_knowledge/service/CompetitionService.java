@@ -26,5 +26,7 @@ public interface CompetitionService {
 
 
     PageInfo<CompetitionDTO> search(CompetitionSearch competitionSearch,Integer pageNum,Integer pageSize);
+    
+    Integer addCompetitionFavorite(Integer userId, Integer competitionId);
 }
 
