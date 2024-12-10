@@ -24,4 +24,6 @@ public interface PostMapper extends BaseMapper<Post> {
     Integer delPostLogic(Integer postId);
     
     Integer delPostCommentLogic(Integer commentId);
+    
+    Integer addPostFavorite(Integer userId,Integer postId);
 }

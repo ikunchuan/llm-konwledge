@@ -112,7 +112,6 @@ public class CommunityController {
     
     /**这个功能是点击社区里面的所有用户,可以看到改社区的所有用户,以及用户名和在这个社区发布过的帖子的数量
      * @return List<UserPostCountDTO> 返回用户名和发帖的数量,例如"userName": "myc","postCount": 2 */
-
     @GetMapping("cmnpostuser/{communityId}")
     public List<UserPostCountDTO> getCommunityPostUser(@PathVariable Integer communityId){
         return communityService.getCommunityPostUser(communityId);

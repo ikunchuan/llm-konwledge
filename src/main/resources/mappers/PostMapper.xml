@@ -70,6 +70,12 @@
         WHERE comment_id = #{commentId}
     </update>
 
+    <!--增加帖子post_favorite-->
+    <insert id="addPostFavorite" parameterType="com.llm.llm_knowledge.entity.PostFavorite">
+        INSERT INTO post_favorite (user_id, post_id, created_time, deleted)
+        VALUES (#{userId}, #{postId}, CURRENT_TIMESTAMP, 1)
+    </insert>
+
 
 
 </mapper>

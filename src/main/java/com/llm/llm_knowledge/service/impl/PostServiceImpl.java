@@ -59,6 +59,7 @@ public class PostServiceImpl implements PostService {
         return postMapper.delPostLogic(postId);
     }
     
+    
     //传来帖子评论的id,根据id来逻辑删除(隐藏)
     @Override
     public Integer delPostCommentLogic(Integer commentId) {
@@ -66,6 +67,10 @@ public class PostServiceImpl implements PostService {
     }
     
     
+    @Override
+    public Integer postFavorite(Integer userId, Integer postId) {
+        return postMapper.addPostFavorite(userId,postId);
+    }
     
     
     //新增帖子
@@ -85,6 +90,7 @@ public class PostServiceImpl implements PostService {
         return postMapper.selectById(postId);
     }
     
+    //查询某个帖子的所有评论
     @Override
     public List<PostCommentDTO> allPostComment(Integer postID) {
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -93,5 +99,7 @@ public class PostServiceImpl implements PostService {
     }
     
 
+
+    
     
 }

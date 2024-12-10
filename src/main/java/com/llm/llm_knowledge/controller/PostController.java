@@ -45,6 +45,7 @@ public class PostController {
         return postService.delPost(postId);
     }
     
+    
     /**删除帖子(逻辑删除)*/
     @PutMapping("post/logicdel/{postId}")
     public Integer delPostLogic(@PathVariable Integer postId){
@@ -79,5 +80,14 @@ public class PostController {
     public List<PostCommentDTO> allPostComment(@PathVariable Integer postID){
         return postService.allPostComment(postID);
     }
+    
+    /**用户收藏帖子,只要根据userId和userId就可以往表里面添加数据,因此直接用get请求*/
+    @GetMapping("post/favorite")
+    public Integer postFavorite(@RequestParam Integer userId,
+                                @RequestParam Integer postId){
+        return postService.postFavorite(userId,postId);
+    }
+    
+    
     
 }

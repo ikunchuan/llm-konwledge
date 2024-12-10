@@ -30,4 +30,7 @@ public interface PostService {
     List<PostCommentDTO> allPostComment(Integer postID);
     
     Integer delPostCommentLogic(Integer commentId);
+    
+    Integer postFavorite(Integer userId, Integer postId);
+    
 }
