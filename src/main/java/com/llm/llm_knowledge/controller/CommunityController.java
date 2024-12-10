@@ -125,7 +125,7 @@ public class CommunityController {
         String oldFileName = file.getOriginalFilename();
         System.out.println(oldFileName);
         String typeName = oldFileName.substring(oldFileName.lastIndexOf('.'));
-        String filePath = FileUtil.getUploadFilePath();
+        String filePath = FileUtil.getUpLoadFilePath();
         System.out.println(typeName);
         String newFileName = System.currentTimeMillis() + oldFileName;
         try {
