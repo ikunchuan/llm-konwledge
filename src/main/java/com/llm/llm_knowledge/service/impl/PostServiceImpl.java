@@ -9,6 +9,7 @@ import com.llm.llm_knowledge.dto.PostCommentDTO;
 import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.entity.PostComment;
+import com.llm.llm_knowledge.entity.PostLike;
 import com.llm.llm_knowledge.mapper.PostMapper;
 import com.llm.llm_knowledge.service.PostService;
 import com.llm.llm_knowledge.vo.PostSearch;
@@ -66,10 +67,27 @@ public class PostServiceImpl implements PostService {
         return postMapper.delPostCommentLogic(commentId);
     }
     
-    
+    //用户收藏帖子
     @Override
     public Integer postFavorite(Integer userId, Integer postId) {
         return postMapper.addPostFavorite(userId,postId);
+    }
+    
+    
+    //用户帖子浏览记录
+    @Override
+    public Integer postView(Integer userId, Integer postId) {
+        return postMapper.addPostView(userId,postId);
+    }
+    
+    @Override
+    public Integer postLike(Integer userId, Integer postId) {
+        PostLike postLike = postMapper.searchPostLike(userId, postId);
+        if (postLike == null) {
+            return postMapper.addPostLike(userId, postId);
+        } else {
+            return postMapper.updateLikeStatus(userId,postId);
+        }
     }
     
     

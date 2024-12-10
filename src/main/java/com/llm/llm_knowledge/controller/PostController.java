@@ -88,6 +88,27 @@ public class PostController {
         return postService.postFavorite(userId,postId);
     }
     
+    /**帖子浏览记录,点击一次帖子会加一条数据,点击同一个帖子会增加帖子浏览次数*/
+    @PostMapping("post/view")
+    public Integer postView(@RequestParam Integer userId,
+                            @RequestParam Integer postId){
+        return postService.postView(userId,postId);
+    }
+    
+    
+    /**帖子点赞,点击点赞会增加一条数据*/
+    @PostMapping("post/like")
+    public Integer postLike(@RequestParam Integer userId,
+                            @RequestParam Integer postId){
+        return postService.postLike(userId,postId);
+    }
+    
+    
+    
+    
+    
+    
+    
     
     
 }

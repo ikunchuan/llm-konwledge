@@ -16,21 +16,33 @@ public interface PostService {
     
     PageInfo<PostDTO> searchPost(PostSearch postSearch, Integer pageNum, Integer pageSize);
     
+    
     Integer delPost(Integer postId);
+    
     
     Integer delPostLogic(Integer postId);
     
+    
     Integer addPost(Post post);
     
+    
     Integer update(Post post);
+    
     
     Post postById(Integer postId);
     
     
     List<PostCommentDTO> allPostComment(Integer postID);
     
+    
     Integer delPostCommentLogic(Integer commentId);
+    
     
     Integer postFavorite(Integer userId, Integer postId);
     
+    
+    Integer postView(Integer userId, Integer postId);
+    
+    
+    Integer postLike(Integer userId, Integer postId);
 }
