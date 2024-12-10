@@ -9,6 +9,7 @@ import com.llm.llm_knowledge.dto.PostCommentDTO;
 import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.entity.PostComment;
+import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.entity.PostLike;
 import com.llm.llm_knowledge.mapper.PostMapper;
 import com.llm.llm_knowledge.service.PostService;
@@ -70,16 +71,17 @@ public class PostServiceImpl implements PostService {
     //用户收藏帖子
     @Override
     public Integer postFavorite(Integer userId, Integer postId) {
-        return postMapper.addPostFavorite(userId,postId);
+        PostFavorite postFavorite = postMapper.searchPostFavorite(userId, postId);
+        if (postFavorite == null) {
+            return postMapper.addPostFavorite(userId, postId);
+        } else {
+            return postMapper.updateFavoriteStatus(userId,postId);
+        }
     }
     
     
-    //用户帖子浏览记录
-    @Override
-    public Integer postView(Integer userId, Integer postId) {
-        return postMapper.addPostView(userId,postId);
-    }
     
+    //用户帖子喜欢
     @Override
     public Integer postLike(Integer userId, Integer postId) {
         PostLike postLike = postMapper.searchPostLike(userId, postId);
@@ -90,6 +92,13 @@ public class PostServiceImpl implements PostService {
         }
     }
     
+    
+    
+    //用户帖子浏览记录
+    @Override
+    public Integer postView(Integer userId, Integer postId) {
+        return postMapper.addPostView(userId,postId);
+    }
     
     //新增帖子
     @Override

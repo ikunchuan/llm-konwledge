@@ -34,4 +34,25 @@
         ORDER BY cr.created_time DESC
     </select>
 
+    <!--查询所有的章节-->
+    <select id="selectAllChapters" resultType="com.llm.llm_knowledge.dto.CourseChapterDTO">
+        SELECT crc.created_time,
+               crc.updated_time,
+               crc.chapter_name,
+               cr.course_name
+        FROM course_chapter AS crc
+                 INNER JOIN course AS cr ON crc.course_id = cr.course_id
+    </select>
+
+
+    <!--用户浏览课程后要把课程浏览表更新,时间更新,view_count + 1-->
+    <insert id="addCourseView" parameterType="com.llm.llm_knowledge.entity.CourseView">
+        INSERT INTO course_view (user_id, course_id, updated_time, view_count)
+        VALUES (#{userId}, #{courseId}, CURRENT_TIMESTAMP, 1)
+        ON DUPLICATE KEY UPDATE
+                             updated_time = CURRENT_TIMESTAMP,
+                             view_count = view_count + 1;
+    </insert>
+
+
 </mapper>

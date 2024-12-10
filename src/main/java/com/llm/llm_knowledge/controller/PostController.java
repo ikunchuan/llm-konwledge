@@ -82,7 +82,7 @@ public class PostController {
     }
     
     /**用户收藏帖子,只要根据userId和userId就可以往表里面添加数据,因此直接用get请求*/
-    @GetMapping("post/favorite")
+    @PostMapping("post/favorite")
     public Integer postFavorite(@RequestParam Integer userId,
                                 @RequestParam Integer postId){
         return postService.postFavorite(userId,postId);
