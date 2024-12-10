@@ -11,7 +11,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseDTO {
-    
     private Integer courseId;
     private String courseDescription;
     private String courseName;
