@@ -37,9 +37,6 @@ public class CourseController {
     @DeleteMapping("v1")
     public Integer deleteCourseById(@RequestBody List<Integer> ids){
         System.out.println("Received IDs: " + ids);
-//        List<Integer> idList = Arrays.stream(ids.split(","))
-//                .map(Integer::parseInt) // 将字符串转换为 Integer
-//                .collect(Collectors.toList());
         return courseService.deleteCourseByIds(ids);
     }
 
@@ -80,14 +77,12 @@ public class CourseController {
     public List<Course> searchParagraph(@PathVariable String courseName){
         return courseService.searchParagraph(courseName);
     }
-
     
     //显示章节表里所有信息
     @GetMapping("allChapters")
     public List<CourseChapterDTO> getAllChapters() {
         return courseService.getAllChapters();
     }
-
     
     //课程浏览记录
     @PostMapping("course/view")
@@ -95,22 +90,5 @@ public class CourseController {
                                  @RequestParam Integer courseId){
         return courseService.addCourseView(userId,courseId);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 
 }

@@ -7,7 +7,6 @@ import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
 import com.llm.llm_knowledge.entity.Course;
-
 import com.llm.llm_knowledge.mapper.CourseMapper;
 import com.llm.llm_knowledge.service.CourseService;
 import com.llm.llm_knowledge.vo.CourseChapterSearch;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 
 @Service
 @Transactional
@@ -34,14 +32,12 @@ public class CourseServiceImpl implements CourseService {
         return result;
     }
 
-
     @Override    //根据id删除
     public Integer deleteCourseById(Integer id) {
         Integer i = courseMapper.deleteById(id);
         System.out.println(i);
         return i;
     }
-
 
     @Override    //根据id批量删除
     public Integer deleteCourseByIds(List<Integer> ids) {
@@ -59,8 +55,6 @@ public class CourseServiceImpl implements CourseService {
         return result;
     }
 
-
-
     @Override //更新课程
     public Integer updateCourseById(Course course) {
         Integer i = courseMapper.updateById(course);
@@ -68,12 +62,10 @@ public class CourseServiceImpl implements CourseService {
         return i;
     }
 
-
     @Override   //根据id查询
     public Course findCourseById(Integer id) {
         return courseMapper.selectById(id);
     }
-
 
     @Override   //分页查询全部记录
     public Page<Course> findAllPageCourse(Integer pageNum, Integer pageSize) {
@@ -88,8 +80,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public PageInfo<CourseDTO> search(CourseSearch courseSearch, Integer pageNum, Integer pageSize){
-        PageHelper.startPage(pageNum,pageSize);
+    public PageInfo<CourseDTO> search(CourseSearch courseSearch, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         List<CourseDTO> courseDTOS = courseMapper.selectCoursesWithFilters(courseSearch);
         return new PageInfo<>(courseDTOS);
     }
@@ -100,26 +92,21 @@ public class CourseServiceImpl implements CourseService {
         queryWrapper.eq("course_name", courseName);
         return courseMapper.selectList(queryWrapper);
     }
-    
-    
+
     @Override
     public List<CourseChapterDTO> searchChapter(CourseChapterSearch courseChapterSearch) {
         return courseMapper.selectChaptersWithFilters(courseChapterSearch);
     }
 
-    
     @Override
     public List<CourseChapterDTO> getAllChapters() {
         return courseMapper.selectAllChapters(); // 调用 Mapper 层方法
     }
-    
-    
-    
+
     //课程观看记录
     @Override
     public Integer addCourseView(Integer userId, Integer courseId) {
-            return courseMapper.addCourseView(userId,courseId);
+        return courseMapper.addCourseView(userId, courseId);
     }
-    
-    
+
 }
