@@ -20,6 +20,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/admin/user")
@@ -61,17 +63,18 @@ public class UserAdminController {
         Integer userId = userAdmin.getUserId();
         
         
-        // 执行登录
-        // 设置用户的登录时间
+        // 执行登录并生成 Token
         StpUtil.login(userId, new SaLoginModel().setTimeout(60 * 60 * 24));
+        String token = StpUtil.getTokenValue();
         
-        
-        // 记录日志,调用logService里面的logAdminLogin方法,传入的参数从前面登录的地方过来,
-        // 因为如果执行到这一步,一定是登录成功,就可以直接存储登录日志
+        // 记录登录日志
         adminLoginLogService.logAdminLogin(userAdminInfoVO.getLoginboard(), userAdminInfoVO.getUserName(), userAdminInfoVO.getPassword());
         
-        return ResultEntity.success(userAdminInfoVO.getUserName());
+        // 返回 Token 和用户名
+        return ResultEntity.success(Map.of("username", userAdminInfoVO.getUserName(), "token", token));
     }
+    
+    
     
     
     @PostMapping("/login/logs")

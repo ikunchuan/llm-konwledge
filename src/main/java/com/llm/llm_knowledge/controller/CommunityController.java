@@ -1,6 +1,7 @@
 package com.llm.llm_knowledge.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CommunityDTO;
@@ -86,6 +87,8 @@ public class CommunityController {
     public Integer addCmn(@RequestBody Community community) {
         return communityService.addCmn(community);
     }
+    
+    
     
     
     /**

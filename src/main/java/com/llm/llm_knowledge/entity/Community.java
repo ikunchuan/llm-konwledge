@@ -13,7 +13,7 @@ public class Community {
     private Integer communityId;
     private Integer categoryId;
     private String communityName;
-    private String CommunityDescription;
+    private String communityDescription;
     private Integer createdBy;
     
     private Integer communityUnderview;
