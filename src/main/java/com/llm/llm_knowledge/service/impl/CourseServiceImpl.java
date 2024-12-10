@@ -15,7 +15,6 @@ import com.llm.llm_knowledge.vo.CourseSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -89,7 +88,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public PageInfo<CourseDTO> search(@RequestBody CourseSearch courseSearch, Integer pageNum, Integer pageSize){
+    public PageInfo<CourseDTO> search(CourseSearch courseSearch, Integer pageNum, Integer pageSize){
         PageHelper.startPage(pageNum,pageSize);
         List<CourseDTO> courseDTOS = courseMapper.selectCoursesWithFilters(courseSearch);
         return new PageInfo<>(courseDTOS);

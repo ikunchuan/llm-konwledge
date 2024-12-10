@@ -10,6 +10,7 @@
         FROM question AS qst
         INNER JOIN category AS cg ON qst.category_id = cg.category_id
         <where>
+            qst.deleted = 0
             <if test="categoryName != null and categoryName != ''">
                 AND cg.category_name LIKE CONCAT('%', #{categoryName}, '%')
             </if>
