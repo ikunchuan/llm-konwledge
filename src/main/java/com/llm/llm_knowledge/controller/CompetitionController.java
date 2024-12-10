@@ -7,9 +7,11 @@ import com.llm.llm_knowledge.entity.Competition;
 
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CompetitionService;
+import com.llm.llm_knowledge.util.FileUtil;
 import com.llm.llm_knowledge.vo.CompetitionSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -60,7 +62,21 @@ public class CompetitionController {
                                            @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
         return competitionService.search(competitionSearch,pageNum,pageSize);
     }
+    //图片上传
 
+    @PostMapping ("/upload")
+    public String upload(@RequestParam("file") MultipartFile file) {
+        String oldFileName = file.getOriginalFilename();
+        System.out.println(oldFileName);
+        String filePath = FileUtil.getUpLoadFilePath();
+        String newFilePath = System.currentTimeMillis() + oldFileName;
 
+        try {
+            FileUtil.uploadFile(file.getBytes(),filePath,newFilePath);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return newFilePath;
+    }
 
 }

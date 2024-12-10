@@ -19,21 +19,20 @@ public class FileUtil {
         out.flush();
         out.close();
     }
-    
-    public static String getUploadFilePath() {
+
+    public static String getUpLoadFilePath() {
         File path = null;
         try {
             path = new File(ResourceUtils.getURL("classpath:").getPath());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        
+
         if (!path.exists()) {
             path = new File("");
         }
         File filePath = new File(path.getAbsolutePath(), "static/images/upload/");
         return filePath.getAbsolutePath();
-        
+
     }
-    
 }
