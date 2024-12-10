@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.CourseFavoriteMapper">
+
+    <!-- 根据课程名搜索收藏记录 -->
+    <select id="selectFavoritesByCourseName" resultType="com.llm.llm_knowledge.dto.CourseFavoriteDTO">
+        SELECT
+        cf.course_favorite_id,
+        cf.course_id,
+        cf.user_id,
+        cf.deleted,
+        cf.created_time,
+        cf.updated_time
+        FROM course_favorite AS cf
+        <where>
+            cf.deleted = 0
+            <!-- 逻辑删除字段，0 代表未删除 -->
+            <if test="courseName != null and courseName != ''">
+                AND EXISTS (
+                SELECT 1
+                FROM course c
+                WHERE c.course_id = cf.course_id
+                AND c.course_name LIKE CONCAT('%', #{courseName}, '%')
+                )
+            </if>
+        </where>
+        ORDER BY cf.updated_time DESC
+    </select>
+
+</mapper>
