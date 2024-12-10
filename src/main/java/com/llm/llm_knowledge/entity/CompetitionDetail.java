@@ -24,11 +24,8 @@ private Date endDate;
 private String competitionUrl;
 private String competitionSchedule;
 private Date registrationDeadline;
-private String registrationGuide;
-private String outstandingCases;
-private String eligibilityCriteria;
-private String judgingCriteria;
-private String prizeDetails;
+private String detail;
+
     //自动填充创建时间
     @TableField(fill = FieldFill.INSERT)
     private Date createdTime;
