@@ -6,10 +6,12 @@ import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
 import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.service.CourseService;
+import com.llm.llm_knowledge.util.FileUtil;
 import com.llm.llm_knowledge.vo.CourseChapterSearch;
 import com.llm.llm_knowledge.vo.CourseSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,6 +22,10 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    //查询所有
+    @GetMapping("v1")
+    public List<Course> allCourse() {return courseService.allCourse();}
 
     //插入
     @PostMapping("v1")
@@ -90,5 +96,22 @@ public class CourseController {
                                  @RequestParam Integer courseId){
         return courseService.addCourseView(userId,courseId);
     }
+
+    //图片上传
+    @PostMapping ("/upload")
+    public String upload(@RequestParam("file") MultipartFile file) {
+        String oldFileName = file.getOriginalFilename();
+        System.out.println(oldFileName);
+        String filePath = FileUtil.getUpLoadFilePath();
+        String newFilePath = System.currentTimeMillis() + oldFileName;
+
+        try {
+            FileUtil.uploadFile(file.getBytes(),filePath,newFilePath);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return newFilePath;
+    }
+
 
 }

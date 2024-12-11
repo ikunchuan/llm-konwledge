@@ -11,6 +11,9 @@ import com.llm.llm_knowledge.vo.CourseSearch;
 import java.util.List;
 
 public interface CourseService {
+    //查询所有
+    List<Course>allCourse();
+
     //插入课程
     Integer insertCourse(Course course);
 
