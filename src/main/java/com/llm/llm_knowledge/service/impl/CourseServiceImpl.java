@@ -23,6 +23,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseMapper courseMapper;
+    //查询所有
+    @Override
+    public List<Course>allCourse() {return courseMapper.selectList(null);}
 
     @Override  //插入课程
     public Integer insertCourse(Course course) {

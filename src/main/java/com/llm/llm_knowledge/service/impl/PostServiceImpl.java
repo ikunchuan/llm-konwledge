@@ -1,14 +1,16 @@
 package com.llm.llm_knowledge.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+//import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+//import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+//import com.github.pagehelper.PageHelper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.PostCommentDTO;
 import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
-import com.llm.llm_knowledge.entity.PostComment;
+//import com.llm.llm_knowledge.entity.PostComment;
 import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.entity.PostLike;
 import com.llm.llm_knowledge.mapper.PostMapper;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+//import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -120,13 +123,21 @@ public class PostServiceImpl implements PostService {
     //查询某个帖子的所有评论
     @Override
     public List<PostCommentDTO> allPostComment(Integer postID) {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("post_id",postID);
-        return postMapper.selectPostCommentsWithFilters(postID);
+//        QueryWrapper queryWrapper = new QueryWrapper();
+//        queryWrapper.eq("post_id",postID);
+//
+//        return postMapper.selectPostCommentsWithFilters(postID);
+
+        System.out.println("查询的帖子ID：" + postID);
+        List<PostCommentDTO> comments = postMapper.selectPostCommentsWithFilters(postID);
+        System.out.println("查询结果：" + comments);
+        return comments;
     }
-    
 
 
-    
-    
+
+
+
+
+
 }
