@@ -18,7 +18,7 @@ public class CourseFavoriteController {
     @Autowired
     private CourseFavoriteService courseFavoriteService;
 
-    @GetMapping("favorite")
+    @PostMapping("favorite")
     public Integer addCourseFavorite(@RequestBody CourseFavorite courseFavorite) {
         return courseFavoriteService.addCourseFavorite(courseFavorite);
     }

@@ -9,7 +9,9 @@ import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Question;
+import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.entity.UserInfo;
+import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.vo.UserInfoSearch;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -56,5 +58,9 @@ public interface UserInfoService {
     List<UserAgeDTO> getAgeUserCount();
     
     List<DateUserCourseCountDTO> selectDateCourseAll();
+    
+    
+    
+    UserInfo login(UserInfo userInfo) throws UserException;
 }
 

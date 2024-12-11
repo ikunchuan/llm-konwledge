@@ -8,9 +8,11 @@ import com.llm.llm_knowledge.dto.CommunityDTO;
 import com.llm.llm_knowledge.dto.UserPostCountDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.exception.BizException;
+import com.llm.llm_knowledge.mapper.CommunityMapper;
 import com.llm.llm_knowledge.service.CommunityService;
 import com.llm.llm_knowledge.util.FileUtil;
 import com.llm.llm_knowledge.vo.CommunitySearch;
+import org.apache.ibatis.annotations.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,14 +20,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-@SaCheckPermission("statistical_analysis_write")
-@CrossOrigin
 @RestController
 @RequestMapping("/v1/cmns")
 public class CommunityController {
     
     @Autowired
     private CommunityService communityService;
+    
+    @Autowired
+    private CommunityMapper communityMapper;
     
     /**
      * 管理员查看所有已注册的社区
@@ -137,6 +140,38 @@ public class CommunityController {
             throw new RuntimeException(e);
         }
         return newFileName;
+    }
+    
+    
+    /**
+     * 阿里云OSS图片上传
+     */
+    @PostMapping("/uploadaliyun")
+    public String uploadCommunityImage(@RequestParam("file") MultipartFile file, @RequestParam("communityId") Integer communityId) {
+        if (file.isEmpty()) {
+            return "No file uploaded";
+        }
+        
+        try {
+            // 上传文件到阿里云OSS
+            String imageUrl = FileUtil.uploadImage(file);
+            if (imageUrl.equals("No file uploaded")) {
+                return "Upload failed";
+            }
+            
+            // 更新数据库中的communityImageUrl字段
+            Community community = communityMapper.selectById(communityId);
+            if (community != null) {
+                community.setCommunityImageUrl(imageUrl);
+                communityMapper.updateById(community);
+                return "Upload successful: " + imageUrl;
+            } else {
+                return "Community not found";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Upload failed due to an error";
+        }
     }
     
     

@@ -13,10 +13,13 @@
         cp.created_time,
         cp.updated_time,
         cp.is_active,
-        cp.level_name
+        cp.level_name,
+        cpd.start_date,
+        cpd.end_date
         FROM
         competition AS cp
         INNER JOIN category AS cg ON cp.category_id = cg.category_id
+        INNER JOIN competition_detail AS cpd ON cp.competition_id = cpd.competition_id
 
         <where>
             <if test="competitionName != null and competitionName != ''">
@@ -29,9 +32,17 @@
             <if test="isActive != null">
                 AND cp.is_active = #{isActive}
             </if>
+            <if test="startDate != null and endDate != null">
+                <!-- 比赛时间与前端时间段有交集 -->
+                AND (
+                (cpd.start_date &lt;= #{endDate} AND cpd.end_date &gt;= #{startDate})
+                )
+            </if>
         </where>
         ORDER BY cp.created_time DESC
     </select>
+
+
 
 
 

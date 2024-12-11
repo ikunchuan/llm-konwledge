@@ -8,11 +8,14 @@ import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.*;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Question;
+import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.entity.UserInfo;
+import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.mapper.UserInfoMapper;
 import com.llm.llm_knowledge.service.UserInfoService;
 import com.llm.llm_knowledge.vo.UserInfoSearch;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -117,8 +120,6 @@ public class UserInfoServiceImpl implements UserInfoService {
     
     
     
-
-    
     @Override
     public List<UserCityDTO> getCityUserCount() {
         return userInfoMapper.getCityUserCount();
@@ -132,6 +133,23 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public List<DateUserCourseCountDTO> selectDateCourseAll() {
         return userInfoMapper.selectDateCourseAll();
+    }
+    
+    
+    
+    
+    @Override
+    public UserInfo login(UserInfo userInfo) throws UserException {
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_name", userInfo.getUserName());
+        String md5 = DigestUtils.md5Hex(userInfo.getUserPassword());
+        queryWrapper.eq("user_password", md5);
+        UserInfo userInfoFromDB = userInfoMapper.selectOne(queryWrapper);
+        // 如果用户名或密码错误，抛出异常
+        if (null == userInfoFromDB) {
+            throw new UserException("用户名或密码错误");
+        }
+        return userInfoFromDB;
     }
     
     

@@ -1,14 +1,23 @@
 package com.llm.llm_knowledge.controller;
 
+import cn.dev33.satoken.stp.SaLoginModel;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.DateUserCourseCountDTO;
 import com.llm.llm_knowledge.dto.UserAgeDTO;
 import com.llm.llm_knowledge.dto.UserCityDTO;
 import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
+import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.entity.UserInfo;
+import com.llm.llm_knowledge.exception.UserException;
+import com.llm.llm_knowledge.pojo.ResultEntity;
 import com.llm.llm_knowledge.service.UserInfoService;
+import com.llm.llm_knowledge.vo.UserAdminInfoVO;
 import com.llm.llm_knowledge.vo.UserInfoSearch;
+import com.llm.llm_knowledge.vo.UserLoginInfoVO;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -147,5 +156,41 @@ public class UserInfoController {
     @GetMapping("ui/dateusercount")
     public List<DateUserCourseCountDTO> selectDateCourseAll(){
         return userInfoService.selectDateCourseAll();
+    }
+    
+    
+    
+    @PostMapping("/login")
+    public ResultEntity login(@RequestBody UserLoginInfoVO userLoginInfoVO) throws Exception {
+        // 如果用户同时没有输入用户名或密码，抛出异常
+        if (null == userLoginInfoVO) {
+            throw new UserException("参数不能为空");
+        }
+        // 如果用户没有输入密码，抛出异常
+        if (StringUtils.isBlank(userLoginInfoVO.getUserName())) {
+            throw new UserException("用户名不能为空");
+        }
+        // 如果用户没有输入密码，抛出异常
+        if (StringUtils.isBlank(userLoginInfoVO.getUserPassword())) {
+            throw new UserException("密码不能为空");
+        }
+        
+        UserInfo userInfo = new UserInfo();
+        // 将userLoginInfoVO的对象属性复制到userInfo中
+        BeanUtils.copyProperties(userLoginInfoVO, userInfo);
+        UserInfo user = userInfoService.login(userInfo);
+        Integer userId = user.getUserId();
+        
+        
+        // 执行登录并生成 Token
+        StpUtil.login(userId, new SaLoginModel().setTimeout(60 * 60 * 24));
+        String token = StpUtil.getTokenValue();
+        
+
+        //获取当前账号所拥有的权限集合
+        System.out.println(StpUtil.getPermissionList());
+        
+        // 返回 Token 和用户名
+        return ResultEntity.success(Map.of("username", userLoginInfoVO.getUserName(), "token", token));
     }
 }

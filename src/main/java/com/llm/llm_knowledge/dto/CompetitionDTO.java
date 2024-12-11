@@ -22,6 +22,7 @@ public class CompetitionDTO {
     private String isActive;
     private Date createdTime;
     private Date updatedTime;
-
+    private Date startDate;
+    private Date endDate;
 
 }
