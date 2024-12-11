@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-
+@SaCheckPermission("statistical_analysis_write")
 @CrossOrigin
 @RestController
 @RequestMapping("/v1/cmns")

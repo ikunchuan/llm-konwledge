@@ -40,7 +40,6 @@
 //        whiteList.add("/admin/user/login");
 //        whiteList.add("/test/hello");
 //        whiteList.add("/admin/user/logout");
-//        whiteList.add("/admin/user/register");
 //        return whiteList;
 //    }
 //

@@ -70,6 +70,9 @@ public class UserAdminController {
         // 记录登录日志
         adminLoginLogService.logAdminLogin(userAdminInfoVO.getLoginboard(), userAdminInfoVO.getUserName(), userAdminInfoVO.getPassword());
         
+        //获取当前账号所拥有的权限集合
+        System.out.println(StpUtil.getPermissionList());
+        
         // 返回 Token 和用户名
         return ResultEntity.success(Map.of("username", userAdminInfoVO.getUserName(), "token", token));
     }
