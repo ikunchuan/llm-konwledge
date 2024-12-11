@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.AnswerRecordMapper">
+
+    <select id="getAnswerDetailsByUserId" resultType="com.llm.llm_knowledge.vo.AnswerRecordVO">
+        SELECT
+            ar.answer_record_id,
+            ar.user_id,
+            ar.question_id,
+            ar.answer_given,
+            ar.score,
+            ar.time_spent,
+            q.question_title,
+            q.question_text,
+            q.correct_answer,
+            q.question_level
+        FROM
+            answer_record ar
+                LEFT JOIN
+            question q
+            ON
+                ar.question_id = q.question_id
+        <where>
+            <if test="userId != null and userId != ''">
+                AND ar.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <select id="searchAnswerDetailsWithFilters" resultType="com.llm.llm_knowledge.vo.AnswerRecordVO">
+        SELECT
+        ar.answer_record_id,
+        ar.user_id,
+        ar.question_id,
+        ar.answer_given,
+        ar.score,
+        ar.time_spent,
+        q.question_title,
+        q.question_text,
+        q.correct_answer,
+        q.question_level
+        FROM
+        answer_record ar
+        LEFT JOIN
+        question q
+        ON
+        ar.question_id = q.question_id
+        <where>
+            <if test="questionTitle != null and questionTitle != ''">
+                AND q.question_title LIKE CONCAT('%', #{questionTitle}, '%')
+            </if>
+            <if test="questionText != null and questionText != ''">
+                AND q.question_text LIKE CONCAT('%', #{questionText}, '%')
+            </if>
+            -- `&lt;`是小于,`&gt;`是大于
+            <if test="minScore != null">
+                AND ar.score &lt;= #{minScore}
+            </if>
+            <if test="maxScore != null">
+                AND ar.score &gt;= #{maxScore}
+            </if>
+        </where>
+    </select>
+
+</mapper>
