@@ -152,6 +152,24 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoFromDB;
     }
     
+    @Override
+    public Integer register(UserInfo userInfo) throws UserException {
+        // 判断用户名是否存在
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_name", userInfo.getUserName());
+        Long count = userInfoMapper.selectCount(queryWrapper);
+        // 这里同时考虑了两种情况：1.存在一个用户 2.或者存在多个用户
+        if (1 <= count) {
+            throw new UserException("用户已存在");
+        }
+        //对用户的密码进行加密
+        String md5 = DigestUtils.md5Hex(userInfo.getUserPassword());
+        //把用户名和密码放到创建userAdminInfo里面
+        userInfo.setUserPassword(md5);
+        //调用userAdminInfoService里面的方法
+        return userInfoMapper.insert(userInfo);
+    }
+    
     
 }
 

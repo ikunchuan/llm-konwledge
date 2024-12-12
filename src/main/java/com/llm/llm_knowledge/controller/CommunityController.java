@@ -143,36 +143,36 @@ public class CommunityController {
     }
     
     
-    /**
-     * 阿里云OSS图片上传
-     */
-    @PostMapping("/uploadaliyun")
-    public String uploadCommunityImage(@RequestParam("file") MultipartFile file, @RequestParam("communityId") Integer communityId) {
-        if (file.isEmpty()) {
-            return "No file uploaded";
-        }
-        
-        try {
-            // 上传文件到阿里云OSS
-            String imageUrl = FileUtil.uploadImage(file);
-            if (imageUrl.equals("No file uploaded")) {
-                return "Upload failed";
-            }
-            
-            // 更新数据库中的communityImageUrl字段
-            Community community = communityMapper.selectById(communityId);
-            if (community != null) {
-                community.setCommunityImageUrl(imageUrl);
-                communityMapper.updateById(community);
-                return "Upload successful: " + imageUrl;
-            } else {
-                return "Community not found";
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Upload failed due to an error";
-        }
-    }
+//    /**
+//     * 阿里云OSS图片上传
+//     */
+//    @PostMapping("/uploadaliyun")
+//    public String uploadCommunityImage(@RequestParam("file") MultipartFile file, @RequestParam("communityId") Integer communityId) {
+//        if (file.isEmpty()) {
+//            return "No file uploaded";
+//        }
+//
+//        try {
+//            // 上传文件到阿里云OSS
+//            String imageUrl = FileUtil.uploadImage(file);
+//            if (imageUrl.equals("No file uploaded")) {
+//                return "Upload failed";
+//            }
+//
+//            // 更新数据库中的communityImageUrl字段
+//            Community community = communityMapper.selectById(communityId);
+//            if (community != null) {
+//                community.setCommunityImageUrl(imageUrl);
+//                communityMapper.updateById(community);
+//                return "Upload successful: " + imageUrl;
+//            } else {
+//                return "Community not found";
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return "Upload failed due to an error";
+//        }
+//    }
     
     
     

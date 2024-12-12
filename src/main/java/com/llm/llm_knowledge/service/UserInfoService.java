@@ -64,6 +64,6 @@ public interface UserInfoService {
     UserInfo login(UserInfo userInfo) throws UserException;
     
     //普通用户注册
-    Integer register(UserInfo userInfo);
+    Integer register(UserInfo userInfo) throws UserException;
 }
 
