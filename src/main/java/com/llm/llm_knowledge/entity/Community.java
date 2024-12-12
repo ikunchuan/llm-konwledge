@@ -15,6 +15,7 @@ public class Community {
     private String communityName;
     private String communityDescription;
     private Integer createdBy;
+    private Integer popular;
     
     private Integer communityUnderview;
     

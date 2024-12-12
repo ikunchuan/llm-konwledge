@@ -30,6 +30,9 @@
             <if test="courseRating != null and courseRating != ''">
                 AND cr.course_rating LIKE CONCAT('%', #{courseRating}, '%')
             </if>
+            <if test="popular != null ">
+                AND cr.popular = #{popular}
+            </if>
         </where>
         ORDER BY cr.created_time DESC
     </select>

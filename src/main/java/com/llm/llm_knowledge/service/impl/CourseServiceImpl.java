@@ -82,6 +82,8 @@ public class CourseServiceImpl implements CourseService {
         return coursePageVar;
     }
 
+    
+    //查询课程 总的 可以在这里面加很多条件
     @Override
     public PageInfo<CourseDTO> search(CourseSearch courseSearch, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);

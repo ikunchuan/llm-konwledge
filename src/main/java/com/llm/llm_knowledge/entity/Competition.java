@@ -23,6 +23,7 @@ public class Competition {
     private String competitionImgUrl;
     private String competitionStatus;
     private String isActive;
+    private Integer popular;
     //自动填充创建时间
     @TableField(fill = FieldFill.INSERT)
     private Date createdTime;

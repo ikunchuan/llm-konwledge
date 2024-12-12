@@ -32,6 +32,9 @@
             <if test="isActive != null">
                 AND cp.is_active = #{isActive}
             </if>
+            <if test="popular != null">
+                AND cp.popular = #{popular}
+            </if>
             <if test="startDate != null and endDate != null">
                 <!-- 比赛时间与前端时间段有交集 -->
                 AND (

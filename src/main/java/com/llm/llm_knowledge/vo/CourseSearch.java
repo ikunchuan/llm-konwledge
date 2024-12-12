@@ -13,5 +13,6 @@ public class CourseSearch {
     private String courseDescription;
     private String courseDifficultyLevel;
     private String courseRating;
+    private Integer popular;
 
 }

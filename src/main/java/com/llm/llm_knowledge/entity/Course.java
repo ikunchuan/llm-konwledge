@@ -26,6 +26,7 @@ public class Course {
     private String courseDifficultyLevel; // 难度级别（初级、中级、高级）
     private BigDecimal courseRating; // 用户评分（范围 0-5）
     private double coursePrice;//价格
+    private Integer popular;   //热门课程推荐
 
     @TableField(fill = FieldFill.INSERT)
     private Date createdTime; // 记录创建时间

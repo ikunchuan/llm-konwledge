@@ -13,5 +13,6 @@ public class CommunitySearch {
     private String communityDescription;
     private String userName;
     private String categoryName;
+    private Integer popular;
     
 }

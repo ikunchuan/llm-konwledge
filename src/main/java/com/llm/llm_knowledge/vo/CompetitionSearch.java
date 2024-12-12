@@ -15,6 +15,7 @@ public class CompetitionSearch {
     private String categoryName;
     private String competitionName;
     private String isActive;
+    private Integer popular;
     
     private Date startDate;
     private Date endDate;
