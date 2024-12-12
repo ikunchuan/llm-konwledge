@@ -213,11 +213,11 @@ public class UserInfoController {
         String token = StpUtil.getTokenValue();
         
 
-        //获取当前账号所拥有的权限集合
+//        获取当前账号所拥有的权限集合
         System.out.println(StpUtil.getPermissionList());
         
         // 返回 Token 和用户名
-        return ResultEntity.success(Map.of("username", userLoginInfoVO.getUserName(),"userid", userLoginInfoVO.getUserId(), "token", token));
+        return ResultEntity.success(Map.of("username", userLoginInfoVO.getUserName(),"userid",userId, "token", token));
     }
     
     
