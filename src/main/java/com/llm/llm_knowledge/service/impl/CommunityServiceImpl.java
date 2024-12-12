@@ -28,9 +28,8 @@ public class CommunityServiceImpl implements CommunityService {
     
     //查询所有社区
     @Override
-    public IPage<Community> allCmn(Integer pageNum, Integer pageSize) {
-        Page<Community> page = new Page<>(pageNum,pageSize);
-        return communityMapper.selectPage(page,null);
+    public List<Community> allCmn() {
+        return communityMapper.selectList(null);
     }
     
     //根据id查询

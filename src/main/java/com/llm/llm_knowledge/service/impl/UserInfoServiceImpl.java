@@ -136,6 +136,25 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
     
     
+    //查看关注者
+    @Override
+    public List<UserInfo> lookFollower(Integer userId) {
+        return userInfoMapper.lookFollower(userId);
+    }
+    
+    
+    //查看粉丝
+    @Override
+    public List<UserInfo> lookFans(Integer userId) {
+        return userInfoMapper.lookFans(userId);
+    }
+    
+    
+    //查看某个用户的某个社区的积分
+    @Override
+    public List<UserScoreDTO> getScore(Integer userId, Integer communityId) {
+        return userInfoMapper.getScore(userId,communityId);
+    }
     
     
     @Override
@@ -169,6 +188,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         //调用userAdminInfoService里面的方法
         return userInfoMapper.insert(userInfo);
     }
+    
+
     
     
 }

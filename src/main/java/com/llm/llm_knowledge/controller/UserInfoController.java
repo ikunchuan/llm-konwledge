@@ -4,10 +4,7 @@ import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
-import com.llm.llm_knowledge.dto.DateUserCourseCountDTO;
-import com.llm.llm_knowledge.dto.UserAgeDTO;
-import com.llm.llm_knowledge.dto.UserCityDTO;
-import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
+import com.llm.llm_knowledge.dto.*;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.exception.UserException;
@@ -159,6 +156,35 @@ public class UserInfoController {
     }
     
     
+    
+    //查看关注的人
+    @GetMapping("user/follower/{userId}")
+    public List<UserInfo> lookFollower(@PathVariable Integer userId){
+        return userInfoService.lookFollower(userId);
+    }
+    
+    
+    //查看粉丝
+    @GetMapping("user/fans/{userId}")
+    public List<UserInfo> lookFans(@PathVariable Integer userId){
+        return userInfoService.lookFans(userId);
+    }
+    
+    
+    
+    //获取用户在某个社区的积分
+    @PostMapping("user/community/score")
+    public List<UserScoreDTO> getScore(@RequestParam Integer userId,
+                                       @RequestParam Integer communityId){
+        return userInfoService.getScore(userId,communityId);
+    }
+    
+    
+    
+    
+    
+    
+    
     //普通用户登录
     @PostMapping("/login")
     public ResultEntity login(@RequestBody UserLoginInfoVO userLoginInfoVO) throws Exception {
@@ -191,7 +217,7 @@ public class UserInfoController {
         System.out.println(StpUtil.getPermissionList());
         
         // 返回 Token 和用户名
-        return ResultEntity.success(Map.of("username", userLoginInfoVO.getUserName(), "token", token));
+        return ResultEntity.success(Map.of("username", userLoginInfoVO.getUserName(),"userid", userLoginInfoVO.getUserId(), "token", token));
     }
     
     

@@ -103,6 +103,10 @@ public class PostController {
         return postService.postLike(userId,postId);
     }
     
+    /**查看帖子的点赞数*/
+    /**查看帖子的收藏数*/
+    /**查看帖子的点赞数*/
+    
     
     /**最热门的帖子 根据点赞数来排名*/
     @GetMapping("post/mostlike")
@@ -123,6 +127,8 @@ public class PostController {
     public List<Post> postRecommend(){
         return postService.postRecommend();
     }
+    
+    
     
     
     

@@ -3,10 +3,7 @@ package com.llm.llm_knowledge.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
-import com.llm.llm_knowledge.dto.DateUserCourseCountDTO;
-import com.llm.llm_knowledge.dto.UserAgeDTO;
-import com.llm.llm_knowledge.dto.UserCityDTO;
-import com.llm.llm_knowledge.dto.UserCourseProgressDTO;
+import com.llm.llm_knowledge.dto.*;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
@@ -65,5 +62,11 @@ public interface UserInfoService {
     
     //普通用户注册
     Integer register(UserInfo userInfo) throws UserException;
+    
+    List<UserInfo> lookFollower(Integer userId);
+    
+    List<UserInfo> lookFans(Integer userId);
+    
+    List<UserScoreDTO> getScore(Integer userId, Integer communityId);
 }
 

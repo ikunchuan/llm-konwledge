@@ -31,14 +31,13 @@ public class CommunityController {
     private CommunityMapper communityMapper;
     
     /**
-     * 管理员查看所有已注册的社区
+     * 查看所有已注册的社区  无分页版
      *
      * @return List<Community>
      */
     @GetMapping("cmn")
-    public IPage<Community> allCmn(@RequestParam(value = "pageNum") Integer pageNum,
-                                   @RequestParam(value = "pageSize") Integer pageSize) {
-        return communityService.allCmn(pageNum, pageSize);
+    public List<Community> allCmn() {
+        return communityService.allCmn();
     }
     
     
