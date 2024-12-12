@@ -104,10 +104,25 @@ public class PostController {
     }
     
     
+    /**最热门的帖子 根据点赞数来排名*/
+    @GetMapping("post/mostlike")
+    public List<Post> postMostLike(){
+        return postService.postMostLike();
+    }
     
     
+    /**最新的帖子 根据创建时间来排序*/
+    @GetMapping("post/earlytime")
+    public List<Post> postEarlyTime(){
+        return postService.postEarlyLike();
+    }
     
     
+    /**推荐帖子 根据每个用户来推荐 暂时写死*/
+    @GetMapping("post/recommend")
+    public List<Post> postRecommend(){
+        return postService.postRecommend();
+    }
     
     
     

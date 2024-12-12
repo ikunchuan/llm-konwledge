@@ -96,6 +96,22 @@ public class PostServiceImpl implements PostService {
     }
     
     
+    //查找最火的几个帖子
+    @Override
+    public List<Post> postMostLike() {
+        return postMapper.getTopPosts();
+    }
+    
+    @Override
+    public List<Post> postEarlyLike() {
+        return postMapper.getLatestPosts();
+    }
+    
+    @Override
+    public List<Post> postRecommend() {
+        return postMapper.getRecommendPosts();
+    }
+    
     
     //用户帖子浏览记录
     @Override
@@ -136,7 +152,7 @@ public class PostServiceImpl implements PostService {
 
 
 
-
+    
 
 
 

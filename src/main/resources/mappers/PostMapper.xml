@@ -125,9 +125,70 @@
     </update>
 
 
+    <!--最火帖子-->
+    <select id="getTopPosts" resultType="com.llm.llm_knowledge.entity.Post">
+        SELECT
+        p.post_id,
+        p.post_title,
+        p.post_content,
+        COUNT(pl.post_like_id) AS like_count
+        FROM
+        post p
+        LEFT JOIN
+        post_like pl
+        ON
+        p.post_id = pl.post_id
+        <if test="onlyLiked != null and onlyLiked">
+            AND pl.deleted = 0 -- 只统计已点赞的记录
+        </if>
+        WHERE
+        p.deleted = 0 -- 只统计展示中的帖子
+        <if test="postTitle != null and postTitle != ''">
+            AND p.post_title LIKE CONCAT('%', #{postTitle}, '%') -- 按标题搜索
+        </if>
+        <if test="postContent != null and postContent != ''">
+            AND p.post_content LIKE CONCAT('%', #{postContent}, '%') -- 按内容搜索
+        </if>
+        GROUP BY
+        p.post_id
+        ORDER BY
+        like_count DESC -- 按点赞数量降序排列
+
+    </select>
 
 
+    <!--最新帖子-->
+    <select id="getLatestPosts" resultType="com.llm.llm_knowledge.entity.Post">
+        SELECT
+        p.post_id,
+        p.post_title,
+        p.post_content,
+        p.created_time
+        FROM
+        post p
+        WHERE
+        p.deleted = 0 -- 只统计展示中的帖子
+        <if test="postTitle != null and postTitle != ''">
+            AND p.post_title LIKE CONCAT('%', #{postTitle}, '%') -- 按标题搜索
+        </if>
+        <if test="postContent != null and postContent != ''">
+            AND p.post_content LIKE CONCAT('%', #{postContent}, '%') -- 按内容搜索
+        </if>
+        ORDER BY
+        p.created_time DESC -- 按创建时间降序排列
+    </select>
 
+
+    <!--推荐帖子-->
+    <select id="getRecommendPosts" resultType="com.llm.llm_knowledge.entity.Post">
+        SELECT p.post_id,
+               p.post_title,
+               p.post_content,
+               p.created_time
+        FROM post p
+        WHERE p.recommend = 1
+        ORDER BY p.created_time
+    </select>
 
 
 

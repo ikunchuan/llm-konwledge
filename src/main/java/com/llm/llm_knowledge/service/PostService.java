@@ -45,4 +45,10 @@ public interface PostService {
     
     
     Integer postLike(Integer userId, Integer postId);
+    
+    List<Post> postMostLike();
+    
+    List<Post> postEarlyLike();
+    
+    List<Post> postRecommend();
 }
