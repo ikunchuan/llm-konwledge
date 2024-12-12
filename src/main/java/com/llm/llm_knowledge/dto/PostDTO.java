@@ -19,6 +19,9 @@ public class PostDTO {
     private String userName;
     private Date createdTime;
     private Date updatedTime;
+    private Integer likeCount;
+    private Integer favoriteCount;
+    private Integer commentCount;
     
     
 }

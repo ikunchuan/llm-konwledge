@@ -46,9 +46,9 @@ public interface PostService {
     
     Integer postLike(Integer userId, Integer postId);
     
-    List<Post> postMostLike();
+    List<PostDTO> postMostLike();
     
-    List<Post> postEarlyLike();
+    List<PostDTO> postEarlyLike();
     
-    List<Post> postRecommend();
+    List<PostDTO> postRecommend();
 }

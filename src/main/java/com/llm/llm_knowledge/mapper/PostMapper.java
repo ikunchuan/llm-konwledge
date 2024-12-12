@@ -51,9 +51,9 @@ public interface PostMapper extends BaseMapper<Post> {
     
     Integer updateFavoriteStatus(Integer userId, Integer postId);
     
-    List<Post> getTopPosts();
+    List<PostDTO> getTopPosts();
     
-    List<Post> getLatestPosts();
+    List<PostDTO> getLatestPosts();
     
-    List<Post> getRecommendPosts();
+    List<PostDTO> getRecommendPosts();
 }

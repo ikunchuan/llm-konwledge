@@ -98,17 +98,17 @@ public class PostServiceImpl implements PostService {
     
     //查找最火的几个帖子
     @Override
-    public List<Post> postMostLike() {
+    public List<PostDTO> postMostLike() {
         return postMapper.getTopPosts();
     }
     
     @Override
-    public List<Post> postEarlyLike() {
+    public List<PostDTO> postEarlyLike() {
         return postMapper.getLatestPosts();
     }
     
     @Override
-    public List<Post> postRecommend() {
+    public List<PostDTO> postRecommend() {
         return postMapper.getRecommendPosts();
     }
     
