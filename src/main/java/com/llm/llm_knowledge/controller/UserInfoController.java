@@ -159,7 +159,7 @@ public class UserInfoController {
     }
     
     
-    
+    //普通用户登录
     @PostMapping("/login")
     public ResultEntity login(@RequestBody UserLoginInfoVO userLoginInfoVO) throws Exception {
         // 如果用户同时没有输入用户名或密码，抛出异常
@@ -193,4 +193,39 @@ public class UserInfoController {
         // 返回 Token 和用户名
         return ResultEntity.success(Map.of("username", userLoginInfoVO.getUserName(), "token", token));
     }
+    
+    
+    //用户登出
+    @PostMapping("/logout")
+    public ResultEntity logout() {
+        // 执行注销
+        StpUtil.logout();
+        return ResultEntity.success("注销成功");
+    }
+    
+    
+    //用户注册
+    @PostMapping("/register")
+    public ResultEntity register(@RequestBody UserLoginInfoVO userLoginInfoVO) throws UserException {
+        if (null == userLoginInfoVO) {
+            throw new UserException("请输入用户名和密码");
+        }
+        if (null == userLoginInfoVO.getUserName()) {
+            throw new UserException("请输入用户名");
+        }
+        if (null == userLoginInfoVO.getUserPassword()) {
+            throw new UserException("请输入密码");
+        }
+        UserInfo userInfo = new UserInfo();
+        BeanUtils.copyProperties(userLoginInfoVO, userInfo);
+        Integer register = userInfoService.register(userInfo);
+        if (1 == register.intValue()) {
+            return ResultEntity.success("注册成功");
+        } else {
+            return ResultEntity.fail("注册失败");
+        }
+    }
+    
+    
+    
 }
