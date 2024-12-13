@@ -90,11 +90,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     //条件查询
     @Override
-    public List<Question> criteriaFindQuestion(Question question) {
+    public List<Question> criteriaFindQuestion(Integer id) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.like("question_title", question.getQuestionTitle());
-        queryWrapper.eq("question_id", question.getQuestionId());
-        queryWrapper.eq("question_category_id", question.getCategoryId());
+        queryWrapper.eq("category_id", id);
         return questionMapper.selectList(queryWrapper);
     }
 
