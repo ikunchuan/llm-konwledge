@@ -20,6 +20,7 @@ public class UserInfo {
     private String userPhone;
     private String userEmail;
     private String userProfilePicture;
+    private String userBio;
     private String userLocal;
     private Integer userUnderview;//用户id
     private Integer userAge;//用户id
