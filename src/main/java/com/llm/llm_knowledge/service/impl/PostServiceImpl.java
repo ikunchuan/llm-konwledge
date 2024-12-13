@@ -119,17 +119,17 @@ public class PostServiceImpl implements PostService {
     
     @Override
     public Integer getUserPostLikeCount(Integer userId) {
-        return postMapper.getUserPostViewCount(userId);
+        return postMapper.getUserPostLikeCount(userId);
     }
     
     @Override
     public Integer getUserPostFavoriteCount(Integer userId) {
-        return postMapper.getUserPostViewCount(userId);
+        return postMapper.getUserPostFavoriteCount(userId);
     }
     
     @Override
     public Integer getUserPostCommentCount(Integer userId) {
-        return postMapper.getUserPostViewCount(userId);
+        return postMapper.getUserPostCommentCount(userId);
     }
     
     
