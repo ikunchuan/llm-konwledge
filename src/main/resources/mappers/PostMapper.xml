@@ -236,6 +236,19 @@
     </select>
 
 
+    <!--查询某个用户的帖子的浏览总数-->
+    <select id="getUserPostViewCount" resultType="integer">
+        SELECT
+            COALESCE(SUM(pv.view_count), 0) AS total_views
+        FROM
+            post p
+                LEFT JOIN
+            post_view pv
+            ON
+                p.post_id = pv.post_id
+        WHERE
+            p.user_id = #{userId}
+    </select>
 
 
 

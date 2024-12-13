@@ -126,7 +126,11 @@ public class PostController {
     }
     
     
-    
+    /**某个用户的所有帖子加起来的浏览数*/
+    @GetMapping("post/all/{userId}")
+    public Integer getUserPostViewCount(@PathVariable Integer userId){
+        return postService.getUserPostViewCount(userId);
+    }
     
     
 }
