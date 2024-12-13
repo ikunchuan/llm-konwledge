@@ -31,7 +31,7 @@ public interface QuestionService {
     List<Question> findQuestionByIds(List<Question> ids);
 
     //条件查询
-    List<Question> criteriaFindQuestion(Question question);
+    List<Question> criteriaFindQuestion(Integer id);
 
     //分页查询全部记录
     Page<Question> findAllPageQuestion(Integer pageNum, Integer pageSize);

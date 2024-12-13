@@ -50,11 +50,20 @@ public class QuestionController {
         return questionService.findQuestionById(id);
     }
 
+    //查询类别中题目
+    @GetMapping("v1/cate/{id}")
+    public List<Question> criteriaFindQuestion(@PathVariable Integer id) {
+        return questionService.criteriaFindQuestion(id);
+    }
+
+
     //分页查全
     @GetMapping("v1/page")
     public Page<Question> findAllPageQuestion(Integer pageNum, Integer pageSize) {
         return questionService.findAllPageQuestion(pageNum, pageSize);
     }
+
+
 
     //模糊联表查询
     @PostMapping("v1/search")
