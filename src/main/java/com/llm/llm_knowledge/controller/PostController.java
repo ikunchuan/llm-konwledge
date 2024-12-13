@@ -126,7 +126,29 @@ public class PostController {
     }
     
     
+    /**某个用户的所有帖子加起来的浏览数*/
+    @GetMapping("post/allview/{userId}")
+    public Integer getUserPostViewCount(@PathVariable Integer userId){
+        return postService.getUserPostViewCount(userId);
+    }
     
+    /**某个用户的所有帖子加起来的点赞数*/
+    @GetMapping("post/alllike/{userId}")
+    public Integer getUserPostLikeCount(@PathVariable Integer userId){
+        return postService.getUserPostViewCount(userId);
+    }
+    
+    /**某个用户的所有帖子加起来的收藏数*/
+    @GetMapping("post/allfavorite/{userId}")
+    public Integer getUserPostFavoriteCount(@PathVariable Integer userId){
+        return postService.getUserPostViewCount(userId);
+    }
+    
+    /**某个用户的所有帖子加起来的评论总数*/
+    @GetMapping("post/allcomment/{userId}")
+    public Integer getUserPostCommentCount(@PathVariable Integer userId){
+        return postService.getUserPostViewCount(userId);
+    }
     
     
 }

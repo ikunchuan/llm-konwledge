@@ -20,5 +20,6 @@ public class CourseDTO {
     private Date updatedTime;
     private String courseDifficultyLevel;
     private String categoryName;
+    private String bvid;
 
 }

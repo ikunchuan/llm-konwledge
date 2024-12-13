@@ -51,4 +51,6 @@ public interface PostService {
     List<PostDTO> postEarlyLike();
     
     List<PostDTO> postRecommend();
+    
+    Integer getUserPostViewCount(Integer userId);
 }

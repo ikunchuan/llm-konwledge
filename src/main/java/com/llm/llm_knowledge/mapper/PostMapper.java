@@ -56,4 +56,9 @@ public interface PostMapper extends BaseMapper<Post> {
     List<PostDTO> getLatestPosts();
     
     List<PostDTO> getRecommendPosts();
+    
+    Integer getUserPostViewCount(Integer userId);
+    Integer getUserPostLikeCount(Integer userId);
+    Integer getUserPostFavoriteCount(Integer userId);
+    Integer getUserPostCommentCount(Integer userId);
 }

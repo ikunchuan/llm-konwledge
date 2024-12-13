@@ -27,6 +27,7 @@ public class Course {
     private BigDecimal courseRating; // 用户评分（范围 0-5）
     private double coursePrice;//价格
     private Integer popular;   //热门课程推荐
+    private String bvid;       //课程的bvid 原来播放b站视频
 
     @TableField(fill = FieldFill.INSERT)
     private Date createdTime; // 记录创建时间

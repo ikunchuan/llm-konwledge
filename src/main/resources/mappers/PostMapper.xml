@@ -236,7 +236,60 @@
     </select>
 
 
+    <!--查询某个用户的帖子的浏览总数-->
+    <select id="getUserPostViewCount" resultType="integer">
+        SELECT
+            COALESCE(SUM(pv.view_count), 0) AS total_views
+        FROM
+            post p
+                LEFT JOIN
+            post_view pv
+            ON
+                p.post_id = pv.post_id
+        WHERE
+            p.user_id = #{userId}
+    </select>
 
+    <!--查询某个用户的帖子的总点赞数-->
+    <select id="getUserPostLikeCount" resultType="integer">
+        SELECT
+            COALESCE(SUM(CASE WHEN pl.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_likes
+        FROM
+            post p
+                LEFT JOIN
+            post_like pl
+            ON
+                p.post_id = pl.post_id
+        WHERE
+            p.user_id = #{userId}
+    </select>
 
+    <!--查询某个用户的帖子的总收藏数-->
+    <select id="getUserPostFavoriteCount" resultType="integer">
+        SELECT
+            COALESCE(SUM(CASE WHEN pf.deleted IS NULL OR pf.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_favorites
+        FROM
+            post p
+                LEFT JOIN
+            post_favorite pf
+            ON
+                p.post_id = pf.post_id
+        WHERE
+            p.user_id = #{userId}
+    </select>
+
+    <!--查询某个用户的帖子的总评论数-->
+    <select id="getUserPostCommentCount" resultType="integer">
+        SELECT
+            COALESCE(SUM(CASE WHEN pc.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_comments
+        FROM
+            post p
+                LEFT JOIN
+            post_comment pc
+            ON
+                p.post_id = pc.post_id
+        WHERE
+            p.user_id = #{userId}
+    </select>
 
 </mapper>
