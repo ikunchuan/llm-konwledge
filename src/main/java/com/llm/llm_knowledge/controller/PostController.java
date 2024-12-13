@@ -67,6 +67,15 @@ public class PostController {
     }
     
     
+    
+    /**用户新增帖子*/
+    @PostMapping("add/postwithscore")
+    public Integer insertPostAndUpdateScore(@RequestBody Post post) throws Exception {
+        return postService.insertPostAndUpdateScore(post);
+    }
+    
+    
+    
     /**更新帖子*/
     @PutMapping("post")
     public Integer updatePost(@RequestBody Post post){

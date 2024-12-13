@@ -75,53 +75,60 @@
     <insert id="addPostView" parameterType="com.llm.llm_knowledge.entity.PostView">
         INSERT INTO post_view (user_id, post_id, updated_time, view_count)
         VALUES (#{userId}, #{postId}, CURRENT_TIMESTAMP, 1)
-        ON DUPLICATE KEY UPDATE
-                             updated_time = CURRENT_TIMESTAMP,
-                             view_count = view_count + 1;
+        ON DUPLICATE KEY UPDATE updated_time = CURRENT_TIMESTAMP,
+                                view_count   = view_count + 1;
     </insert>
 
 
     <!--用户点赞帖子后会在帖子点赞表增加一条点赞记录-->
     <!--插入新记录-->
-    <insert id="addPostLike" parameterType="map" >
-        INSERT INTO post_like (user_id, post_id,updated_time,deleted)
+    <insert id="addPostLike" parameterType="map">
+        INSERT INTO post_like (user_id, post_id, updated_time, deleted)
         VALUES (#{userId}, #{postId}, CURRENT_TIMESTAMP, 0)
     </insert>
     <!--查询记录-->
     <select id="searchPostLike" parameterType="map" resultType="com.llm.llm_knowledge.entity.PostLike">
-        SELECT * FROM post_like WHERE user_id = #{userId} AND post_id = #{postId}
+        SELECT *
+        FROM post_like
+        WHERE user_id = #{userId}
+          AND post_id = #{postId}
     </select>
     <!--更新记录-->
     <update id="updateLikeStatus" parameterType="map">
         UPDATE post_like
-        SET deleted = CASE
-                          WHEN deleted = 0 THEN 1   -- 如果当前是点赞（deleted=0），则取消点赞（设置为1）
-                          WHEN deleted = 1 THEN 0   -- 如果当前是取消点赞（deleted=1），则恢复点赞（设置为0）
+        SET deleted      = CASE
+                               WHEN deleted = 0 THEN 1 -- 如果当前是点赞（deleted=0），则取消点赞（设置为1）
+                               WHEN deleted = 1 THEN 0 -- 如果当前是取消点赞（deleted=1），则恢复点赞（设置为0）
             END,
-            updated_time = CURRENT_TIMESTAMP  -- 更新点赞时间
-        WHERE user_id = #{userId} AND post_id = #{postId};
+            updated_time = CURRENT_TIMESTAMP -- 更新点赞时间
+        WHERE user_id = #{userId}
+          AND post_id = #{postId};
     </update>
 
 
     <!--用户收藏帖子后会在帖子收藏表增加一条点赞记录-->
     <!--插入新记录-->
-    <insert id="addPostFavorite" parameterType="map" >
-        INSERT INTO post_favorite (user_id, post_id,updated_time,deleted)
+    <insert id="addPostFavorite" parameterType="map">
+        INSERT INTO post_favorite (user_id, post_id, updated_time, deleted)
         VALUES (#{userId}, #{postId}, CURRENT_TIMESTAMP, 0)
     </insert>
     <!--查询记录-->
     <select id="searchPostFavorite" parameterType="map" resultType="com.llm.llm_knowledge.entity.PostFavorite">
-        SELECT * FROM post_favorite WHERE user_id = #{userId} AND post_id = #{postId}
+        SELECT *
+        FROM post_favorite
+        WHERE user_id = #{userId}
+          AND post_id = #{postId}
     </select>
     <!--更新记录-->
     <update id="updateFavoriteStatus" parameterType="map">
         UPDATE post_favorite
-        SET deleted = CASE
-                          WHEN deleted = 0 THEN 1   -- 如果当前是收藏（deleted=0），则取消收藏（设置为1）
-                          WHEN deleted = 1 THEN 0   -- 如果当前是取消收藏（deleted=1），则恢复收藏（设置为0）
+        SET deleted      = CASE
+                               WHEN deleted = 0 THEN 1 -- 如果当前是收藏（deleted=0），则取消收藏（设置为1）
+                               WHEN deleted = 1 THEN 0 -- 如果当前是取消收藏（deleted=1），则恢复收藏（设置为0）
             END,
-            updated_time = CURRENT_TIMESTAMP  -- 更新点赞时间
-        WHERE user_id = #{userId} AND post_id = #{postId};
+            updated_time = CURRENT_TIMESTAMP -- 更新点赞时间
+        WHERE user_id = #{userId}
+          AND post_id = #{postId};
     </update>
 
 
@@ -207,89 +214,90 @@
 
     <!--推荐帖子-->
     <select id="getRecommendPosts" resultType="com.llm.llm_knowledge.dto.PostDTO">
-        SELECT
-            p.post_id,
-            p.post_title,
-            p.post_content,
-            p.created_time,
-            COUNT(DISTINCT pl.post_like_id) AS like_count, -- 点赞数
-            COUNT(DISTINCT pc.comment_id) AS comment_count, -- 评论数
-            COUNT(DISTINCT pf.post_favorite_id) AS favorite_count -- 收藏数
-        FROM
-            post p
-                LEFT JOIN
-            post_like pl
-            ON
-                p.post_id = pl.post_id
-                LEFT JOIN
-            post_comment pc
-            ON
-                p.post_id = pc.post_id
-                LEFT JOIN
-            post_favorite pf
-            ON
-                p.post_id = pf.post_id
-        WHERE
-            p.recommend = 1 -- 只查询推荐的帖子
-        GROUP BY
-            p.post_id
+        SELECT p.post_id,
+               p.post_title,
+               p.post_content,
+               p.created_time,
+               COUNT(DISTINCT pl.post_like_id)     AS like_count,    -- 点赞数
+               COUNT(DISTINCT pc.comment_id)       AS comment_count, -- 评论数
+               COUNT(DISTINCT pf.post_favorite_id) AS favorite_count -- 收藏数
+        FROM post p
+                 LEFT JOIN
+             post_like pl
+             ON
+                 p.post_id = pl.post_id
+                 LEFT JOIN
+             post_comment pc
+             ON
+                 p.post_id = pc.post_id
+                 LEFT JOIN
+             post_favorite pf
+             ON
+                 p.post_id = pf.post_id
+        WHERE p.recommend = 1 -- 只查询推荐的帖子
+        GROUP BY p.post_id
     </select>
 
 
     <!--查询某个用户的帖子的浏览总数-->
     <select id="getUserPostViewCount" resultType="integer">
-        SELECT
-            COALESCE(SUM(pv.view_count), 0) AS total_views
-        FROM
-            post p
-                LEFT JOIN
-            post_view pv
-            ON
-                p.post_id = pv.post_id
-        WHERE
-            p.user_id = #{userId}
+        SELECT COALESCE(SUM(pv.view_count), 0) AS total_views
+        FROM post p
+                 LEFT JOIN
+             post_view pv
+             ON
+                 p.post_id = pv.post_id
+        WHERE p.user_id = #{userId}
     </select>
 
     <!--查询某个用户的帖子的总点赞数-->
     <select id="getUserPostLikeCount" resultType="integer">
-        SELECT
-            COALESCE(SUM(CASE WHEN pl.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_likes
-        FROM
-            post p
-                LEFT JOIN
-            post_like pl
-            ON
-                p.post_id = pl.post_id
-        WHERE
-            p.user_id = #{userId}
+        SELECT COALESCE(SUM(CASE WHEN pl.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_likes
+        FROM post p
+                 LEFT JOIN
+             post_like pl
+             ON
+                 p.post_id = pl.post_id
+        WHERE p.user_id = #{userId}
     </select>
 
     <!--查询某个用户的帖子的总收藏数-->
     <select id="getUserPostFavoriteCount" resultType="integer">
-        SELECT
-            COALESCE(SUM(CASE WHEN pf.deleted IS NULL OR pf.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_favorites
-        FROM
-            post p
-                LEFT JOIN
-            post_favorite pf
-            ON
-                p.post_id = pf.post_id
-        WHERE
-            p.user_id = #{userId}
+        SELECT COALESCE(SUM(CASE WHEN pf.deleted IS NULL OR pf.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_favorites
+        FROM post p
+                 LEFT JOIN
+             post_favorite pf
+             ON
+                 p.post_id = pf.post_id
+        WHERE p.user_id = #{userId}
     </select>
 
     <!--查询某个用户的帖子的总评论数-->
     <select id="getUserPostCommentCount" resultType="integer">
-        SELECT
-            COALESCE(SUM(CASE WHEN pc.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_comments
-        FROM
-            post p
-                LEFT JOIN
-            post_comment pc
-            ON
-                p.post_id = pc.post_id
-        WHERE
-            p.user_id = #{userId}
+        SELECT COALESCE(SUM(CASE WHEN pc.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_comments
+        FROM post p
+                 LEFT JOIN
+             post_comment pc
+             ON
+                 p.post_id = pc.post_id
+        WHERE p.user_id = #{userId}
     </select>
+
+
+    <!--用户发帖后执行下面的sql语句 往帖子表里面加一条数据 并更新用户的score-->
+    <insert id="insertPost" parameterType="map">
+        <![CDATA[
+            INSERT INTO post (community_id, user_id, post_title, post_content, created_time, updated_time)
+            VALUES (#{communityId}, #{userId}, #{postTitle}, #{postContent}, NOW(), NOW());
+        ]]>
+    </insert>
+    <update id="updateUserScoreForPost" parameterType="map">
+        <![CDATA[
+            UPDATE user_community_score
+            SET score = score + 5
+            WHERE user_id = #{userId}
+          AND community_id = #{communityId};
+        ]]>
+    </update>
 
 </mapper>

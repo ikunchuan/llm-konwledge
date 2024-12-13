@@ -84,5 +84,15 @@ public class CommunityServiceImpl implements CommunityService {
         return communityMapper.selectCommunityUsersWithPostCount(communityId);
     }
     
+
+    
+    @Override
+    public Integer updateUserScoreForLogin(Integer communityId, Integer userId) {
+        //首先查看用户在这个社区是否有积分表,如果没有则先插入数据,如果有则增加分数
+        communityMapper.insertUserCommunityScoreIfNotExist(communityId,userId);
+        communityMapper.updateUserScoreForLogin(communityId,userId);
+        return null;
+    }
+    
     
 }

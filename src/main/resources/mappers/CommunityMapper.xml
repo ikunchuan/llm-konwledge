@@ -93,4 +93,26 @@
     </select>
 
 
+    <update id="updateUserScoreForLogin" parameterType="map">
+        <![CDATA[
+            UPDATE user_community_score
+            SET score = score + 3
+            WHERE user_id = #{userId}
+            AND community_id = #{communityId};
+        ]]>
+    </update>
+
+
+
+    <update id="insertUserCommunityScoreIfNotExist" parameterType="map">
+        <![CDATA[
+            INSERT INTO user_community_score (user_id, community_id, score,created_time,updated_time)
+            SELECT #{userId}, #{communityId}, 0 , NOW(), NOW()
+            WHERE NOT EXISTS (
+            SELECT 1 FROM user_community_score WHERE user_id = #{userId} AND community_id = #{communityId}
+        );
+        ]]>
+</update>
+
+
 </mapper>

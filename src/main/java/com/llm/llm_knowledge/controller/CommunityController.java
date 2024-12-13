@@ -13,6 +13,7 @@ import com.llm.llm_knowledge.service.CommunityService;
 import com.llm.llm_knowledge.util.FileUtil;
 import com.llm.llm_knowledge.vo.CommunitySearch;
 import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -145,36 +146,19 @@ public class CommunityController {
     }
     
     
-//    /**
-//     * 阿里云OSS图片上传
-//     */
-//    @PostMapping("/uploadaliyun")
-//    public String uploadCommunityImage(@RequestParam("file") MultipartFile file, @RequestParam("communityId") Integer communityId) {
-//        if (file.isEmpty()) {
-//            return "No file uploaded";
-//        }
-//
-//        try {
-//            // 上传文件到阿里云OSS
-//            String imageUrl = FileUtil.uploadImage(file);
-//            if (imageUrl.equals("No file uploaded")) {
-//                return "Upload failed";
-//            }
-//
-//            // 更新数据库中的communityImageUrl字段
-//            Community community = communityMapper.selectById(communityId);
-//            if (community != null) {
-//                community.setCommunityImageUrl(imageUrl);
-//                communityMapper.updateById(community);
-//                return "Upload successful: " + imageUrl;
-//            } else {
-//                return "Community not found";
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return "Upload failed due to an error";
-//        }
-//    }
+    
+    
+    //用户登录社区增加积分
+    @PutMapping("loginwithscore")
+    public Integer updateUserScoreForLogin(@RequestParam Integer communityId,
+                                           @RequestParam Integer userId){
+        return communityService.updateUserScoreForLogin(communityId,userId);
+    }
+    
+    
+    
+    
+
     
     
     

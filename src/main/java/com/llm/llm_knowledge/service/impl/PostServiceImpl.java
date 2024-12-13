@@ -134,6 +134,20 @@ public class PostServiceImpl implements PostService {
     
     
     
+    @Override
+    public Integer insertPostAndUpdateScore(Post post) throws Exception {
+        
+        try{
+            postMapper.insertPost(post);
+            postMapper.updateUserScoreForPost(post);
+        }catch(Exception e){
+            throw new Exception("此方法执行失败,没有添加帖子,也没有增加积分");
+        }
+        return 1;
+    }
+    
+    
+    
     //用户帖子浏览记录
     @Override
     public Integer postView(Integer userId, Integer postId) {

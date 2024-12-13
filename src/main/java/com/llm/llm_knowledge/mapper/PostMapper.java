@@ -61,4 +61,8 @@ public interface PostMapper extends BaseMapper<Post> {
     Integer getUserPostLikeCount(Integer userId);
     Integer getUserPostFavoriteCount(Integer userId);
     Integer getUserPostCommentCount(Integer userId);
+    
+    Integer insertPost(Post post);
+    Integer updateUserScoreForPost(Post post);
+    
 }

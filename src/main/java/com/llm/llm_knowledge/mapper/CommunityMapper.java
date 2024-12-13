@@ -20,5 +20,9 @@ public interface CommunityMapper extends BaseMapper<Community> {
     
     
     List<UserPostCountDTO> selectCommunityUsersWithPostCount(Integer communityId);
-
+    
+    
+    void insertUserCommunityScoreIfNotExist(Integer communityId, Integer userId);
+    
+    void updateUserScoreForLogin(Integer communityId, Integer userId);
 }

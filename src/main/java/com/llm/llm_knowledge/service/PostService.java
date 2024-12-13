@@ -56,4 +56,6 @@ public interface PostService {
     Integer getUserPostLikeCount(Integer userId);
     Integer getUserPostFavoriteCount(Integer userId);
     Integer getUserPostCommentCount(Integer userId);
+    
+    Integer insertPostAndUpdateScore(Post post) throws Exception;
 }

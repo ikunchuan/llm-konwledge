@@ -10,6 +10,7 @@ import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.pojo.ResultEntity;
 import com.llm.llm_knowledge.service.UserInfoService;
+import com.llm.llm_knowledge.util.FileUtil;
 import com.llm.llm_knowledge.vo.UserAdminInfoVO;
 import com.llm.llm_knowledge.vo.UserInfoSearch;
 import com.llm.llm_knowledge.vo.UserLoginInfoVO;
@@ -18,7 +19,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -252,6 +255,26 @@ public class UserInfoController {
         }
     }
     
+    
+    //用户头像上传
+    @PostMapping ("/upload")
+    public String upload(@RequestParam("file") MultipartFile file) {
+        String oldFileName = file.getOriginalFilename();  // 获取原始文件名
+        System.out.println(oldFileName);
+        String typeName = oldFileName.substring(oldFileName.lastIndexOf('.'));  // 获取文件扩展名
+        String filePath = FileUtil.getUpLoadFilePath();  // 获取文件保存路径
+        System.out.println(typeName);
+        String newFileName = System.currentTimeMillis() + oldFileName;  // 生成新文件名，防止覆盖
+        
+        try {
+            // 保存文件到指定路径
+            FileUtil.uploadFile(file.getBytes(), filePath, newFileName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);  // 如果上传失败，抛出运行时异常
+        }
+        
+        return newFileName;  // 返回新文件名
+    }
     
     
 }

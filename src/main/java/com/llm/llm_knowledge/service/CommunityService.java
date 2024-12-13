@@ -35,4 +35,7 @@ public interface CommunityService {
     
     
     List<UserPostCountDTO> getCommunityPostUser(Integer communityId);
+    
+    
+    Integer updateUserScoreForLogin(Integer communityId, Integer userId);
 }
