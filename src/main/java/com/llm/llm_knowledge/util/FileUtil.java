@@ -11,8 +11,8 @@ public class FileUtil {
     
     public static void uploadFile(byte[] file, String filePath, String fileName) throws IOException {
         File targetFile = new File(filePath);
-        if(!targetFile.exists()){
-            targetFile.mkdirs();
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();  // 如果文件夹不存在则创建
         }
         FileOutputStream out = new FileOutputStream(targetFile.getAbsolutePath() + "/" + fileName);
         out.write(file);
@@ -21,18 +21,7 @@ public class FileUtil {
     }
 
     public static String getUpLoadFilePath() {
-        File path = null;
-        try {
-            path = new File(ResourceUtils.getURL("classpath:").getPath());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (!path.exists()) {
-            path = new File("");
-        }
-        File filePath = new File(path.getAbsolutePath(), "static/images/upload/");
-        return filePath.getAbsolutePath();
+        return "F:/llm-vue/src/assets/img";
 
     }
 }

@@ -127,18 +127,21 @@ public class CommunityController {
      * 图片上传*/
     @PostMapping("/upload")
     public String getPicFileName(MultipartFile file){
-        String oldFileName = file.getOriginalFilename();
+        String oldFileName = file.getOriginalFilename();  // 获取原始文件名
         System.out.println(oldFileName);
-        String typeName = oldFileName.substring(oldFileName.lastIndexOf('.'));
-        String filePath = FileUtil.getUpLoadFilePath();
+        String typeName = oldFileName.substring(oldFileName.lastIndexOf('.'));  // 获取文件扩展名
+        String filePath = FileUtil.getUpLoadFilePath();  // 获取文件保存路径
         System.out.println(typeName);
-        String newFileName = System.currentTimeMillis() + oldFileName;
+        String newFileName = System.currentTimeMillis() + oldFileName;  // 生成新文件名，防止覆盖
+        
         try {
-            FileUtil.uploadFile(file.getBytes(),filePath,newFileName);
+            // 保存文件到指定路径
+            FileUtil.uploadFile(file.getBytes(), filePath, newFileName);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e);  // 如果上传失败，抛出运行时异常
         }
-        return newFileName;
+        
+        return newFileName;  // 返回新文件名
     }
     
     
