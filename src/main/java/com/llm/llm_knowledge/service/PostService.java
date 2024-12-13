@@ -53,4 +53,7 @@ public interface PostService {
     List<PostDTO> postRecommend();
     
     Integer getUserPostViewCount(Integer userId);
+    Integer getUserPostLikeCount(Integer userId);
+    Integer getUserPostFavoriteCount(Integer userId);
+    Integer getUserPostCommentCount(Integer userId);
 }

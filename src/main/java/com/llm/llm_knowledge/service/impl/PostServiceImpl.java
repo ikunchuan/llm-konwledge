@@ -117,6 +117,22 @@ public class PostServiceImpl implements PostService {
         return postMapper.getUserPostViewCount(userId);
     }
     
+    @Override
+    public Integer getUserPostLikeCount(Integer userId) {
+        return postMapper.getUserPostViewCount(userId);
+    }
+    
+    @Override
+    public Integer getUserPostFavoriteCount(Integer userId) {
+        return postMapper.getUserPostViewCount(userId);
+    }
+    
+    @Override
+    public Integer getUserPostCommentCount(Integer userId) {
+        return postMapper.getUserPostViewCount(userId);
+    }
+    
+    
     
     //用户帖子浏览记录
     @Override
