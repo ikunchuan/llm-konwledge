@@ -26,4 +26,19 @@ public class CourseChapterServiceImpl implements CourseChapterService {
         queryWrapper.eq("course_id", id);
         return courseChapterMapper.selectList(queryWrapper);
     }
+    
+    @Override
+    public Integer insertCourseChapter(CourseChapter courseChapter) {
+        return courseChapterMapper.insert(courseChapter);
+    }
+    
+    @Override
+    public Integer updateCourseChapter(CourseChapter courseChapter) {
+        return courseChapterMapper.updateById(courseChapter);
+    }
+    
+    @Override
+    public Integer deleteCourseChapter(Integer id) {
+        return courseChapterMapper.deleteById(id);
+    }
 }

@@ -16,17 +16,36 @@ import java.util.List;
 public class CourseChapterController {
     @Autowired
     private CourseChapterService courseChapterService;
-
+    
     //查询全部
     @GetMapping("v1")
-    public List<CourseChapter> getAllCourseChapter(){return courseChapterService.getCourseChapter();}
-
- @GetMapping("v1/{id}")
+    public List<CourseChapter> getAllCourseChapter() {
+        return courseChapterService.getCourseChapter();
+    }
+    
+    @GetMapping("v1/{id}")
     public List<CourseChapter> getCourseChapter(@PathVariable Integer id) {
-     return courseChapterService.getCourseChapterByCourseId(id);
+        return courseChapterService.getCourseChapterByCourseId(id);
+        
+    }
+    
+    //上传章节
+    @PostMapping("v1")
+    public Integer insertCourseChapter(CourseChapter courseChapter){
+        return courseChapterService.insertCourseChapter(courseChapter);
+    }
 
- }
-
-
-
+    //更改章节
+    @PutMapping("v1")
+    public Integer updateCourseChapter(CourseChapter courseChapter){
+        return courseChapterService.updateCourseChapter(courseChapter);
+    }
+    
+    //删除章节
+    @DeleteMapping("v1/{id}")
+    public Integer deleteCourseChapter(@PathVariable Integer id){
+        return courseChapterService.deleteCourseChapter(id);
+    }
+    
+    
 }
