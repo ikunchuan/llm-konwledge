@@ -31,13 +31,13 @@ public class CourseChapterController {
     
     //上传章节
     @PostMapping("v1")
-    public Integer insertCourseChapter(CourseChapter courseChapter){
+    public Integer insertCourseChapter(@RequestBody CourseChapter courseChapter){
         return courseChapterService.insertCourseChapter(courseChapter);
     }
 
     //更改章节
     @PutMapping("v1")
-    public Integer updateCourseChapter(CourseChapter courseChapter){
+    public Integer updateCourseChapter(@RequestBody CourseChapter courseChapter){
         return courseChapterService.updateCourseChapter(courseChapter);
     }
     
