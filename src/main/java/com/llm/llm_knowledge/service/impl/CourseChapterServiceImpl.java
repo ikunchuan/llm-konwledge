@@ -2,8 +2,12 @@ package com.llm.llm_knowledge.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.entity.CourseChapter;
+import com.llm.llm_knowledge.entity.CourseContent;
+import com.llm.llm_knowledge.entity.CourseLesson;
 import com.llm.llm_knowledge.mapper.CourseChapterMapper;
+import com.llm.llm_knowledge.mapper.CourseLessonMapper;
 import com.llm.llm_knowledge.service.CourseChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,10 @@ import java.util.List;
 public class CourseChapterServiceImpl implements CourseChapterService {
     @Autowired
     private CourseChapterMapper courseChapterMapper;
+    
+    @Autowired
+    private CourseLessonMapper courseLessonMapper;
+    
     //查询全部
     @Override
     public List<CourseChapter>getCourseChapter(){return courseChapterMapper.selectList(null);}
@@ -40,5 +48,27 @@ public class CourseChapterServiceImpl implements CourseChapterService {
     @Override
     public Integer deleteCourseChapter(Integer id) {
         return courseChapterMapper.deleteById(id);
+    }
+    
+    @Override
+    public List<CourseLesson> getLessonWithChapter(Integer chapterId) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("chapter_id",chapterId);
+        return courseLessonMapper.selectList(queryWrapper);
+    }
+    
+    @Override
+    public Integer addChapterLesson(CourseLesson courseLesson) {
+        return courseLessonMapper.insert(courseLesson);
+    }
+    
+    @Override
+    public Integer updateChapterLesson(CourseLesson courseLesson) {
+        return courseLessonMapper.updateById(courseLesson);
+    }
+    
+    @Override
+    public Integer deleteChapterLesson(Integer lessonId) {
+        return courseLessonMapper.deleteById(lessonId);
     }
 }

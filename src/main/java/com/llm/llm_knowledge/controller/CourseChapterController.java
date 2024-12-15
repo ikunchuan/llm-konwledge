@@ -3,6 +3,8 @@ package com.llm.llm_knowledge.controller;
 
 import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.entity.CourseChapter;
+import com.llm.llm_knowledge.entity.CourseContent;
+import com.llm.llm_knowledge.entity.CourseLesson;
 import com.llm.llm_knowledge.service.CourseChapterService;
 import com.llm.llm_knowledge.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +49,30 @@ public class CourseChapterController {
         return courseChapterService.deleteCourseChapter(id);
     }
     
+    
+    //传入章节的Id,可以查询这个章节的所有课程选集
+    @GetMapping("v1/chapterlesson/{chapterId}")
+    public List<CourseLesson> getLessonWithChapter(@PathVariable Integer chapterId){
+        return courseChapterService.getLessonWithChapter(chapterId);
+    }
+    
+    //对具体lesson的操作,放到章节的Controller里面
+    //上传lesson
+    @PostMapping("v1/chapterlesson")
+    public Integer addChapterLesson(@RequestBody CourseLesson courseLesson){
+        return courseChapterService.addChapterLesson(courseLesson);
+    }
+    
+    //更新lesson
+    @PutMapping("v1/chapterlesson")
+    public Integer updateChapterLesson(@RequestBody CourseLesson courseLesson){
+        return courseChapterService.updateChapterLesson(courseLesson);
+    }
+    
+    //删除lesson
+    @DeleteMapping("v1/chapterlesson/{lessonId}")
+    public Integer deleteChapterLesson(@PathVariable Integer lessonId){
+        return courseChapterService.deleteChapterLesson(lessonId);
+    }
     
 }
