@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 @SpringBootApplication
 @MapperScan(basePackages = "com.llm.llm_knowledge.mapper")
-@MapperScan(basePackages = "com.llm.llm_knowledge.mapper")
 public class LlmKnowledgeApplication {
 
 	public static void main(String[] args) {
