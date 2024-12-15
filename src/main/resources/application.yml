@@ -7,14 +7,14 @@ spring:
     url: jdbc:mysql://47.113.204.84:3306/lingyanlinghang?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true # 数据库连接URL
     username: root # 数据库用户名
     password: 2005M02y02c # 数据库密码
-#  ai:
-#    openai:
-#      chat:
-#        enabled: true
-#        base-url: https://openai.maosuyu.com
-#        options:
-#          model: gpt-4o
-#      api-key: ${OPENAI_API_KEY}
+  ai:
+    openai:
+      chat:
+        enabled: true
+        base-url: https://openai.maosuyu.com
+        options:
+          model: gpt-4o
+      api-key: ${OPENAI_API_KEY}
   web:
     resources:
       static-locations: file:/F:/llm-vue/src/assets/img/, classpath:/static/

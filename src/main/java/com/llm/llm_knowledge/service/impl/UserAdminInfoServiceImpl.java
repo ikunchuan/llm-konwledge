@@ -11,6 +11,7 @@ import com.llm.llm_knowledge.mapper.AdminLoginLogMapper;
 import com.llm.llm_knowledge.mapper.UserAdminInfoMapper;
 import com.llm.llm_knowledge.service.UserAdminInfoService;
 import com.llm.llm_knowledge.vo.LoginLogSearch;
+import com.llm.llm_knowledge.vo.UserAdminInfoVO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,6 @@ public class UserAdminInfoServiceImpl implements UserAdminInfoService {
 
     @Autowired
     private UserAdminInfoMapper userAdminInfoMapper;
-    
-    @Autowired
-    private AdminLoginLogMapper adminLoginLogMapper;
 
     @Override
     public UserAdminInfo login(UserAdminInfo userAdminInfo) throws UserException {
@@ -65,11 +63,17 @@ public class UserAdminInfoServiceImpl implements UserAdminInfoService {
     }
     
     
-    //查看登录日志
+    //管理员用户登录后执行这个方法,记录登录日志
     @Override
-    public PageInfo<AdminLoginLog> getLoginLog(@RequestBody LoginLogSearch loginLogSearch, Integer pageNum, Integer pageSize) {
+    public void recordLoginLog(UserAdminInfoVO userAdminInfoVO) {
+        userAdminInfoVO.setPassword(DigestUtils.md5Hex(userAdminInfoVO.getPassword()));
+        userAdminInfoMapper.recordLoginLog(userAdminInfoVO);
+    }
+    
+    @Override
+    public PageInfo<AdminLoginLog> getAdminLoginLog(LoginLogSearch loginLogSearch,Integer pageNum,Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<AdminLoginLog> adminInfos = adminLoginLogMapper.selectList(null);
+        List<AdminLoginLog> adminInfos = userAdminInfoMapper.selectLoginLogWithSearch(loginLogSearch);
         return new PageInfo<>(adminInfos);
     }
     

@@ -5,12 +5,13 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
+//import com.llm.llm_knowledge.entity.AdminLoginLog;
 import com.llm.llm_knowledge.entity.AdminLoginLog;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.entity.UserAdminInfo;
 import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.pojo.ResultEntity;
-import com.llm.llm_knowledge.service.AdminLoginLogService;
+//import com.llm.llm_knowledge.service.AdminLoginLogService;
 import com.llm.llm_knowledge.service.UserAdminInfoService;
 import com.llm.llm_knowledge.vo.LoginLogSearch;
 import com.llm.llm_knowledge.vo.UserAdminInfoVO;
@@ -20,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -127,4 +129,18 @@ public class UserAdminController {
             return ResultEntity.fail("注册失败");
         }
     }
+    
+    
+    /**查看管理员的登录日志*/
+    @PostMapping("/loginlog")
+    public PageInfo<AdminLoginLog> getAdminLoginLog(@RequestBody LoginLogSearch loginLogSearch,
+                                                    @RequestParam(defaultValue = "1") Integer pageNum,
+                                                    @RequestParam(defaultValue = "10") Integer pageSize){
+        return userAdminInfoService.getAdminLoginLog(loginLogSearch,pageNum,pageSize);
+    }
+    
+    
+    
+    
+    
 }

@@ -24,7 +24,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SaTokenConfigure implements WebMvcConfigurer {
 	
 	// 允许的域名列表
-	String[] allowedOrigins = {"http://localhost:5173"};
+	String[] allowedOrigins = {"http://localhost:5173","http://localhost:5174"};
 
 	/**
      * 注册 [Sa-Token 全局过滤器]

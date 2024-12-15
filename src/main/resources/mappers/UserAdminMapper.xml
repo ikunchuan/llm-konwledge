@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.llm.llm_knowledge.mapper.UserAdminInfoMapper">
+
+    <insert id="recordLoginLog" parameterType="com.llm.llm_knowledge.vo.UserAdminInfoVO">
+        INSERT INTO
+        admin_login_log(user_name, password, login_time, loginboard)
+        VALUES
+        (#{userName},#{password},NOW(),#{loginboard})
+    </insert>
+
+
+    <select id="selectLoginLogWithSearch" resultType="com.llm.llm_knowledge.entity.AdminLoginLog">
+        select
+        *
+        FROM
+        admin_login_log
+        <where>
+            <if test="userName != null and userName != ''">
+                AND user_name = #{userName}
+            </if>
+            <if test="loginboard != null and loginboard != ''">
+                AND loginboard = #{loginboard}
+            </if>
+        </where>
+
+    </select>
+
+</mapper>
