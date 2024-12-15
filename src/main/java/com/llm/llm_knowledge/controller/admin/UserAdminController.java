@@ -33,8 +33,6 @@ public class UserAdminController {
     @Autowired
     private UserAdminInfoService userAdminInfoService;
     
-    @Autowired
-    private AdminLoginLogService adminLoginLogService;
     
     /**
      * 用户登录
@@ -69,24 +67,16 @@ public class UserAdminController {
         StpUtil.login(userId, new SaLoginModel().setTimeout(60 * 60 * 24));
         String token = StpUtil.getTokenValue();
         
-        // 记录登录日志
-        adminLoginLogService.logAdminLogin(userAdminInfoVO.getLoginboard(), userAdminInfoVO.getUserName(), userAdminInfoVO.getPassword());
         
         //获取当前账号所拥有的权限集合
         System.out.println(StpUtil.getPermissionList());
         
+        //到这一步已经登录成功,记录登录日志  传来userAdminInfoVO,因为需要id,name,board
+        userAdminInfoService.recordLoginLog(userAdminInfoVO);
+        
+        
         // 返回 Token 和用户名
         return ResultEntity.success(Map.of("username", userAdminInfoVO.getUserName(), "token", token));
-    }
-    
-    
-    
-    
-    @PostMapping("/login/logs")
-    public PageInfo<AdminLoginLog> getLoginLog(@RequestBody LoginLogSearch loginLogSearch,
-                                               @RequestParam(defaultValue = "1") Integer pageNum ,
-                                               @RequestParam(defaultValue = "5") Integer pageSize ) {
-        return userAdminInfoService.getLoginLog(loginLogSearch,pageNum,pageSize);
     }
     
     
