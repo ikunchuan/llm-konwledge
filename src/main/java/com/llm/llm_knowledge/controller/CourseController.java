@@ -26,7 +26,9 @@ public class CourseController {
 
     //查询所有
     @GetMapping("v1")
-    public List<Course> allCourse() {return courseService.allCourse();}
+    public List<Course> allCourse() {
+        return courseService.allCourse();
+    }
 
     //插入
     @PostMapping("v1")

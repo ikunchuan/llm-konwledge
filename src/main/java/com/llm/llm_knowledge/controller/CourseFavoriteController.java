@@ -15,14 +15,17 @@ import java.util.List;
 @RestController
 @RequestMapping("crs/v1")
 public class CourseFavoriteController {
+    
     @Autowired
     private CourseFavoriteService courseFavoriteService;
 
+    //收藏课程
     @PostMapping("favorite")
     public Integer addCourseFavorite(@RequestBody CourseFavorite courseFavorite) {
         return courseFavoriteService.addCourseFavorite(courseFavorite);
     }
 
+    //
     @DeleteMapping("favorite/{id}")
     public Integer delCourseFavorite(@PathVariable Integer id) {
         return courseFavoriteService.delCourseFavorite(id);
@@ -41,4 +44,5 @@ public class CourseFavoriteController {
             @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
         return courseFavoriteService.search(courseFavoriteSearch, pageNum, pageSize);
     }
+    
 }

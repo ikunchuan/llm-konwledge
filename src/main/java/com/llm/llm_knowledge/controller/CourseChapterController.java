@@ -49,12 +49,12 @@ public class CourseChapterController {
         return courseChapterService.deleteCourseChapter(id);
     }
     
-    
     //传入章节的Id,可以查询这个章节的所有课程选集
     @GetMapping("v1/chapterlesson/{chapterId}")
     public List<CourseLesson> getLessonWithChapter(@PathVariable Integer chapterId){
         return courseChapterService.getLessonWithChapter(chapterId);
     }
+    
     
     //对具体lesson的操作,放到章节的Controller里面
     //上传lesson

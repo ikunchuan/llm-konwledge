@@ -20,42 +20,46 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("comp/v1")
 public class CompetitionController {
+    
     @Autowired
     private CompetitionService competitionService;
-
+    
     //查看所有的比赛
     @GetMapping("compe")
     public List<Competition> allCompe() {return competitionService.allCompe();}
-
+    
     //根据ID查询比赛
     @GetMapping("compe/{compeid}")
     public Competition compeById(@PathVariable Integer compeid) {return competitionService.compeById(compeid);}
-
+    
     //添加比赛
     @PostMapping("compe")
     public Integer addCompe(@RequestBody Competition competition) {
         return competitionService.addCompe(competition);}
-
+    
     //根据ID删除比赛
     @DeleteMapping("compe/{compeid}")
-    public Integer delCompe(@PathVariable Integer compeid) {return competitionService.delCompe(compeid);}
-
+    public Integer delCompe(@PathVariable Integer compeid) {
+        return competitionService.delCompe(compeid);
+    }
+    
     //根据ID批量删除
     @DeleteMapping("compe")
     public Integer deleteCompes(@RequestBody List<Integer> compeids) {
         System.out.println("received ids "+compeids);
         return competitionService.deleteCompes(compeids);
     }
-
+    
     //修改（更新）比赛信息
     @PutMapping("compe")
     public Integer UpdateCompe(@RequestBody Competition competition) {return competitionService.updateCompe(competition);}
-
+    
     //分页查询
     @GetMapping("v1")
     public Page<Competition> compePage( Integer pageNum, Integer pageSize) {
         return competitionService.compePage(pageNum, pageSize);
     }
+    
     //多表联查并分页
     @PostMapping("search")
     public PageInfo<CompetitionDTO> search(@RequestBody CompetitionSearch competitionSearch,
@@ -63,8 +67,8 @@ public class CompetitionController {
                                            @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
         return competitionService.search(competitionSearch,pageNum,pageSize);
     }
+    
     //图片上传
-
     @PostMapping ("/upload")
     public String upload(@RequestParam("file") MultipartFile file) {
         String oldFileName = file.getOriginalFilename();  // 获取原始文件名

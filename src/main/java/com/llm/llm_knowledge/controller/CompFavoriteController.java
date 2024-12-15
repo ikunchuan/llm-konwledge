@@ -19,27 +19,32 @@ public class CompFavoriteController {
     @Autowired
     private CompFavoriteService compFavoriteService;
 
+    //用户收藏竞赛  传入竞赛Id和用户的Id
     @PostMapping("favorite")
     public Integer addCompFavorite(@RequestBody CompetitionFavorite competitionFavorite) {
         return compFavoriteService.addCompFavorite(competitionFavorite);
     }
 
+    //删除(真删)
     @DeleteMapping("favorite/{id}")
     public Integer delCompFavorite(@PathVariable Integer id) {
         return compFavoriteService.delCompFavorite(id);
     }
 
+    //多选删除
     @DeleteMapping("favorite")
     public Integer delCompFavoriteByIds(@RequestBody List<Integer> ids) {
         System.out.println("Received IDs: " + ids);
         return compFavoriteService.delCompFavoriteByIds(ids);
     }
 
+    //更新
     @PutMapping("favorite")
     public Integer updCompFavorite(@RequestBody CompetitionFavorite competitionFavorite) {
         return compFavoriteService.updCompFavorite(competitionFavorite);
     }
 
+    //分页查询
     @PostMapping("favorite/search")
     public PageInfo<CompFavoriteDTO> search(
             @RequestBody CompFavoriteSearch compFavoriteSearch,

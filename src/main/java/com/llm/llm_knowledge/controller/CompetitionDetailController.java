@@ -9,43 +9,56 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-    @RestController
-    @CrossOrigin
-    @RequestMapping("comdetail/v1")
-    public  class CompetitionDetailController {
-        @Autowired
-        private CompetitionDetailService competitionDetailService;
-        //查看所有比赛信息
-        @GetMapping("detail")
-        public List<CompetitionDetail> allCompeDetail() {return competitionDetailService.allCompeDetail();}
-
-        //根据ID进行查询
-        @GetMapping("detail/{compeid}")
-        public CompetitionDetail compeDetailById(@PathVariable Integer compeid) {return competitionDetailService.compeDetailById(compeid);}
-
-        //添加竞赛信息
-        @PostMapping("detail")
-        public Integer addCompeDetail(@RequestBody CompetitionDetail competitionDetail) {
-            return competitionDetailService.addCompeDetail(competitionDetail);}
-
-        //根据ID删除比赛
-        @DeleteMapping ("detail/{compeid}")
-        public Integer deleteCompeDetail(@PathVariable Integer compeid) {return competitionDetailService.deleteCompeDetail(compeid);}
-
-        //进行批量删除
-        @DeleteMapping("detail")
-        public Integer deleteCompeDetails(@RequestBody List<Integer> compeids) {
-            System.out.println("received ids"+compeids);
-            return competitionDetailService.deleteCompeDetails(compeids);}
-        //修改比赛详情信息
-        @PutMapping("detail")
-        public Integer updateCompeDetail(@RequestBody CompetitionDetail competitionDetail) {return competitionDetailService.updateCompeDetail(competitionDetail);}
-
-        //分页查询
-        @GetMapping("v1")
-        public Page<CompetitionDetail> compeDetailByPage (Integer pageNum, Integer pageSize) {
-            return competitionDetailService.compeDetailByPage(pageNum, pageSize);
-        }
-
+@RestController
+@CrossOrigin
+@RequestMapping("comdetail/v1")
+public class CompetitionDetailController {
+    
+    @Autowired
+    private CompetitionDetailService competitionDetailService;
+    
+    //查看所有比赛信息
+    @GetMapping("detail")
+    public List<CompetitionDetail> allCompeDetail() {
+        return competitionDetailService.allCompeDetail();
     }
+    
+    //根据ID进行查询
+    @GetMapping("detail/{compeid}")
+    public CompetitionDetail compeDetailById(@PathVariable Integer compeid) {
+        return competitionDetailService.compeDetailById(compeid);
+    }
+    
+    //添加竞赛信息
+    @PostMapping("detail")
+    public Integer addCompeDetail(@RequestBody CompetitionDetail competitionDetail) {
+        return competitionDetailService.addCompeDetail(competitionDetail);
+    }
+    
+    //根据ID删除比赛
+    @DeleteMapping("detail/{compeid}")
+    public Integer deleteCompeDetail(@PathVariable Integer compeid) {
+        return competitionDetailService.deleteCompeDetail(compeid);
+    }
+    
+    //进行批量删除
+    @DeleteMapping("detail")
+    public Integer deleteCompeDetails(@RequestBody List<Integer> compeids) {
+        System.out.println("received ids" + compeids);
+        return competitionDetailService.deleteCompeDetails(compeids);
+    }
+    
+    //修改比赛详情信息
+    @PutMapping("detail")
+    public Integer updateCompeDetail(@RequestBody CompetitionDetail competitionDetail) {
+        return competitionDetailService.updateCompeDetail(competitionDetail);
+    }
+    
+    //分页查询
+    @GetMapping("v1")
+    public Page<CompetitionDetail> compeDetailByPage(Integer pageNum, Integer pageSize) {
+        return competitionDetailService.compeDetailByPage(pageNum, pageSize);
+    }
+    
+}
 

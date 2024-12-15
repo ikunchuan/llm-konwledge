@@ -30,9 +30,6 @@ public class CommunityController {
     @Autowired
     private CommunityService communityService;
     
-    @Autowired
-    private CommunityMapper communityMapper;
-    
     /**
      * 查看所有已注册的社区  无分页版
      *
@@ -43,7 +40,6 @@ public class CommunityController {
         return communityService.allCmn();
     }
     
-    
     /**
      * 根据社区id查询社区
      *
@@ -53,7 +49,6 @@ public class CommunityController {
     public Community cmnById(@PathVariable Integer cmnid) {
         return communityService.cmnById(cmnid);
     }
-    
     
     /**
      * 根据社区标签和名字进行模糊查询 这里查询的是已经审核过的社区
@@ -68,7 +63,6 @@ public class CommunityController {
         return communityService.search(communitySearch, pageNum, pageSize);
     }
     
-    
     /**
      * 根据社区标签和名字进行模糊查询 这里查询的是未审核过的社区
      *
@@ -82,7 +76,6 @@ public class CommunityController {
         return communityService.search2(communitySearch, pageNum, pageSize);
     }
     
-    
     /**
      * 新增一个社区,传入的是一个community实体
      *
@@ -92,9 +85,6 @@ public class CommunityController {
     public Integer addCmn(@RequestBody Community community) {
         return communityService.addCmn(community);
     }
-    
-    
-    
     
     /**
      * 根据cmnid删除社区
@@ -106,7 +96,6 @@ public class CommunityController {
         return communityService.delCmn(cmnid);
     }
     
-    
     /**
      * 根据cmnid更新社区
      *
@@ -117,14 +106,12 @@ public class CommunityController {
         return communityService.updateCmn(community);
     }
     
-    
     /**这个功能是点击社区里面的所有用户,可以看到改社区的所有用户,以及用户名和在这个社区发布过的帖子的数量
      * @return List<UserPostCountDTO> 返回用户名和发帖的数量,例如"userName": "myc","postCount": 2 */
     @GetMapping("cmnpostuser/{communityId}")
     public List<UserPostCountDTO> getCommunityPostUser(@PathVariable Integer communityId){
         return communityService.getCommunityPostUser(communityId);
     }
-    
     
     /**
      * 图片上传*/
@@ -147,17 +134,12 @@ public class CommunityController {
         return newFileName;  // 返回新文件名
     }
     
-    
-    
-    
-    /**用户登录社区增加积分*/
+    /**用户登录社区增加积分  发帖也会增加积分(方法在POstControler里面)*/
     @PutMapping("loginwithscore")
     public Integer updateUserScoreForLogin(@RequestParam Integer communityId,
                                            @RequestParam Integer userId){
         return communityService.updateUserScoreForLogin(communityId,userId);
     }
-    
-    
     
     /**查看社区里面的用户积分排行榜*/
     @GetMapping("comscore/{communityId}")
