@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CommunityDTO;
+import com.llm.llm_knowledge.dto.UserCommunityScoreDTO;
 import com.llm.llm_knowledge.dto.UserPostCountDTO;
 import com.llm.llm_knowledge.entity.Community;
+import com.llm.llm_knowledge.entity.UserCommunityScore;
 import com.llm.llm_knowledge.mapper.CommunityMapper;
 import com.llm.llm_knowledge.service.CommunityService;
 import com.llm.llm_knowledge.vo.CommunitySearch;
@@ -92,6 +94,11 @@ public class CommunityServiceImpl implements CommunityService {
         communityMapper.insertUserCommunityScoreIfNotExist(communityId,userId);
         communityMapper.updateUserScoreForLogin(communityId,userId);
         return null;
+    }
+    
+    @Override
+    public List<UserCommunityScoreDTO> checkCommuniutyScore(Integer communityId) {
+        return communityMapper.checkCommuniutyScore(communityId);
     }
     
     

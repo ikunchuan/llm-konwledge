@@ -3,8 +3,10 @@ package com.llm.llm_knowledge.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CommunityDTO;
+import com.llm.llm_knowledge.dto.UserCommunityScoreDTO;
 import com.llm.llm_knowledge.dto.UserPostCountDTO;
 import com.llm.llm_knowledge.entity.Community;
+import com.llm.llm_knowledge.entity.UserCommunityScore;
 import com.llm.llm_knowledge.vo.CommunitySearch;
 
 import java.util.List;
@@ -38,4 +40,6 @@ public interface CommunityService {
     
     
     Integer updateUserScoreForLogin(Integer communityId, Integer userId);
+    
+    List<UserCommunityScoreDTO> checkCommuniutyScore(Integer communityId);
 }

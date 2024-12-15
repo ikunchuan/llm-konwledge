@@ -112,7 +112,24 @@
             SELECT 1 FROM user_community_score WHERE user_id = #{userId} AND community_id = #{communityId}
         );
         ]]>
-</update>
+    </update>
+
+    <select id="checkCommuniutyScore" resultType="com.llm.llm_knowledge.dto.UserCommunityScoreDTO">
+        SELECT
+        ucs.*,
+        ui.user_name
+        FROM
+        user_community_score AS ucs
+        INNER JOIN
+        user_info AS ui ON ucs.user_id = ui.user_id
+        <where>
+            <if test="communityId != null and community != ''">
+                AND community_id = #{communityId};
+            </if>
+        </where>
+
+
+    </select>
 
 
 </mapper>

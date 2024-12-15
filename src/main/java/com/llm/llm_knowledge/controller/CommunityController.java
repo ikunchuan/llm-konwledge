@@ -5,8 +5,10 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CommunityDTO;
+import com.llm.llm_knowledge.dto.UserCommunityScoreDTO;
 import com.llm.llm_knowledge.dto.UserPostCountDTO;
 import com.llm.llm_knowledge.entity.Community;
+import com.llm.llm_knowledge.entity.UserCommunityScore;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.mapper.CommunityMapper;
 import com.llm.llm_knowledge.service.CommunityService;
@@ -148,7 +150,7 @@ public class CommunityController {
     
     
     
-    //用户登录社区增加积分
+    /**用户登录社区增加积分*/
     @PutMapping("loginwithscore")
     public Integer updateUserScoreForLogin(@RequestParam Integer communityId,
                                            @RequestParam Integer userId){
@@ -157,9 +159,13 @@ public class CommunityController {
     
     
     
-    
+    /**查看社区里面的用户积分排行榜*/
+    @GetMapping("comscore/{communityId}")
+    public List<UserCommunityScoreDTO> checkCommuniutyScore(@PathVariable Integer communityId){
+        return communityService.checkCommuniutyScore(communityId);
+    }
 
     
-    
+
     
 }
