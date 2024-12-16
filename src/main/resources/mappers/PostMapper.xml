@@ -42,8 +42,8 @@
         post.post_title,
         postcm.comment_content,
         `user`.user_name,
-        post.created_time,
-        post.updated_time
+        postcm.created_time,
+        postcm.updated_time
         FROM
         post
         INNER JOIN post_comment AS postcm ON post.post_id = postcm.post_id
