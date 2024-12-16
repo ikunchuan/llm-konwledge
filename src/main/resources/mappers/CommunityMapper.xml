@@ -76,6 +76,10 @@
         SELECT
         ui.user_id,
         ui.user_name AS username,
+        ui.user_age,
+        ui.user_local,
+        ui.user_bio,
+        ui.user_email,
         COUNT(p.post_id) AS post_count
         FROM
         community_join AS cj

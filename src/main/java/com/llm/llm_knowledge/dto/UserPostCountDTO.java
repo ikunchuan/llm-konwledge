@@ -12,5 +12,9 @@ public class UserPostCountDTO {
     private Integer userId;
     private String userName;
     private Integer postCount;
+    private String userEmail;
+    private String userBio;
+    private String userLocal;
+    private Integer userAge;
     
 }
