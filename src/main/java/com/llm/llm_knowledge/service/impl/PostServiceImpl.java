@@ -147,6 +147,12 @@ public class PostServiceImpl implements PostService {
     }
     
     
+    //传入帖子的Id,查询这个帖子的所有浏览数,点赞数....
+    @Override
+    public PostDTO getPostAllCount(Integer postId) {
+        return postMapper.getPostAllCount(postId);
+    }
+    
     
     //用户帖子浏览记录
     @Override

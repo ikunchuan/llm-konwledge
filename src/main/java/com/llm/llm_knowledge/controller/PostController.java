@@ -159,5 +159,19 @@ public class PostController {
         return postService.getUserPostCommentCount(userId);
     }
     
+    /**传入帖子的id,查询这个帖子的浏览数,点赞数,收藏数,评论数
+     * 注意 : 查到的是这个帖子过往的所有喜欢,收藏和评论, 取消过的也算*/
+    @GetMapping("post/allcount/{postId}")
+    public PostDTO getPostAllCount(@PathVariable Integer postId){
+        return postService.getPostAllCount(postId);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

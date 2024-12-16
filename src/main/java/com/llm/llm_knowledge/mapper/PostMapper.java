@@ -65,4 +65,5 @@ public interface PostMapper extends BaseMapper<Post> {
     Integer insertPost(Post post);
     Integer updateUserScoreForPost(Post post);
     
+    PostDTO getPostAllCount(Integer postId);
 }

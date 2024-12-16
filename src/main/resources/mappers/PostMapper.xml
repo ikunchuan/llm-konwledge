@@ -300,4 +300,28 @@
         ]]>
     </update>
 
+
+    <select id="getPostAllCount" resultType="com.llm.llm_knowledge.dto.PostDTO">
+        SELECT
+            p.post_id,
+            COUNT(DISTINCT pv.post_view_id) AS view_count,         -- 总浏览数
+            COUNT(DISTINCT pl.post_like_id) AS like_count,         -- 点赞数
+            COUNT(DISTINCT pf.post_favorite_id) AS favorite_count, -- 收藏数
+            COUNT(DISTINCT pc.comment_id) AS comment_count    -- 评论数
+        FROM
+            post AS p
+                LEFT JOIN
+            post_view AS pv ON p.post_id = pv.post_id
+                LEFT JOIN
+            post_like AS pl ON p.post_id = pl.post_id
+                LEFT JOIN
+            post_favorite AS pf ON p.post_id = pf.post_id
+                LEFT JOIN
+            post_comment AS pc ON p.post_id = pc.post_id
+        WHERE
+            p.post_id = #{postId}
+        GROUP BY
+            p.post_id;
+    </select>
+
 </mapper>
