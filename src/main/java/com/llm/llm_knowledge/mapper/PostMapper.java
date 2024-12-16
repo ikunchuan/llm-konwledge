@@ -66,4 +66,6 @@ public interface PostMapper extends BaseMapper<Post> {
     Integer updateUserScoreForPost(Post post);
     
     PostDTO getPostAllCount(Integer postId);
+    
+    Integer addPostComment(Integer postId, Integer userId, String comment);
 }

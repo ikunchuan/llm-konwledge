@@ -167,7 +167,14 @@ public class PostController {
     }
     
     
-    
+    /**帖子评论 传入用户ID 帖子ID 评论内容*/
+    @PostMapping("post/usercomment")
+    public Integer addPostComment(@RequestParam Integer postId,
+                                  @RequestParam Integer userId,
+                                  @RequestParam String comment){
+        return postService.addPostComment(postId,userId,comment
+        );
+    }
     
     
     

@@ -153,6 +153,11 @@ public class PostServiceImpl implements PostService {
         return postMapper.getPostAllCount(postId);
     }
     
+    @Override
+    public Integer addPostComment(Integer postId, Integer userId, String comment) {
+        return postMapper.addPostComment(postId,userId,comment);
+    }
+    
     
     //用户帖子浏览记录
     @Override

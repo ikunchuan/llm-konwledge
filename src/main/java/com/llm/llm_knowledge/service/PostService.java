@@ -60,4 +60,6 @@ public interface PostService {
     Integer insertPostAndUpdateScore(Post post) throws Exception;
     
     PostDTO getPostAllCount(Integer postId);
+    
+    Integer addPostComment(Integer postId, Integer userId, String comment);
 }
