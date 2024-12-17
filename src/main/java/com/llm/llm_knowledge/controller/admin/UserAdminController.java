@@ -64,7 +64,7 @@ public class UserAdminController {
         
         
         // 执行登录并生成 Token
-        StpUtil.login(userId, new SaLoginModel().setTimeout(60 * 60 * 24));
+        StpUtil.login(userId);
         String token = StpUtil.getTokenValue();
         
         

@@ -4,7 +4,6 @@ import cn.dev33.satoken.fun.SaParamFunction;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -44,15 +43,6 @@ public class SaTokenInterceptor implements WebMvcConfigurer {
         whiteList.add("/admin/user/logout");
         whiteList.add("/chat/stream");
         return whiteList;
-    }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // 允许所有路径
-                .allowedOrigins("http://localhost:5173") // 允许来自前端的请求地址
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // 允许的 HTTP 方法
-                .allowCredentials(true) // 允许携带凭证（如 Cookie）
-                .allowedHeaders("*"); // 允许所有的请求头
     }
 
 }
