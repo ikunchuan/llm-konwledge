@@ -11,8 +11,7 @@ public class Post {
     
     @TableId(type = IdType.AUTO)
     Integer postId;
-    
-    String communityName;
+
     Integer communityId;
     Integer userId;
     String postTitle;
