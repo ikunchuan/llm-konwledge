@@ -138,11 +138,15 @@
         p.post_id,
         p.post_title,
         p.post_content,
+        cmn.community_name,
         COUNT(DISTINCT pl.post_like_id) AS like_count, -- 点赞数
         COUNT(DISTINCT pc.comment_id) AS comment_count, -- 评论数
         COUNT(DISTINCT pf.post_favorite_id) AS favorite_count -- 收藏数
         FROM
         post p
+        LEFT JOIN
+        community cmn
+        ON p.community_id = cmn.community_id
         LEFT JOIN
         post_like pl
         ON
@@ -182,11 +186,15 @@
         p.post_title,
         p.post_content,
         p.created_time,
+        cmn.community_name,
         COUNT(DISTINCT pl.post_like_id) AS like_count, -- 点赞数
         COUNT(DISTINCT pc.comment_id) AS comment_count, -- 评论数
         COUNT(DISTINCT pf.post_favorite_id) AS favorite_count -- 收藏数
         FROM
         post p
+        LEFT JOIN
+        community cmn
+        ON p.community_id = cmn.community_id
         LEFT JOIN
         post_like pl
         ON
@@ -218,10 +226,14 @@
                p.post_title,
                p.post_content,
                p.created_time,
+               cmn.community_name,
                COUNT(DISTINCT pl.post_like_id)     AS like_count,    -- 点赞数
                COUNT(DISTINCT pc.comment_id)       AS comment_count, -- 评论数
                COUNT(DISTINCT pf.post_favorite_id) AS favorite_count -- 收藏数
         FROM post p
+                 LEFT JOIN
+             community cmn
+             ON p.community_id = cmn.community_id
                  LEFT JOIN
              post_like pl
              ON
@@ -287,49 +299,43 @@
     <!--用户发帖后执行下面的sql语句 往帖子表里面加一条数据 并更新用户的score-->
     <insert id="insertPost" parameterType="map">
         <![CDATA[
-            INSERT INTO post (community_id, user_id, post_title, post_content, created_time, updated_time)
-            VALUES (#{communityId}, #{userId}, #{postTitle}, #{postContent}, NOW(), NOW());
+        INSERT INTO post (community_id, user_id, post_title, post_content, created_time, updated_time)
+        VALUES (#{communityId}, #{userId}, #{postTitle}, #{postContent}, NOW(), NOW());
         ]]>
     </insert>
     <update id="updateUserScoreForPost" parameterType="map">
         <![CDATA[
-            UPDATE user_community_score
-            SET score = score + 5
-            WHERE user_id = #{userId}
+        UPDATE user_community_score
+        SET score = score + 5
+        WHERE user_id = #{userId}
           AND community_id = #{communityId};
         ]]>
     </update>
 
 
     <select id="getPostAllCount" resultType="com.llm.llm_knowledge.dto.PostDTO">
-        SELECT
-            p.post_id,
-            COUNT(DISTINCT pv.post_view_id) AS view_count,         -- 总浏览数
-            COUNT(DISTINCT pl.post_like_id) AS like_count,         -- 点赞数
-            COUNT(DISTINCT pf.post_favorite_id) AS favorite_count, -- 收藏数
-            COUNT(DISTINCT pc.comment_id) AS comment_count    -- 评论数
-        FROM
-            post AS p
-                LEFT JOIN
-            post_view AS pv ON p.post_id = pv.post_id
-                LEFT JOIN
-            post_like AS pl ON p.post_id = pl.post_id
-                LEFT JOIN
-            post_favorite AS pf ON p.post_id = pf.post_id
-                LEFT JOIN
-            post_comment AS pc ON p.post_id = pc.post_id
-        WHERE
-            p.post_id = #{postId}
-        GROUP BY
-            p.post_id;
+        SELECT p.post_id,
+               COUNT(DISTINCT pv.post_view_id)     AS view_count,     -- 总浏览数
+               COUNT(DISTINCT pl.post_like_id)     AS like_count,     -- 点赞数
+               COUNT(DISTINCT pf.post_favorite_id) AS favorite_count, -- 收藏数
+               COUNT(DISTINCT pc.comment_id)       AS comment_count   -- 评论数
+        FROM post AS p
+                 LEFT JOIN
+             post_view AS pv ON p.post_id = pv.post_id
+                 LEFT JOIN
+             post_like AS pl ON p.post_id = pl.post_id
+                 LEFT JOIN
+             post_favorite AS pf ON p.post_id = pf.post_id
+                 LEFT JOIN
+             post_comment AS pc ON p.post_id = pc.post_id
+        WHERE p.post_id = #{postId}
+        GROUP BY p.post_id;
     </select>
 
 
     <insert id="addPostComment">
-        INSERT INTO
-        post_comment (user_id, post_id, comment_content, created_time, deleted, updated_time)
-        VALUES
-        (#{userId},#{postId},#{comment},NOW(),0,NOW())
+        INSERT INTO post_comment (user_id, post_id, comment_content, created_time, deleted, updated_time)
+        VALUES (#{userId}, #{postId}, #{comment}, NOW(), 0, NOW())
 
     </insert>
 
