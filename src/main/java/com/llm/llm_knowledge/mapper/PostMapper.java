@@ -68,4 +68,6 @@ public interface PostMapper extends BaseMapper<Post> {
     PostDTO getPostAllCount(Integer postId);
     
     Integer addPostComment(Integer postId, Integer userId, String comment);
+    
+    List<Post> getPostsUser(Integer userId);
 }

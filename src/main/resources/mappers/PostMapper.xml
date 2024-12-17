@@ -339,4 +339,12 @@
 
     </insert>
 
+    <select id="getPostsUser" resultType="com.llm.llm_knowledge.entity.Post">
+        SELECT
+        *
+        FROM
+        post
+        WHERE user_id = #{userId}
+    </select>
+
 </mapper>

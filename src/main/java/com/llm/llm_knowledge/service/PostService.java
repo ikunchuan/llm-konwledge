@@ -62,4 +62,6 @@ public interface PostService {
     PostDTO getPostAllCount(Integer postId);
     
     Integer addPostComment(Integer postId, Integer userId, String comment);
+    
+    List<Post> getPostsUser(Integer userId);
 }

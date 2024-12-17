@@ -177,7 +177,11 @@ public class PostController {
     }
     
     
-    
+    /**传入用户的Id,查询这个用户发过的所有帖子*/
+    @GetMapping("user/{userId}")
+    public List<Post> getPostsUser(@PathVariable Integer userId){
+        return postService.getPostsUser(userId);
+    }
     
     
     
