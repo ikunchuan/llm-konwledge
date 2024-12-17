@@ -68,5 +68,7 @@ public interface UserInfoService {
     List<UserInfo> lookFans(Integer userId);
     
     List<UserScoreDTO> getScore(Integer userId, Integer communityId);
+
+    Integer userFollow(Integer userId, Integer followeeUserId);
 }
 

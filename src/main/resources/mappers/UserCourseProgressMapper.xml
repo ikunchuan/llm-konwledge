@@ -122,4 +122,11 @@
     </select>
 
 
+    <insert id="userFollow">
+        INSERT INTO
+        user_follow (follower_id, followee_id, created_time)
+        VALUES
+        (#{userId},#{followeeUserId},NOW())
+    </insert>
+
 </mapper>
