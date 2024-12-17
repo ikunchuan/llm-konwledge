@@ -5,6 +5,7 @@
 
     <select id="selectCoursesWithFilters" resultType="com.llm.llm_knowledge.dto.CourseDTO">
         SELECT
+        cr.course_img_url,
         cr.course_id,
         cr.course_description,
         cr.course_name,
