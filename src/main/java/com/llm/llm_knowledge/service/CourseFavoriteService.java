@@ -12,4 +12,5 @@ public interface CourseFavoriteService {
     Integer delCourseFavorite(Integer courseFavoriteId);
     Integer delCourseFavoriteByIds(List<Integer> Ids);
     PageInfo<CourseFavoriteDTO> search(CourseFavoriteSearch courseFavoriteSearch, Integer pageNum, Integer pageSize);
+    List<CourseFavorite> getCourseFavoriteByUserId(Integer userId);
 }

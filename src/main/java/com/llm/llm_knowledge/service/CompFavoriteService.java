@@ -22,4 +22,7 @@ public interface CompFavoriteService {
 
     //分页查询
     PageInfo<CompFavoriteDTO> search(CompFavoriteSearch compSearch, Integer pageNum, Integer pageSize);
+
+    //userId获取收藏夹
+    List<CompetitionFavorite> getCompFavoriteByUserId(Integer userId);
 }

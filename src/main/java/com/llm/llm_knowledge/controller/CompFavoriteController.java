@@ -52,4 +52,10 @@ public class CompFavoriteController {
             @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
         return compFavoriteService.search(compFavoriteSearch, pageNum, pageSize);
     }
+
+    //userId查询
+    @GetMapping("favorite/{userId}")
+    public List<CompetitionFavorite> getCompFavoriteByUserId(@PathVariable Integer userId) {
+        return compFavoriteService.getCompFavoriteByUserId(userId);
+    }
 }

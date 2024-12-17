@@ -7,6 +7,7 @@ import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Community;
 import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.entity.PostComment;
+import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.PostService;
 import com.llm.llm_knowledge.vo.PostSearch;
@@ -95,6 +96,12 @@ public class PostController {
     public Integer postFavorite(@RequestParam Integer userId,
                                 @RequestParam Integer postId){
         return postService.postFavorite(userId,postId);
+    }
+
+    /**userId收藏*/
+    @GetMapping("post/favorite/{userId}")
+    public List<PostFavorite> getPostFavoriteByUserId(@PathVariable Integer userId){
+        return postService.getPostFavoriteByUserId(userId);
     }
     
     /**帖子浏览记录,点击一次帖子会加一条数据,点击同一个帖子会增加帖子浏览次数*/

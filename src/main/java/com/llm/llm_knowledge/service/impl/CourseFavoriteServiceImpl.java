@@ -1,5 +1,6 @@
 package com.llm.llm_knowledge.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseFavoriteDTO;
@@ -48,5 +49,12 @@ public class CourseFavoriteServiceImpl implements CourseFavoriteService {
         PageHelper.startPage(pageNum,pageSize);
         List<CourseFavoriteDTO> compFavoriteDTOS = courseFavoriteMapper.selectFavoritesByCourseName(courseFavoriteSearch);
         return new PageInfo<>(compFavoriteDTOS);
+    }
+
+    @Override
+    public List<CourseFavorite> getCourseFavoriteByUserId(Integer userId) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("user_id",userId);
+        return courseFavoriteMapper.selectList(queryWrapper);
     }
 }

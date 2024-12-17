@@ -284,6 +284,12 @@
         WHERE p.user_id = #{userId}
     </select>
 
+    <select id="getPostFavoriteByUserId" resultType="com.llm.llm_knowledge.entity.PostFavorite">
+        SELECT *
+        FROM post_favorite pf
+        WHERE pf.user_id = #{userId}
+    </select>
+
     <!--查询某个用户的帖子的总评论数-->
     <select id="getUserPostCommentCount" resultType="integer">
         SELECT COALESCE(SUM(CASE WHEN pc.deleted = 0 THEN 1 ELSE 0 END), 0) AS total_comments
@@ -340,10 +346,8 @@
     </insert>
 
     <select id="getPostsUser" resultType="com.llm.llm_knowledge.entity.Post">
-        SELECT
-        *
-        FROM
-        post
+        SELECT *
+        FROM post
         WHERE user_id = #{userId}
     </select>
 

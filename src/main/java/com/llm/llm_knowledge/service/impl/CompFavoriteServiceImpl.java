@@ -1,5 +1,6 @@
 package com.llm.llm_knowledge.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CompFavoriteDTO;
@@ -63,5 +64,13 @@ public class CompFavoriteServiceImpl implements CompFavoriteService {
         PageHelper.startPage(pageNum,pageSize);
         List<CompFavoriteDTO> compFavoriteDTOS = competitionFavoriteMapper.selectFavoritesByCompetitionName(compSearch);
         return new PageInfo<>(compFavoriteDTOS);
+    }
+
+    //根据用户ID查询收藏夹
+    @Override
+    public List<CompetitionFavorite> getCompFavoriteByUserId(Integer userId) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("user_id",userId);
+        return competitionFavoriteMapper.selectList(queryWrapper);
     }
 }

@@ -44,5 +44,10 @@ public class CourseFavoriteController {
             @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
         return courseFavoriteService.search(courseFavoriteSearch, pageNum, pageSize);
     }
-    
+
+    //userId
+    @GetMapping("favorite/{userId}")
+    public List<CourseFavorite> getCourseFavoriteByUserId(@PathVariable Integer userId) {
+        return courseFavoriteService.getCourseFavoriteByUserId(userId);
+    }
 }
