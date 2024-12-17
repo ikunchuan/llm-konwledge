@@ -155,8 +155,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<UserScoreDTO> getScore(Integer userId, Integer communityId) {
         return userInfoMapper.getScore(userId,communityId);
     }
-    
-    
+
+    @Override
+    public Integer userFollow(Integer userId, Integer followeeUserId) {
+        return userInfoMapper.userFollow(userId,followeeUserId);
+    }
+
+
     @Override
     public UserInfo login(UserInfo userInfo) throws UserException {
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();

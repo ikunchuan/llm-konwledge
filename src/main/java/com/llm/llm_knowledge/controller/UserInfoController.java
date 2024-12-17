@@ -183,7 +183,12 @@ public class UserInfoController {
     }
     
     
-    
+    //用户关注另一个用户
+    @GetMapping("user/follow")
+    public Integer userFollow(@RequestParam Integer userId,
+                              @RequestParam Integer followeeUserId){
+        return userInfoService.userFollow(userId,followeeUserId);
+    }
     
     
     
