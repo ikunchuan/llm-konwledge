@@ -58,5 +58,26 @@
                              view_count = view_count + 1;
     </insert>
 
+    <!--根据父id查出子id-->
+    <select id="getChildByParent">
+        Select
+            category.category_id
+        FROM
+            category
+        WHERE
+            parent_id = #{parentId}
+    </select>
+
+
+    <!--根据子id来查课程-->
+    <select id="getCourByIds">
+        SELECT
+            *
+        FROM
+            course
+        WHERE
+            category_id = #{childId}
+    </select>
+
 
 </mapper>

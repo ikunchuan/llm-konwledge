@@ -19,4 +19,8 @@ public interface CourseMapper extends BaseMapper<Course> {
     List<CourseChapterDTO> selectAllChapters();
     
     Integer addCourseView(Integer userId, Integer courseId);
+    
+    List<Integer> getChildByParent(Integer parentId);
+    
+    List<Course> getCourByIds(Integer integer);
 }

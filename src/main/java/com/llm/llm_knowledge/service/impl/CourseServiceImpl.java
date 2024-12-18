@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
+import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.mapper.CourseMapper;
 import com.llm.llm_knowledge.service.CourseService;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -113,5 +115,23 @@ public class CourseServiceImpl implements CourseService {
     public Integer addCourseView(Integer userId, Integer courseId) {
         return courseMapper.addCourseView(userId, courseId);
     }
-
+    
+    @Override
+    public List<Course> getCourseByParentId(Integer parentId) {
+        //listComp 用来返回查到的数据
+        List<Course> listCour = new ArrayList<>();
+        
+        //先查到传来的父id的所有子id
+        List<Integer> childCategoryIds = courseMapper.getChildByParent(parentId);
+        System.out.println(childCategoryIds);
+        
+        //然后根据所有的子id来查找这些竞赛 把竞赛放到compeByIds里面 然后listComp拼接compeByIds
+        for (int i = 0; i < childCategoryIds.size(); i++) {
+            List<Course> courByIds = courseMapper.getCourByIds(childCategoryIds.get(i));
+            listCour.addAll(courByIds);
+        }
+        
+        return listCour;
+    }
+    
 }

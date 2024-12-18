@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
+import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.service.CourseService;
 import com.llm.llm_knowledge.util.FileUtil;
@@ -119,6 +120,16 @@ public class CourseController {
         
         return newFileName;  // 返回新文件名
     }
-
+    
+    
+    //传来一个category_id,这个肯定是父id Course
+    @GetMapping("course/byParentId")
+    public List<Course> getCourseByParentId(@RequestParam Integer parentId){
+        return courseService.getCourseByParentId(parentId);
+    }
+    
+    
+    
+    
 
 }

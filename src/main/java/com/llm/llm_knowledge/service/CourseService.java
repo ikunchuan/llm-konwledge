@@ -42,4 +42,6 @@ public interface CourseService {
     List<CourseChapterDTO> getAllChapters();
     
     Integer addCourseView(Integer userId, Integer courseId);
+    
+    List<Course> getCourseByParentId(Integer parentId);
 }
