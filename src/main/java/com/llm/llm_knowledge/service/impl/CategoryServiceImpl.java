@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -66,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
     //父类别分页查询
     @Override
     public PageInfo<CategoryDTO> search(CategorySearch categorySearch, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<CategoryDTO> category = categoryMapper.selectCategoryWithFilters(categorySearch);
         return new PageInfo<>(category);
     }
@@ -75,7 +76,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> allIdAndName() {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.select("category_id","parent_id","category_name");
+        queryWrapper.select("category_id", "parent_id", "category_name");
         return categoryMapper.selectList(queryWrapper);
     }
 
@@ -86,8 +87,19 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAllSubCategories() {
-        QueryWrapper   queryWrapper = new QueryWrapper();
+        QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.isNotNull("parent_id");
+        return categoryMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<Category> getQstCat() {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.select("category_id", "category_name");
+        queryWrapper.in("category_name", Arrays.asList(
+                "程序设计", "网络安全", "人工智能与大数据",
+                "数据挖掘与分析", "数学知识", "数学建模",
+                "语言表达", "英语应用", "跨文化交流"));
         return categoryMapper.selectList(queryWrapper);
     }
 }

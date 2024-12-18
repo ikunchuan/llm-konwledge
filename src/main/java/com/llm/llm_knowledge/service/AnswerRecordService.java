@@ -20,4 +20,7 @@ public interface AnswerRecordService {
     void startAnswer(Integer answerRecordId);
     void submitAnswer(Integer answerRecordId, String answerGiven);
     AnswerRecordVO judgeAndSaveAnswer(AnswerRecordDTO answerRecordDTO);
+
+    //用户id答题记录
+    List<AnswerRecord> findAnswerRecordByUserId(Integer userId);
 }
