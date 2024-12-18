@@ -52,6 +52,12 @@ public class AnswerRecordController {
         return answerRecordService.search(answerRecordDTO, pageNum, pageSize);
     }
 
+    //查询用户答题记录并返回
+    @GetMapping("v1/rec/{userId}")
+    public List<AnswerRecord> findAnswerRecordByUserId(@PathVariable Integer userId) {
+        return answerRecordService.findAnswerRecordByUserId(userId);
+    }
+
     /**
      * 开始答题接口
      */

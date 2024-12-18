@@ -1,5 +1,6 @@
 package com.llm.llm_knowledge.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.AnswerRecordDTO;
@@ -144,11 +145,12 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
 
         // 4. 保存做题记录
         AnswerRecord answerRecord = new AnswerRecord();
+//就差id        answerRecord.setAnswerRecordId();
         answerRecord.setUserId(userId);
         answerRecord.setQuestionId(questionId);
         answerRecord.setAnswerGiven(answerGiven);
         answerRecord.setScore(score);
-        answerRecord.setTimeSpent(30); // 示例：假设答题时间 30 秒
+        answerRecord.setTimeSpent(30); // 示例：假设答题时间 30 秒就差时间
         answerRecordMapper.insert(answerRecord);
 
         // 5. 封装返回 VO
@@ -165,6 +167,14 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
         result.setTimeSpent(answerRecord.getTimeSpent());
 
         return result;
+    }
+
+    //id查做题记录
+    @Override
+    public List<AnswerRecord> findAnswerRecordByUserId(Integer userId) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("user_id", userId);
+        return answerRecordMapper.selectList(queryWrapper);
     }
 
 }
