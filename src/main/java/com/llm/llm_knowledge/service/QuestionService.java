@@ -41,4 +41,6 @@ public interface QuestionService {
 
     //查全
     List<Question> allQuestion();
+    
+    List<Question> getQstByParentId(Integer parentId);
 }

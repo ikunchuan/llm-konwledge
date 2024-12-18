@@ -96,7 +96,7 @@ public class CompetitionController {
     }
 
     
-    //传来一个category_id,这个肯定是父id 通过这个父id找到所有的Competition
+    //传来一个category_id, 通过这个id找到所有的Competition
     @GetMapping("comp/byParentId")
     public List<Competition> getCompByParentId(@RequestParam Integer parentId){
         return competitionService.getCompByParentId(parentId);

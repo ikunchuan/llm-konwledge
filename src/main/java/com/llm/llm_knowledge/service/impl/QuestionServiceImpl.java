@@ -118,4 +118,24 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> allQuestion() {
         return questionMapper.selectList(null);
     }
+    
+    @Override
+    public List<Question> getQstByParentId(Integer parentId) {
+        
+        List<Question> listQst = new ArrayList<>();
+        
+        List<Integer> childCategoryIds = questionMapper.getChildByParent(parentId);
+        
+        if(childCategoryIds == null || childCategoryIds.isEmpty()){
+            List<Question> qstByIds = questionMapper.getQstByIds(parentId);
+            listQst.addAll(qstByIds);
+        }else {
+            for(Integer childId : childCategoryIds){
+                List<Question> qstByIds = questionMapper.getQstByIds(childId);
+                listQst.addAll(qstByIds);
+            }
+        }
+        
+        return listQst;
+    }
 }

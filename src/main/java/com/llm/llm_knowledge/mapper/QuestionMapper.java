@@ -11,4 +11,8 @@ import java.util.List;
 @Repository
 public interface QuestionMapper extends BaseMapper<Question> {
     List<QuestionDTO> selectQuestionsWithFilters(QuestionSearch questionSearch);
+    
+    List<Integer> getChildByParent(Integer parentId);
+    
+    List<Question> getQstByIds(Integer parentId);
 }

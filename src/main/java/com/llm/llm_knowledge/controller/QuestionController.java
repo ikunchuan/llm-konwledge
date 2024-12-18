@@ -3,6 +3,7 @@ package com.llm.llm_knowledge.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.QuestionDTO;
+import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.Question;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.QuestionService;
@@ -76,4 +77,14 @@ public class QuestionController {
         return questionService.allQuestion();
     }
 
+    
+    //传来一个category_id, 通过这个id找到所有的Question
+    @GetMapping("v1/qstByParentId")
+    public List<Question> getQstByParentId(@RequestParam Integer parentId){
+        return questionService.getQstByParentId(parentId);
+    }
+    
+    
+    
+    
 }

@@ -104,18 +104,23 @@ public  class CompetitionServiceImpl implements CompetitionService {
     //根据传过来的父id查所有的Competition
     @Override
     public List<Competition> getCompByParentId(Integer parentId) {
-        
-        //listComp 用来返回查到的数据
+        // listComp 用来返回查到的数据
         List<Competition> listComp = new ArrayList<>();
         
-        //先查到传来的父id的所有子id
+        // 先查到传来的父id的所有子id
         List<Integer> childCategoryIds = competitionMapper.getChildByParent(parentId);
         System.out.println(childCategoryIds);
         
-        //然后根据所有的子id来查找这些竞赛 把竞赛放到compeByIds里面 然后listComp拼接compeByIds
-        for (int i = 0; i < childCategoryIds.size(); i++) {
-            List<Competition> compeByIds = competitionMapper.getCompeByIds(childCategoryIds.get(i));
+        // 如果没有childCategoryIds，或者childCategoryIds为空，则直接根据父id查询竞赛
+        if (childCategoryIds == null || childCategoryIds.isEmpty()) {
+            List<Competition> compeByIds = competitionMapper.getCompeByIds(parentId);
             listComp.addAll(compeByIds);
+        } else {
+            // 然后根据所有的子id来查找这些竞赛，把竞赛放到listComp里面
+            for (Integer childId : childCategoryIds) {
+                List<Competition> compeByIds = competitionMapper.getCompeByIds(childId);
+                listComp.addAll(compeByIds);
+            }
         }
         
         return listComp;

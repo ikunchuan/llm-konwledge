@@ -27,4 +27,25 @@
         ORDER BY qst.updated_time DESC
     </select>
 
+    <!--根据父id查出子id-->
+    <select id="getChildByParent">
+        Select
+            category.category_id
+        FROM
+            category
+        WHERE
+            parent_id = #{parentId}
+    </select>
+
+
+    <!--根据子id来查题目-->
+    <select id="getQstByIds">
+        SELECT
+            *
+        FROM
+            question
+        WHERE
+            category_id = #{childId}
+    </select>
+
 </mapper>
