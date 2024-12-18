@@ -59,6 +59,30 @@
     <select id="searchCompetitionFavorite" parameterType="map" resultType="com.llm.llm_knowledge.entity.CompetitionFavorite">
         SELECT * FROM competition_favorite WHERE user_id = #{userId} AND competition_id = #{competitionId}
     </select>
+
+
+    <!--根据父id查出子id-->
+    <select id="getChildByParent">
+        Select
+        category.category_id
+        FROM
+        category
+        WHERE
+        parent_id = #{parentId}
+    </select>
+
+
+    <!--根据子id来查竞赛-->
+    <select id="getCompeByIds">
+        SELECT
+        *
+        FROM
+        competition
+        WHERE
+        category_id = #{childId}
+    </select>
+
+
     <!--更新记录-->
     <update id="updateFavoriteStatus" parameterType="map">
         UPDATE competition_favorite
@@ -69,6 +93,7 @@
             updated_time = CURRENT_TIMESTAMP  -- 更新竞赛收藏时间
         WHERE user_id = #{userId} AND competition_id = #{competitionId};
     </update>
+
 
 
 

@@ -95,4 +95,25 @@ public class CompetitionController {
         return competitionService.addCompetitionFavorite(userId,competitionId);
     }
 
+    
+    //传来一个category_id,这个肯定是父id 通过这个父id找到所有的Competition
+    @GetMapping("comp/byParentId")
+    public List<Competition> getCompByParentId(@RequestParam Integer parentId){
+        return competitionService.getCompByParentId(parentId);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

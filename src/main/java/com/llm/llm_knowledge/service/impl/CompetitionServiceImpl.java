@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CompetitionDTO;
+import com.llm.llm_knowledge.entity.Category;
 import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.CompetitionFavorite;
 import com.llm.llm_knowledge.entity.PostFavorite;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -96,6 +98,27 @@ public  class CompetitionServiceImpl implements CompetitionService {
         } else {
             return competitionMapper.updateFavoriteStatus(userId,competitionId);
         }
+    }
+    
+    
+    //根据传过来的父id查所有的Competition
+    @Override
+    public List<Competition> getCompByParentId(Integer parentId) {
+        
+        //listComp 用来返回查到的数据
+        List<Competition> listComp = new ArrayList<>();
+        
+        //先查到传来的父id的所有子id
+        List<Integer> childCategoryIds = competitionMapper.getChildByParent(parentId);
+        System.out.println(childCategoryIds);
+        
+        //然后根据所有的子id来查找这些竞赛 把竞赛放到compeByIds里面 然后listComp拼接compeByIds
+        for (int i = 0; i < childCategoryIds.size(); i++) {
+            List<Competition> compeByIds = competitionMapper.getCompeByIds(childCategoryIds.get(i));
+            listComp.addAll(compeByIds);
+        }
+        
+        return listComp;
     }
     
     
