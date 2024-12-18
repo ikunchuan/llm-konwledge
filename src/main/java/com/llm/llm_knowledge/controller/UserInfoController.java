@@ -282,15 +282,16 @@ public class UserInfoController {
     
     
     //用户要查看浏览记录
-    //竞赛浏览记录
-    @GetMapping("/cmnview/{userId}")
+    //课程浏览记录
+    @GetMapping("/courseview/{userId}")
     public List<Course> getCourseView(@PathVariable Integer userId){
         return userInfoService.getCourseView(userId);
     }
     //帖子浏览记录
-    @GetMapping("postsview/{userId}")
+    @GetMapping("/postsview/{userId}")
     public List<Post> getPostView(@PathVariable Integer userId){
         return userInfoService.getPostView(userId);
     }
+
     
 }
