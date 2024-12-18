@@ -6,6 +6,7 @@ import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
 import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.Course;
+import com.llm.llm_knowledge.entity.CourseComment;
 import com.llm.llm_knowledge.service.CourseService;
 import com.llm.llm_knowledge.util.FileUtil;
 import com.llm.llm_knowledge.vo.CourseChapterSearch;
@@ -129,6 +130,13 @@ public class CourseController {
     }
     
 
+    //传来一个course_id,查看这个课程的所有评论
+    @GetMapping("course/comment/{courseId}")
+    public List<CourseComment> getCourseComment(@PathVariable Integer courseId){
+        return  courseService.getCourseComment(courseId);
+        
+    }
+    
     
 
 }

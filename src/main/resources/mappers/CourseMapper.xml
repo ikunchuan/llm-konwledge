@@ -79,5 +79,13 @@
             category_id = #{childId}
     </select>
 
+    <select id="getCourseComment" resultType="com.llm.llm_knowledge.entity.CourseComment">
+        SELECT
+        *
+        FROM
+        course_comment
+        WHERE
+        course_id = #{courseId}
+    </select>
 
 </mapper>

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
 import com.llm.llm_knowledge.entity.Course;
+import com.llm.llm_knowledge.entity.CourseComment;
 import com.llm.llm_knowledge.vo.CourseChapterSearch;
 import com.llm.llm_knowledge.vo.CourseSearch;
 
@@ -44,4 +45,6 @@ public interface CourseService {
     Integer addCourseView(Integer userId, Integer courseId);
     
     List<Course> getCourseByParentId(Integer parentId);
+    
+    List<CourseComment> getCourseComment(Integer courseId);
 }

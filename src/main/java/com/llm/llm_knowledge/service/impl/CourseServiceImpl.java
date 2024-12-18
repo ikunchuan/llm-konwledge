@@ -8,6 +8,7 @@ import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
 import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.Course;
+import com.llm.llm_knowledge.entity.CourseComment;
 import com.llm.llm_knowledge.mapper.CourseMapper;
 import com.llm.llm_knowledge.service.CourseService;
 import com.llm.llm_knowledge.vo.CourseChapterSearch;
@@ -137,6 +138,11 @@ public class CourseServiceImpl implements CourseService {
         }
         
         return listCour;
+    }
+    
+    @Override
+    public List<CourseComment> getCourseComment(Integer courseId) {
+        return courseMapper.getCourseComment(courseId);
     }
     
 }

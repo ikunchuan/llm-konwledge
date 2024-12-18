@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.llm.llm_knowledge.dto.CourseChapterDTO;
 import com.llm.llm_knowledge.dto.CourseDTO;
 import com.llm.llm_knowledge.entity.Course;
+import com.llm.llm_knowledge.entity.CourseComment;
 import com.llm.llm_knowledge.vo.CourseChapterSearch;
 import com.llm.llm_knowledge.vo.CourseSearch;
 
@@ -23,4 +24,6 @@ public interface CourseMapper extends BaseMapper<Course> {
     List<Integer> getChildByParent(Integer parentId);
     
     List<Course> getCourByIds(Integer integer);
+    
+    List<CourseComment> getCourseComment(Integer courseId);
 }
