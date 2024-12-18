@@ -56,14 +56,11 @@ public class QuestionController {
         return questionService.criteriaFindQuestion(id);
     }
 
-
     //分页查全
     @GetMapping("v1/page")
     public Page<Question> findAllPageQuestion(Integer pageNum, Integer pageSize) {
         return questionService.findAllPageQuestion(pageNum, pageSize);
     }
-
-
 
     //模糊联表查询
     @PostMapping("v1/search")
@@ -72,6 +69,11 @@ public class QuestionController {
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "5") Integer pageSize) throws BizException {
         return questionService.search(questionSearch, pageNum, pageSize);
+    }
+
+    @GetMapping("v1/all")
+    public List<Question> allQuestion() {
+        return questionService.allQuestion();
     }
 
 }

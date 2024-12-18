@@ -38,4 +38,7 @@ public interface QuestionService {
 
     //根据题目的种类标签输入的内容来模糊查询
     PageInfo<QuestionDTO> search(QuestionSearch questionSearch, Integer pageNum, Integer pageSize);
+
+    //查全
+    List<Question> allQuestion();
 }

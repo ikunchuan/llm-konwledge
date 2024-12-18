@@ -112,4 +112,10 @@ public class QuestionServiceImpl implements QuestionService {
         List<QuestionDTO> questionDTOS = questionMapper.selectQuestionsWithFilters(questionSearch);
         return new PageInfo<>(questionDTOS);
     }
+
+    //查全
+    @Override
+    public List<Question> allQuestion() {
+        return questionMapper.selectList(null);
+    }
 }

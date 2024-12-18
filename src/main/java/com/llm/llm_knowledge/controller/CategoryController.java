@@ -69,4 +69,8 @@ public class CategoryController {
         return categoryService.getSubCategoriesByParentId(categoryId);
     }
 
+    @GetMapping("v1/allSubcategories")
+    public List<Category> getAllSubCategories() {
+        return categoryService.getAllSubCategories();
+    }
 }
