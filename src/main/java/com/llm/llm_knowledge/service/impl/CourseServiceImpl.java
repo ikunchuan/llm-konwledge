@@ -121,14 +121,19 @@ public class CourseServiceImpl implements CourseService {
         //listComp 用来返回查到的数据
         List<Course> listCour = new ArrayList<>();
         
-        //先查到传来的父id的所有子id
+        //先查到传来的id的所有子id
         List<Integer> childCategoryIds = courseMapper.getChildByParent(parentId);
-        System.out.println(childCategoryIds);
         
-        //然后根据所有的子id来查找这些竞赛 把竞赛放到compeByIds里面 然后listComp拼接compeByIds
-        for (int i = 0; i < childCategoryIds.size(); i++) {
-            List<Course> courByIds = courseMapper.getCourByIds(childCategoryIds.get(i));
+        //如果没有childCategoryIds,则它不是父id
+        if (childCategoryIds == null || childCategoryIds.isEmpty()) {
+            List<Course> courByIds = courseMapper.getCourByIds(parentId);
             listCour.addAll(courByIds);
+        } else {
+            //然后根据所有的子id来查找这些竞赛 把竞赛放到compeByIds里面 然后listComp拼接compeByIds
+            for (int i = 0; i < childCategoryIds.size(); i++) {
+                List<Course> courByIds = courseMapper.getCourByIds(childCategoryIds.get(i));
+                listCour.addAll(courByIds);
+            }
         }
         
         return listCour;

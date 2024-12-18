@@ -122,14 +122,13 @@ public class CourseController {
     }
     
     
-    //传来一个category_id,这个肯定是父id Course
+    //传来一个category_id,这个Id可能是父id也可能是子id
     @GetMapping("course/byParentId")
     public List<Course> getCourseByParentId(@RequestParam Integer parentId){
         return courseService.getCourseByParentId(parentId);
     }
     
-    
-    
+
     
 
 }
