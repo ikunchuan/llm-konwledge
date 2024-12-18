@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@MapperScan("com.llm.llm_knowledge.mapper")
 @EnableTransactionManagement
 @Configuration
 public class MyBatisPlusConfig {

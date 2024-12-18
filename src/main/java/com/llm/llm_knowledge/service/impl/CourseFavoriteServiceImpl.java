@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseFavoriteDTO;
+import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.entity.CourseFavorite;
 import com.llm.llm_knowledge.mapper.CourseFavoriteMapper;
 import com.llm.llm_knowledge.service.CourseFavoriteService;
@@ -52,9 +53,7 @@ public class CourseFavoriteServiceImpl implements CourseFavoriteService {
     }
 
     @Override
-    public List<CourseFavorite> getCourseFavoriteByUserId(Integer userId) {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_id",userId);
-        return courseFavoriteMapper.selectList(queryWrapper);
+    public List<Course> getCourseFavoriteByUserId(Integer userId) {
+        return courseFavoriteMapper.getCourseFavoriteByUserId(userId);
     }
 }

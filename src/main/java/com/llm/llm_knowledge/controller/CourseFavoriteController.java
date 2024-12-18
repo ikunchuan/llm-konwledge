@@ -2,6 +2,7 @@ package com.llm.llm_knowledge.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseFavoriteDTO;
+import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.entity.CourseFavorite;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CourseFavoriteService;
@@ -45,9 +46,9 @@ public class CourseFavoriteController {
         return courseFavoriteService.search(courseFavoriteSearch, pageNum, pageSize);
     }
 
-    //userId
+    //查看某用户收藏的所有课程  传入userId
     @GetMapping("favorite/{userId}")
-    public List<CourseFavorite> getCourseFavoriteByUserId(@PathVariable Integer userId) {
+    public List<Course> getCourseFavoriteByUserId(@PathVariable Integer userId) {
         return courseFavoriteService.getCourseFavoriteByUserId(userId);
     }
 }

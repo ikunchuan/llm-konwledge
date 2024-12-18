@@ -28,4 +28,22 @@
         ORDER BY cf.updated_time DESC
     </select>
 
+
+    <select id="getCourseFavoriteByUserId" resultType="com.llm.llm_knowledge.entity.Course">
+        SELECT
+        cr.course_id,
+        cr.course_img_url,
+        cr.course_name,
+        cr.course_description,
+        crf.updated_time
+        FROM
+        course AS cr
+        INNER JOIN
+        course_favorite
+        AS crf
+        ON cr.course_id = crf.course_id
+        WHERE
+        crf.user_id = #{userId}
+    </select>
+
 </mapper>

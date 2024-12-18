@@ -349,7 +349,22 @@
         SELECT *
         FROM post
         WHERE user_id = #{userId}
-        AND deleted = 0
+          AND deleted = 0
+    </select>
+
+
+    <select id="getUserFavorite" resultType="com.llm.llm_knowledge.dto.PostDTO">
+        SELECT post.post_id,
+               post.post_title,
+               post.post_content,
+               postf.updated_time
+        FROM post_favorite
+                 AS postf
+                 INNER JOIN
+             post
+             ON
+                 postf.post_id = post.post_id
+        WHERE postf.user_id = #{userId}
     </select>
 
 </mapper>

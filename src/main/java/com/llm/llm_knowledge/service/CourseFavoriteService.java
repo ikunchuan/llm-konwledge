@@ -2,6 +2,7 @@ package com.llm.llm_knowledge.service;
 
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseFavoriteDTO;
+import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.entity.CourseFavorite;
 import com.llm.llm_knowledge.vo.CourseFavoriteSearch;
 
@@ -12,5 +13,5 @@ public interface CourseFavoriteService {
     Integer delCourseFavorite(Integer courseFavoriteId);
     Integer delCourseFavoriteByIds(List<Integer> Ids);
     PageInfo<CourseFavoriteDTO> search(CourseFavoriteSearch courseFavoriteSearch, Integer pageNum, Integer pageSize);
-    List<CourseFavorite> getCourseFavoriteByUserId(Integer userId);
+    List<Course> getCourseFavoriteByUserId(Integer userId);
 }

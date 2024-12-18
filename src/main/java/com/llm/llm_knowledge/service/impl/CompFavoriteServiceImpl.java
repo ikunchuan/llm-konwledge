@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CompFavoriteDTO;
+import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.CompetitionFavorite;
 import com.llm.llm_knowledge.mapper.CompFavoriteMapper;
 import com.llm.llm_knowledge.service.CompFavoriteService;
@@ -68,9 +69,7 @@ public class CompFavoriteServiceImpl implements CompFavoriteService {
 
     //根据用户ID查询收藏夹
     @Override
-    public List<CompetitionFavorite> getCompFavoriteByUserId(Integer userId) {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_id",userId);
-        return competitionFavoriteMapper.selectList(queryWrapper);
+    public List<Competition> getCompFavoriteByUserId(Integer userId) {
+        return competitionFavoriteMapper.getCompFavoriteByUserId(userId);
     }
 }

@@ -50,4 +50,15 @@
         ORDER BY cf.updated_time DESC
     </select>
 
+
+    <select id="getCompFavoriteByUserId" resultType="com.llm.llm_knowledge.entity.Competition">
+        SELECT
+        cp.competition_id,
+        cp.competition_img_url,
+        cp.competition_name,
+        cpf.updated_time
+        FROM competition_favorite AS cpf INNER JOIN competition AS cp ON cp.competition_id = cpf.competition_id
+        WHERE cpf.user_id = #{userId}
+    </select>
+
 </mapper>

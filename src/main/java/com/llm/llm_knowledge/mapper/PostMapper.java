@@ -68,4 +68,6 @@ public interface PostMapper extends BaseMapper<Post> {
     List<Post> getPostsUser(Integer userId);
 
     List<PostFavorite> getPostFavoriteByUserId(Integer userId);
+    
+    List<Post> getUserFavorite(Integer userId);
 }

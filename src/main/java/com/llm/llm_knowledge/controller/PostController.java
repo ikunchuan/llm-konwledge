@@ -191,5 +191,10 @@ public class PostController {
     }
     
     
+    /**传入userId,查询这个用户收藏的所有帖子*/
+    @GetMapping("userpost/{userId}")
+    public List<Post> getUserPostFavorite(@PathVariable Integer userId){
+        return postService.getUserFavorite(userId);
+    };
     
 }

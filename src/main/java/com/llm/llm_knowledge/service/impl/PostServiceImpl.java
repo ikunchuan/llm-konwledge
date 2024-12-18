@@ -161,8 +161,14 @@ public class PostServiceImpl implements PostService {
     public List<PostFavorite> getPostFavoriteByUserId(Integer userId) {
         return postMapper.getPostFavoriteByUserId(userId);
     }
-
-
+    
+    //根据用户查询出用户收藏的帖子
+    @Override
+    public List<Post> getUserFavorite(Integer userId) {
+        return postMapper.getUserFavorite(userId);
+    }
+    
+    
     //用户帖子浏览记录
     @Override
     public Integer postView(Integer userId, Integer postId) {

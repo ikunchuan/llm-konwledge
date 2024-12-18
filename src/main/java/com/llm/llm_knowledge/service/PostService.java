@@ -69,4 +69,6 @@ public interface PostService {
     List<Post> getPostsUser(Integer userId);
 
     List<PostFavorite> getPostFavoriteByUserId(Integer userId);
+    
+    List<Post> getUserFavorite(Integer userId);
 }

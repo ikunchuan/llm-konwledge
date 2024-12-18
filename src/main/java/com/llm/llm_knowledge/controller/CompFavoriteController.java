@@ -2,6 +2,7 @@ package com.llm.llm_knowledge.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CompFavoriteDTO;
+import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.CompetitionFavorite;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CompFavoriteService;
@@ -53,9 +54,9 @@ public class CompFavoriteController {
         return compFavoriteService.search(compFavoriteSearch, pageNum, pageSize);
     }
 
-    //userId查询
+    //根据userId查询这个用户收藏的帖子
     @GetMapping("favorite/{userId}")
-    public List<CompetitionFavorite> getCompFavoriteByUserId(@PathVariable Integer userId) {
+    public List<Competition> getCompFavoriteByUserId(@PathVariable Integer userId) {
         return compFavoriteService.getCompFavoriteByUserId(userId);
     }
 }
