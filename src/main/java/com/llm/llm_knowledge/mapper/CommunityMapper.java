@@ -29,4 +29,8 @@ public interface CommunityMapper extends BaseMapper<Community> {
     void updateUserScoreForLogin(Integer communityId, Integer userId);
     
     List<UserCommunityScoreDTO> checkCommuniutyScore(Integer communityId);
+    
+    List<Integer> getChildByParent(Integer parentId);
+    
+    List<Community> getCmnByIds(Integer parentId);
 }

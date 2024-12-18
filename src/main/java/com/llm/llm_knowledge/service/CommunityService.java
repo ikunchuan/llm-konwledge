@@ -42,4 +42,6 @@ public interface CommunityService {
     Integer updateUserScoreForLogin(Integer communityId, Integer userId);
     
     List<UserCommunityScoreDTO> checkCommuniutyScore(Integer communityId);
+    
+    List<Community> getCmnByParentId(Integer parentId);
 }

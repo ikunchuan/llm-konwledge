@@ -132,8 +132,28 @@
             </if>
         </where>
         ORDER BY ucs.score DESC
-
     </select>
 
+
+    <!--根据父id查出子id-->
+    <select id="getChildByParent">
+        Select
+            category.category_id
+        FROM
+            category
+        WHERE
+            parent_id = #{parentId}
+    </select>
+
+
+    <!--根据子id来查社区-->
+    <select id="getCmnByIds">
+        SELECT
+            *
+        FROM
+            community
+        WHERE
+            category_id = #{childId}
+    </select>
 
 </mapper>

@@ -8,6 +8,7 @@ import com.llm.llm_knowledge.dto.CommunityDTO;
 import com.llm.llm_knowledge.dto.UserCommunityScoreDTO;
 import com.llm.llm_knowledge.dto.UserPostCountDTO;
 import com.llm.llm_knowledge.entity.Community;
+import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.UserCommunityScore;
 import com.llm.llm_knowledge.mapper.CommunityMapper;
 import com.llm.llm_knowledge.service.CommunityService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -100,6 +102,37 @@ public class CommunityServiceImpl implements CommunityService {
     public List<UserCommunityScoreDTO> checkCommuniutyScore(Integer communityId) {
         return communityMapper.checkCommuniutyScore(communityId);
     }
+    
+    @Override
+    public List<Community> getCmnByParentId(Integer parentId) {
+        
+        List<Community> list = new ArrayList<>();
+        
+        List<Integer> childCategoryIds = communityMapper.getChildByParent(parentId);
+        
+        if (childCategoryIds == null || childCategoryIds.isEmpty()) {
+            List<Community> cmnByIds = communityMapper.getCmnByIds(parentId);
+            list.addAll(cmnByIds);
+        } else {
+            // 然后根据所有的子id来查找这些竞赛，把竞赛放到listComp里面
+            for (Integer childId : childCategoryIds) {
+                List<Community> compeByIds = communityMapper.getCmnByIds(childId);
+                list.addAll(compeByIds);
+            }
+        }
+        
+        
+        return list;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 }

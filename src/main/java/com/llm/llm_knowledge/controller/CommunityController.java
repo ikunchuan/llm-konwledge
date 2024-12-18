@@ -149,5 +149,18 @@ public class CommunityController {
 
     
 
+    /**传入categoryId  通过这个categoryId查询相关的社区*/
+    @GetMapping("cmn/byParentId")
+    public List<Community> getCmnByParentId(@RequestParam Integer parentId){
+        return communityService.getCmnByParentId(parentId);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
