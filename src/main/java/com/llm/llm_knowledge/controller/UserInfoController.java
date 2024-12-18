@@ -31,11 +31,14 @@ public class UserInfoController {
 
     @Autowired
     private UserInfoService userInfoService;
+    
     //获取男女人数
     @GetMapping("ui/sex-distribution")
     public List<Map<String, Object>> getUserSexDistribution() {
         return userInfoService.getUserSexDistribution();
     }
+    
+    
     //获取用户总数
     @GetMapping("ui/user-total-count")
     public ResponseEntity<Integer> getUserTotalCount() {
@@ -126,32 +129,33 @@ public class UserInfoController {
         return userInfoService.updateUserInfo(userInfo);
     }
 
-    //多表联查
+    /**
+     * 返回用所有用户的看课程情况 */
     @GetMapping("ui/watch")
     public List<UserCourseProgressDTO> progressDTOS(){
         return userInfoService.progressDTO();
     }
 
-    //获取用户观看视频总数
+    /**获取用户观看视频总数*/
     @GetMapping("ui/countCourseAll")
     public List<Map<String, Object>> getCompletedCoursesCount(){
         return userInfoService.getCompletedCoursesCount();
     }
     
     
-    //呈现每个城市里面的用户总数
+    /**呈现每个城市里面的用户总数*/
     @GetMapping("ui/cityuserall")
     public List<UserCityDTO> getCityUserCount(){
         return userInfoService.getCityUserCount();
     }
     
-    //呈现每个年龄的用户人数
+    /**呈现每个年龄的用户人数*/
     @GetMapping("ui/userageall")
     public List<UserAgeDTO> getAgeUserCount(){
         return userInfoService.getAgeUserCount();
     }
     
-    //selectDateCourseAll查看每天的每个课程有多少人看了
+    /**selectDateCourseAll查看每天的每个课程有多少人看了*/
     @GetMapping("ui/dateusercount")
     public List<DateUserCourseCountDTO> selectDateCourseAll(){
         return userInfoService.selectDateCourseAll();
@@ -159,14 +163,14 @@ public class UserInfoController {
     
     
     
-    //查看关注的人
+    /**查看关注的人*/
     @GetMapping("user/follower/{userId}")
     public List<UserInfo> lookFollower(@PathVariable Integer userId){
         return userInfoService.lookFollower(userId);
     }
     
     
-    //查看粉丝
+    /**查看粉丝*/
     @GetMapping("user/fans/{userId}")
     public List<UserInfo> lookFans(@PathVariable Integer userId){
         return userInfoService.lookFans(userId);
@@ -174,7 +178,7 @@ public class UserInfoController {
     
     
     
-    //获取用户在某个社区的积分
+    /**获取用户在某个社区的积分*/
     @PostMapping("user/community/score")
     public List<UserScoreDTO> getScore(@RequestParam Integer userId,
                                        @RequestParam Integer communityId){
@@ -182,7 +186,7 @@ public class UserInfoController {
     }
     
     
-    //用户关注另一个用户
+    /**用户关注另一个用户*/
     @GetMapping("user/follow")
     public Integer userFollow(@RequestParam Integer userId,
                               @RequestParam Integer followeeUserId){
@@ -192,7 +196,7 @@ public class UserInfoController {
     
     
     
-    //普通用户登录
+    /**普通用户登录*/
     @PostMapping("/login")
     public ResultEntity login(@RequestBody UserLoginInfoVO userLoginInfoVO) throws Exception {
         // 如果用户同时没有输入用户名或密码，抛出异常
@@ -228,7 +232,7 @@ public class UserInfoController {
     }
     
     
-    //用户登出
+    /**用户登出*/
     @PostMapping("/logout")
     public ResultEntity logout() {
         // 执行注销
@@ -237,7 +241,7 @@ public class UserInfoController {
     }
     
     
-    //用户注册
+    /**用户注册*/
     @PostMapping("/register")
     public ResultEntity register(@RequestBody UserLoginInfoVO userLoginInfoVO) throws UserException {
         if (null == userLoginInfoVO) {
@@ -260,7 +264,7 @@ public class UserInfoController {
     }
     
     
-    //用户头像上传
+    /**用户头像上传*/
     @PostMapping ("/upload")
     public String upload(@RequestParam("file") MultipartFile file) {
         String oldFileName = file.getOriginalFilename();  // 获取原始文件名
@@ -281,7 +285,7 @@ public class UserInfoController {
     }
     
     
-    //用户要查看浏览记录
+    /**用户要查看浏览记录*/
     //课程浏览记录
     @GetMapping("/courseview/{userId}")
     public List<Course> getCourseView(@PathVariable Integer userId){

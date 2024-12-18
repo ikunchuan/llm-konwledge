@@ -55,26 +55,26 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoMapper.selectById(userid);
     }
 
+    
     //增加用户
     @Override
     public Integer addUserInfo(UserInfo userInfo) {
         return userInfoMapper.insert(userInfo);
     }
 
+    
     //根据id删除用户
     @Override
     public Integer delUserInfo(Integer userid) {
         return userInfoMapper.deleteById(userid);
     }
+    
+    
     //更新社区用户信息
     @Override
     public Integer updateUserInfo(UserInfo userInfo) {
         return userInfoMapper.updateById(userInfo);
     }
-
-
-    
-    
     
     
     // 根据 userId 和 userName 分页查询用户
@@ -87,6 +87,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
     
     
+    //这里查找的是被冻结的用户
     @Override
     public PageInfo<UserInfo> uiByCondi2(@RequestBody UserInfoSearch userInfoSearch, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
@@ -94,8 +95,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         
         return new PageInfo<>(userInfos);
     }
-    
-    
     
     
     

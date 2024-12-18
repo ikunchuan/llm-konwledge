@@ -21,39 +21,24 @@ import java.util.Map;
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
     // 新增获取用户分布数据的方法
-    @Select("SELECT user_sex AS user_sex, COUNT(*) AS count FROM user_info GROUP BY user_sex")
     List<Map<String, Object>> findUserSexDistribution();
 
     
     // 获取用户总数
-    @Select("SELECT COUNT(*) AS total FROM user_info")
-    int getUserTotalCount();
+    Integer getUserTotalCount();
     
     
+    //用户
     List<UserCourseProgressDTO> selectProgressWithFilters();
     
     
-    @Select("SELECT u.user_name, COUNT(*) AS completed_count " +
-            "FROM course_progress cp " +
-            "JOIN user_info u ON cp.user_id = u.user_id " +
-            "WHERE cp.is_completed = 1 " +
-            "GROUP BY u.user_name")
+    //用户完成了多少视频
     List<Map<String, Object>> countCompletedCoursesByUser();
     
     
-    @Select("SELECT user_local, COUNT(*) as `user_num` FROM user_info GROUP BY user_local")
-    @Results({
-            @Result(property = "userLocal", column = "user_local"),
-            @Result(property = "userNum", column = "user_num")
-    })
     List<UserCityDTO> getCityUserCount();
     
     
-    @Select("SELECT user_age, COUNT(*) as age_count FROM user_info GROUP BY user_age")
-    @Results({
-            @Result(property = "userAge", column = "user_age"),
-            @Result(property = "ageCount", column = "age_count")
-    })
     List<UserAgeDTO> getAgeUserCount();
     
     

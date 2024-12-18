@@ -3,6 +3,66 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.llm.llm_knowledge.mapper.UserInfoMapper">
 
+<!--    获取男女人数-->
+    <select id="findUserSexDistribution" resultType="java.util.Map">
+        SELECT
+            user_sex AS user_sex,
+            COUNT(*) AS count
+        FROM
+            user_info
+        GROUP BY
+            user_sex
+    </select>
+
+
+<!--    获取用户总数-->
+    <select id="getUserTotalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS total
+        FROM user_info
+    </select>
+
+
+<!--获取用户观看视频总数-->
+    <select id="countCompletedCoursesByUser" resultType="java.util.Map">
+        SELECT
+            u.user_name,
+            COUNT(*) AS completed_count
+        FROM
+            course_progress cp
+                JOIN
+            user_info u ON cp.user_id = u.user_id
+        WHERE
+            cp.is_completed = 1
+        GROUP BY
+            u.user_name
+    </select>
+
+
+
+    <select id="getCityUserCount" resultType="com.llm.llm_knowledge.dto.UserCityDTO">
+        SELECT
+            user_local AS userLocal,
+            COUNT(*) AS user_num
+        FROM
+            user_info
+        GROUP BY
+            user_local
+    </select>
+
+
+    <select id="getAgeUserCount" resultType="com.llm.llm_knowledge.dto.UserAgeDTO">
+        SELECT
+            user_age AS userAge,
+            COUNT(*) AS age_count
+        FROM
+            user_info
+        GROUP BY
+            user_age
+    </select>
+
+
+
+<!--    查看用户是否完成某个课程-->
     <select id="selectProgressWithFilters" resultType="com.llm.llm_knowledge.dto.UserCourseProgressDTO">
         SELECT
         curpg.*,
