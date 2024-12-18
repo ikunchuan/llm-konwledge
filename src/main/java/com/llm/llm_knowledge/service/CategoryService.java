@@ -23,4 +23,5 @@ public interface CategoryService {
     PageInfo<CategoryDTO> search(CategorySearch categorySearch, Integer pageNum, Integer pageSize);
     List<Category> allIdAndName();
     List<Category> getSubCategoriesByParentId(Integer categoryId);
+    List<Category> getAllSubCategories();
 }

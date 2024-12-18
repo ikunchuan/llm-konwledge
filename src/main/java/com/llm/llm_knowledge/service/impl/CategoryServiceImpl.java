@@ -83,4 +83,11 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> getSubCategoriesByParentId(Integer categoryId) {
         return categoryMapper.getSubCategoriesByParentId(categoryId);
     }
+
+    @Override
+    public List<Category> getAllSubCategories() {
+        QueryWrapper   queryWrapper = new QueryWrapper();
+        queryWrapper.isNotNull("parent_id");
+        return categoryMapper.selectList(queryWrapper);
+    }
 }
