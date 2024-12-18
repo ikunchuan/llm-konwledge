@@ -349,6 +349,7 @@
         SELECT *
         FROM post
         WHERE user_id = #{userId}
+        AND deleted = 0
     </select>
 
 </mapper>

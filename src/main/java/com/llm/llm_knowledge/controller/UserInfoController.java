@@ -5,8 +5,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.*;
-import com.llm.llm_knowledge.entity.UserAdminInfo;
-import com.llm.llm_knowledge.entity.UserInfo;
+import com.llm.llm_knowledge.entity.*;
 import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.pojo.ResultEntity;
 import com.llm.llm_knowledge.service.UserInfoService;
@@ -281,5 +280,17 @@ public class UserInfoController {
         return newFileName;  // 返回新文件名
     }
     
+    
+    //用户要查看浏览记录
+    //竞赛浏览记录
+    @GetMapping("/cmnview/{userId}")
+    public List<Course> getCourseView(@PathVariable Integer userId){
+        return userInfoService.getCourseView(userId);
+    }
+    //帖子浏览记录
+    @GetMapping("postsview/{userId}")
+    public List<Post> getPostView(@PathVariable Integer userId){
+        return userInfoService.getPostView(userId);
+    }
     
 }

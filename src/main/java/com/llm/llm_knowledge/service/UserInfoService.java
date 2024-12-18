@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.*;
-import com.llm.llm_knowledge.entity.Community;
-import com.llm.llm_knowledge.entity.Question;
-import com.llm.llm_knowledge.entity.UserAdminInfo;
-import com.llm.llm_knowledge.entity.UserInfo;
+import com.llm.llm_knowledge.entity.*;
 import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.vo.UserInfoSearch;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,5 +67,10 @@ public interface UserInfoService {
     List<UserScoreDTO> getScore(Integer userId, Integer communityId);
 
     Integer userFollow(Integer userId, Integer followeeUserId);
+    
+    //查看竞赛浏览记录
+    List<Course> getCourseView(Integer userId);
+    
+    List<Post> getPostView(Integer userId);
 }
 

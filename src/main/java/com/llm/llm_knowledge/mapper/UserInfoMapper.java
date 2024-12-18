@@ -3,6 +3,9 @@ package com.llm.llm_knowledge.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.*;
+import com.llm.llm_knowledge.entity.Competition;
+import com.llm.llm_knowledge.entity.Course;
+import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.entity.UserInfo;
 import com.llm.llm_knowledge.vo.UserInfoSearch;
 import org.apache.ibatis.annotations.Mapper;
@@ -69,4 +72,8 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     List<UserScoreDTO> getScore(Integer userId, Integer communityId);
 
     Integer userFollow(Integer userId, Integer followeeUserId);
+    
+    List<Course> getCourseView(Integer userId);
+    
+    List<Post> getPostView(Integer userId);
 }

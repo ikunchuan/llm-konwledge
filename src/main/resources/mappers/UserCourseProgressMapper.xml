@@ -129,4 +129,43 @@
         (#{userId},#{followeeUserId},NOW())
     </insert>
 
+    <!--用户查看课程观看记录-->
+    <select id="getCourseView" resultType="com.llm.llm_knowledge.entity.Course">
+        select
+        cr.course_id,
+        cr.course_name,
+        cr.course_img_url,
+        cr.course_description,
+        crv.updated_time
+        FROM
+        course
+        AS
+        cr
+        INNER JOIN
+        course_view
+        AS
+        crv
+        ON
+        cr.course_id = crv.course_id
+        WHERE
+        crv.user_id = #{userId}
+    </select>
+
+    <!--用户观看帖子记录-->
+    <select id="getPostView" resultType="com.llm.llm_knowledge.entity.Post">
+        select
+        post.post_id,post.post_title,post.post_content,post.community_id,post_view.updated_time
+        FROM
+        post
+        INNER JOIN
+        post_view
+        ON
+        post.post_id = post_view.post_id
+        WHERE
+        post_view.user_id = #{userId}
+        AND
+        post.deleted = 0
+    </select>
+
+
 </mapper>
