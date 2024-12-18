@@ -20,38 +20,38 @@ public class CategoryController {
 
     //插入
     @PostMapping("v1")
-    public Integer addCategory(@RequestBody Category category){
+    public Integer addCategory(@RequestBody Category category) {
         return categoryService.addCategory(category);
     }
 
     //删除
     @DeleteMapping("v1/{id}")
-    public Integer deleteCategoryById(@PathVariable Integer id){
+    public Integer deleteCategoryById(@PathVariable Integer id) {
         return categoryService.deleteCategoryById(id);
     }
 
     //批量删除
     @DeleteMapping("v1")
-    public Integer deleteQuestionByIds(@RequestBody List<Integer> ids){
+    public Integer deleteQuestionByIds(@RequestBody List<Integer> ids) {
         System.out.println("Received IDs: " + ids);
         return categoryService.deleteCategoryByIds(ids);
     }
 
     //更新
     @PutMapping("v1")
-    public Integer updateCategoryById(@RequestBody Category category){
+    public Integer updateCategoryById(@RequestBody Category category) {
         return categoryService.updateCategoryById(category);
     }
 
     //查询
     @GetMapping("v1/{id}")
-    public Category findCategoryById(@PathVariable Integer id){
+    public Category findCategoryById(@PathVariable Integer id) {
         return categoryService.findCategoryById(id);
     }
 
     //查询id和name
     @GetMapping("v1/all")
-    public List<Category> allIdAndName(){
+    public List<Category> allIdAndName() {
         return categoryService.allIdAndName();
     }
 
@@ -72,5 +72,11 @@ public class CategoryController {
     @GetMapping("v1/allSubcategories")
     public List<Category> getAllSubCategories() {
         return categoryService.getAllSubCategories();
+    }
+
+    //有题目的特定类别
+    @GetMapping("v1/qstCat")
+    public List<Category> getQstCat() {
+        return categoryService.getQstCat();
     }
 }
