@@ -10,15 +10,25 @@ import java.util.List;
 public interface AnswerRecordService {
     //基本业务
     Integer addAnswerRecord(AnswerRecord answerRecord);
+
     Integer delAnswerRecordById(Integer id);
+
     Integer delAnswerRecordByIds(List<Integer> ids);
+
     Integer updAnswerRecord(AnswerRecord answerRecord);
+
     PageInfo<AnswerRecordVO> search(AnswerRecordDTO answerRecordDTO,
                                     Integer pageNum,
                                     Integer pageSize);
+
     //做题
-    void startAnswer(Integer answerRecordId);
-    void submitAnswer(Integer answerRecordId, String answerGiven);
+    //开始答题
+//    void startAnswer(Integer answerRecordId);
+
+    //提交答案
+//    void submitAnswer(Integer answerRecordId, String answerGiven);
+
+    //  判断
     AnswerRecordVO judgeAndSaveAnswer(AnswerRecordDTO answerRecordDTO);
 
     //用户id答题记录

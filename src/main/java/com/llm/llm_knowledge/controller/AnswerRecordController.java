@@ -58,17 +58,17 @@ public class AnswerRecordController {
         return answerRecordService.findAnswerRecordByUserId(userId);
     }
 
-    /**
-     * 开始答题接口
-     */
-    @PostMapping("start/{AnswerRecordId}")
-    public ResponseEntity<String> startQuestion(@PathVariable Integer AnswerRecordId) {
-        answerRecordService.startAnswer(AnswerRecordId);
-        return ResponseEntity.ok("答题开始！");
-    }
+//    /**
+//     * 开始答题接口
+//     */
+//    @PostMapping("start/{AnswerRecordId}")
+//    public ResponseEntity<String> startQuestion(@PathVariable Integer AnswerRecordId) {
+//        answerRecordService.startAnswer(AnswerRecordId);
+//        return ResponseEntity.ok("答题开始！");
+//    }
 
     /**
-     * 判断
+     * 答题判断
      * @param answerRecordDTO
      * @return
      */
@@ -77,23 +77,24 @@ public class AnswerRecordController {
         return answerRecordService.judgeAndSaveAnswer(answerRecordDTO);
     }
 
-    @PostMapping("submit/{AnswerRecordId}")
-    public ResponseEntity<String> submitAnswer(@PathVariable Integer AnswerRecordId,
-                                               @RequestBody String answerGiven) {
-        answerRecordService.submitAnswer(AnswerRecordId, answerGiven);
-        return ResponseEntity.ok("答题提交成功！");
-    }
+//    提交
+//    @PostMapping("submit/{AnswerRecordId}")
+//    public ResponseEntity<String> submitAnswer(@PathVariable Integer AnswerRecordId,
+//                                               @RequestBody String answerGiven) {
+//        answerRecordService.submitAnswer(AnswerRecordId, answerGiven);
+//        return ResponseEntity.ok("答题提交成功！");
+//    }
 
-    /**
-     * 实时同步答题时间
-     */
-    @PostMapping("sync-time")
-    public ResponseEntity<String> syncTimeSpent(
-            @RequestParam Integer answerRecordId,
-            @RequestParam Integer timeSpent) {
-        // 可选：将时间直接写入数据库或日志
-        log.info("用户 {} 同步用时：{} 秒", answerRecordId, timeSpent);
-        return ResponseEntity.ok("用时同步成功！");
-    }
+//    /**
+//     * 实时同步答题时间
+//     */
+//    @PostMapping("sync-time")
+//    public ResponseEntity<String> syncTimeSpent(
+//            @RequestParam Integer answerRecordId,
+//            @RequestParam Integer timeSpent) {
+//        // 可选：将时间直接写入数据库或日志
+//        log.info("用户 {} 同步用时：{} 秒", answerRecordId, timeSpent);
+//        return ResponseEntity.ok("用时同步成功！");
+//    }
 
 }
