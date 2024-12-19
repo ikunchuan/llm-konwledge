@@ -131,9 +131,13 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
      * @return result
      */
     public AnswerRecordVO judgeAndSaveAnswer(AnswerRecordDTO answerRecordDTO) {
+
         Integer userId = answerRecordDTO.getUserId();
+        System.out.println(userId);
         Integer questionId = answerRecordDTO.getQuestionId();
+        System.out.println(questionId);
         String answerGiven = answerRecordDTO.getAnswerGiven();
+        System.out.println(answerGiven);
 
         // 1. 查询题目详情
         Question question = questionMapper.selectById(questionId);

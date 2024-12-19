@@ -1,5 +1,7 @@
 package com.llm.llm_knowledge.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.AnswerRecordDTO;
 import com.llm.llm_knowledge.entity.AnswerRecord;
@@ -73,7 +75,12 @@ public class AnswerRecordController {
      * @return
      */
     @PostMapping("judge")
-    public AnswerRecordVO judgeAndSaveAnswer(AnswerRecordDTO answerRecordDTO) {
+    public AnswerRecordVO judgeAndSaveAnswer(@RequestBody AnswerRecordDTO answerRecordDTO) {
+        try {
+            System.out.println("接收到的 JSON 字符串: " + new ObjectMapper().writeValueAsString(answerRecordDTO));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return answerRecordService.judgeAndSaveAnswer(answerRecordDTO);
     }
 
