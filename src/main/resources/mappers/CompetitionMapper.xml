@@ -41,10 +41,10 @@
                 (cpd.start_date &lt;= #{endDate} AND cpd.end_date &gt;= #{startDate})
                 )
             </if>
-            <if test="level_name != null">
+            <if test="levelName != null">
                 AND cp.level_name = #{levelName}
             </if>
-            <if test="competition_status != null">
+            <if test="competitionStatus != null">
                 AND cp.competition_status = #{competitionStatus}
             </if>
         </where>
