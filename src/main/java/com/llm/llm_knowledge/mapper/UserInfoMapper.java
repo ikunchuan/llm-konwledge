@@ -52,9 +52,13 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
     Integer userFollow(Integer userId, Integer followeeUserId);
 
+    //删除课程浏览
+    Integer delCourseViewById(Integer courseViewId);
     //查询课程记录
     List<CourseViewVO> getCourseView(Integer userId);
 
+    //删除帖子浏览
+    Integer delPostViewById(Integer postViewId);
     //查询帖子记录
     List<PostViewVO> getPostView(Integer userId);
 

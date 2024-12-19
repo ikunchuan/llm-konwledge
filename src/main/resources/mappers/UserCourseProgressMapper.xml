@@ -175,6 +175,13 @@
         VALUES (#{userId}, #{followeeUserId}, NOW())
     </insert>
 
+<!--    删除课程浏览-->
+    <delete id="delCourseViewById">
+        DELETE FROM course_view
+        WHERE course_view_id = #{courseViewId}
+          AND deleted=0
+    </delete>
+
     <!--用户查看课程观看记录-->
     <select id="getCourseView" resultType="com.llm.llm_knowledge.vo.CourseViewVO">
         select crv.course_view_id,
@@ -182,6 +189,7 @@
                cr.course_name,
                cr.course_img_url,
                cr.course_description,
+               crv.deleted,
                crv.updated_time
         FROM course
                  AS cr
@@ -194,6 +202,14 @@
           AND deleted = 0
     </select>
 
+
+    <!--    删除帖子浏览-->
+    <delete id="delPostViewById">
+        DELETE FROM post_view
+        WHERE post_view_id = #{postViewId}
+          AND deleted=0
+    </delete>
+
     <!--用户观看帖子记录-->
     <select id="getPostView" resultType="com.llm.llm_knowledge.vo.PostViewVO">
         select post_view.post_view_id,
@@ -201,6 +217,7 @@
                post.post_title,
                post.post_content,
                post.community_id,
+               post_view.deleted,
                post_view.updated_time
         FROM post
                  INNER JOIN
