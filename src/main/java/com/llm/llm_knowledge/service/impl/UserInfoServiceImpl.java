@@ -158,7 +158,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 //删除课程浏览记录
     @Override
     public Integer delCourseViewById(Integer courseViewId) {
-        return userInfoMapper.deleteById(courseViewId);
+        return userInfoMapper.delCourseViewById(courseViewId);
     }
 
     //查看课程浏览记录
@@ -166,10 +166,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<CourseViewVO> getCourseView(Integer userId) {
         return userInfoMapper.getCourseView(userId);
     }
+
 //删除帖子浏览记录
     @Override
     public Integer delPostViewById(Integer postViewId) {
-        return userInfoMapper.deleteById(postViewId);
+        return userInfoMapper.delPostViewById(postViewId);
     }
 
     @Override

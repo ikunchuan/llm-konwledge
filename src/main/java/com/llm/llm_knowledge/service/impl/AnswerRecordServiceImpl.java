@@ -137,7 +137,9 @@ public class AnswerRecordServiceImpl implements AnswerRecordService {
 
         // 1. 查询题目详情
         Question question = questionMapper.selectById(questionId);
+        System.out.println(question);
         if (question == null) {
+
             throw new RuntimeException("题目不存在！");
         }
 
