@@ -96,7 +96,7 @@ public class CourseController {
     }
     
     //课程浏览记录 用户浏览一个课程 传入用户Id和课程Id 增加一条记录
-    @PostMapping("course/view")
+    @GetMapping("course/view")
     public Integer addCourseView(@RequestParam Integer userId,
                                  @RequestParam Integer courseId){
         return courseService.addCourseView(userId,courseId);
