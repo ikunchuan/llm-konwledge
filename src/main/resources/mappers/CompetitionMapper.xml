@@ -41,6 +41,12 @@
                 (cpd.start_date &lt;= #{endDate} AND cpd.end_date &gt;= #{startDate})
                 )
             </if>
+            <if test="level_name != null">
+                AND cp.level_name = #{levelName}
+            </if>
+            <if test="competition_status != null">
+                AND cp.competition_status = #{competitionStatus}
+            </if>
         </where>
         ORDER BY cp.created_time DESC
     </select>
