@@ -10,6 +10,8 @@ import com.llm.llm_knowledge.entity.*;
 import com.llm.llm_knowledge.exception.UserException;
 import com.llm.llm_knowledge.mapper.UserInfoMapper;
 import com.llm.llm_knowledge.service.UserInfoService;
+import com.llm.llm_knowledge.vo.CourseViewVO;
+import com.llm.llm_knowledge.vo.PostViewVO;
 import com.llm.llm_knowledge.vo.UserInfoSearch;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -18,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +34,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     //获取男女人数
     @Override
-    public List<Map<String, Object>>getUserSexDistribution() {
+    public List<Map<String, Object>> getUserSexDistribution() {
         return userInfoMapper.findUserSexDistribution();
     }
+
     //获取用户总数
     @Override
     public int getUserTotalCount() {
@@ -49,126 +51,133 @@ public class UserInfoServiceImpl implements UserInfoService {
         Page<UserInfo> page = new Page<>(pageNum, pageSize);
         return userInfoMapper.selectPage(page, null);
     }
+
     //根据id查询
     @Override
     public UserInfo userInfoById(Integer userid) {
         return userInfoMapper.selectById(userid);
     }
 
-    
+
     //增加用户
     @Override
     public Integer addUserInfo(UserInfo userInfo) {
         return userInfoMapper.insert(userInfo);
     }
 
-    
+
     //根据id删除用户
     @Override
     public Integer delUserInfo(Integer userid) {
         return userInfoMapper.deleteById(userid);
     }
-    
-    
+
+
     //更新社区用户信息
     @Override
     public Integer updateUserInfo(UserInfo userInfo) {
         return userInfoMapper.updateById(userInfo);
     }
-    
-    
+
+
     // 根据 userId 和 userName 分页查询用户
     @Override
     public PageInfo<UserInfo> uiByCondi(@RequestBody UserInfoSearch userInfoSearch, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<UserInfo> userInfos = userInfoMapper.selectUserInfoAll(userInfoSearch);
-        
+
         return new PageInfo<>(userInfos);
     }
-    
-    
+
+
     //这里查找的是被冻结的用户
     @Override
     public PageInfo<UserInfo> uiByCondi2(@RequestBody UserInfoSearch userInfoSearch, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<UserInfo> userInfos = userInfoMapper.selectUserInfoAll2(userInfoSearch);
-        
+
         return new PageInfo<>(userInfos);
     }
-    
-    
-    
-    
+
+
     @Override
     public List<UserCourseProgressDTO> progressDTO() {
         List<UserCourseProgressDTO> userCourseProgressDTOS = userInfoMapper.selectProgressWithFilters();
         return userCourseProgressDTOS;
     }
-    
+
     //获取用户观看视频总数
     @Override
     public List<Map<String, Object>> getCompletedCoursesCount() {
         List<Map<String, Object>> result = userInfoMapper.countCompletedCoursesByUser();
         return result;
-        
+
     }
-    
-    
-    
-    
+
+
     @Override
     public List<UserCityDTO> getCityUserCount() {
         return userInfoMapper.getCityUserCount();
     }
-    
+
     @Override
     public List<UserAgeDTO> getAgeUserCount() {
         return userInfoMapper.getAgeUserCount();
     }
-    
+
     @Override
     public List<DateUserCourseCountDTO> selectDateCourseAll() {
         return userInfoMapper.selectDateCourseAll();
     }
-    
-    
+
+
     //查看关注者
     @Override
     public List<UserInfo> lookFollower(Integer userId) {
         return userInfoMapper.lookFollower(userId);
     }
-    
-    
+
+
     //查看粉丝
     @Override
     public List<UserInfo> lookFans(Integer userId) {
         return userInfoMapper.lookFans(userId);
     }
-    
-    
+
+
     //查看某个用户的某个社区的积分
     @Override
     public List<UserScoreDTO> getScore(Integer userId, Integer communityId) {
-        return userInfoMapper.getScore(userId,communityId);
+        return userInfoMapper.getScore(userId, communityId);
     }
 
     @Override
     public Integer userFollow(Integer userId, Integer followeeUserId) {
-        return userInfoMapper.userFollow(userId,followeeUserId);
+        return userInfoMapper.userFollow(userId, followeeUserId);
     }
-    
+//删除课程浏览记录
+    @Override
+    public Integer delCourseViewById(Integer courseViewId) {
+        return userInfoMapper.deleteById(courseViewId);
+    }
+
     //查看课程浏览记录
     @Override
-    public List<Course> getCourseView(Integer userId) {
+    public List<CourseViewVO> getCourseView(Integer userId) {
         return userInfoMapper.getCourseView(userId);
     }
-    
+//删除帖子浏览记录
     @Override
-    public List<Post> getPostView(Integer userId) {
+    public Integer delPostViewById(Integer postViewId) {
+        return userInfoMapper.deleteById(postViewId);
+    }
+
+    @Override
+    public List<PostViewVO> getPostView(Integer userId) {
         return userInfoMapper.getPostView(userId);
     }
-    
-    
+
+
     @Override
     public UserInfo login(UserInfo userInfo) throws UserException {
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
@@ -182,7 +191,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         return userInfoFromDB;
     }
-    
+
     @Override
     public Integer register(UserInfo userInfo) throws UserException {
         // 判断用户名是否存在
@@ -200,10 +209,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         //调用userAdminInfoService里面的方法
         return userInfoMapper.insert(userInfo);
     }
-    
 
-    
-    
+
 }
 
 

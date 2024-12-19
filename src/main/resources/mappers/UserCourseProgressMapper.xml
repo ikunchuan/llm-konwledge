@@ -123,108 +123,92 @@
 
 
     <select id="lookFollower" resultType="com.llm.llm_knowledge.entity.UserInfo">
-        SELECT
-            uf.followee_id AS user_id,
-            ui.user_name,
-            ui.user_profile_picture,
-            ui.user_bio,
-            uf.created_time AS follow_time
-        FROM
-            user_follow uf
-                JOIN
-            user_info ui
-            ON
-                uf.followee_id = ui.user_id
-        WHERE
-            uf.follower_id = #{userId}
-        ORDER BY
-            uf.created_time DESC
+        SELECT uf.followee_id  AS user_id,
+               ui.user_name,
+               ui.user_profile_picture,
+               ui.user_bio,
+               uf.created_time AS follow_time
+        FROM user_follow uf
+                 JOIN
+             user_info ui
+             ON
+                 uf.followee_id = ui.user_id
+        WHERE uf.follower_id = #{userId}
+        ORDER BY uf.created_time DESC
     </select>
 
 
     <select id="lookFans" resultType="com.llm.llm_knowledge.entity.UserInfo">
-        SELECT
-            uf.follower_id AS user_id,
-            ui.user_name,
-            ui.user_profile_picture,
-            ui.user_bio,
-            uf.created_time AS follow_time
-        FROM
-            user_follow uf
-                JOIN
-            user_info ui
-            ON
-                uf.follower_id = ui.user_id
-        WHERE
-            uf.followee_id = #{userId}
-        ORDER BY
-            uf.created_time DESC
+        SELECT uf.follower_id  AS user_id,
+               ui.user_name,
+               ui.user_profile_picture,
+               ui.user_bio,
+               uf.created_time AS follow_time
+        FROM user_follow uf
+                 JOIN
+             user_info ui
+             ON
+                 uf.follower_id = ui.user_id
+        WHERE uf.followee_id = #{userId}
+        ORDER BY uf.created_time DESC
     </select>
 
 
 
     <select id="getScore" resultType="com.llm.llm_knowledge.dto.UserScoreDTO">
-        SELECT
-            ui.user_id AS userId,
-            ui.user_name AS userName,
-            usc.score AS score
-        FROM
-            user_info ui
-                JOIN
-            user_community_score usc
-            ON
-                ui.user_id = usc.user_id
-        WHERE
-            usc.community_id = #{communityId}
-        ORDER BY
-            usc.score DESC,
-            ui.user_id ASC
+        SELECT ui.user_id   AS userId,
+               ui.user_name AS userName,
+               usc.score    AS score
+        FROM user_info ui
+                 JOIN
+             user_community_score usc
+             ON
+                 ui.user_id = usc.user_id
+        WHERE usc.community_id = #{communityId}
+        ORDER BY usc.score DESC,
+                 ui.user_id
     </select>
 
 
     <insert id="userFollow">
-        INSERT INTO
-        user_follow (follower_id, followee_id, created_time)
-        VALUES
-        (#{userId},#{followeeUserId},NOW())
+        INSERT INTO user_follow (follower_id, followee_id, created_time)
+        VALUES (#{userId}, #{followeeUserId}, NOW())
     </insert>
 
     <!--用户查看课程观看记录-->
-    <select id="getCourseView" resultType="com.llm.llm_knowledge.entity.Course">
-        select
-        cr.course_id,
-        cr.course_name,
-        cr.course_img_url,
-        cr.course_description,
-        crv.updated_time
-        FROM
-        course
-        AS
-        cr
-        INNER JOIN
-        course_view
-        AS
-        crv
-        ON
-        cr.course_id = crv.course_id
-        WHERE
-        crv.user_id = #{userId}
+    <select id="getCourseView" resultType="com.llm.llm_knowledge.vo.CourseViewVO">
+        select crv.course_view_id,
+               cr.course_id,
+               cr.course_name,
+               cr.course_img_url,
+               cr.course_description,
+               crv.updated_time
+        FROM course
+                 AS cr
+                 INNER JOIN
+             course_view
+                 AS crv
+             ON
+                 cr.course_id = crv.course_id
+        WHERE crv.user_id = #{userId}
+          AND deleted = 0
     </select>
 
     <!--用户观看帖子记录-->
-    <select id="getPostView" resultType="com.llm.llm_knowledge.entity.Post">
-        select
-        post.post_id,post.post_title,post.post_content,post.community_id,post_view.updated_time
-        FROM
-        post
-        INNER JOIN
-        post_view
-        ON
-        post.post_id = post_view.post_id
-        WHERE
-        post_view.user_id = #{userId}
-        AND
-        post.deleted = 0
+    <select id="getPostView" resultType="com.llm.llm_knowledge.vo.PostViewVO">
+        select post_view.post_view_id,
+               post.post_id,
+               post.post_title,
+               post.post_content,
+               post.community_id,
+               post_view.updated_time
+        FROM post
+                 INNER JOIN
+             post_view
+             ON
+                 post.post_id = post_view.post_id
+        WHERE post_view.user_id = #{userId}
+          AND post.deleted = 0
     </select>
 
 

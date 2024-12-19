@@ -1,17 +1,11 @@
 package com.llm.llm_knowledge.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.*;
-import com.llm.llm_knowledge.entity.Competition;
-import com.llm.llm_knowledge.entity.Course;
-import com.llm.llm_knowledge.entity.Post;
-import com.llm.llm_knowledge.entity.UserInfo;
+import com.llm.llm_knowledge.entity.*;
+import com.llm.llm_knowledge.vo.CourseViewVO;
+import com.llm.llm_knowledge.vo.PostViewVO;
 import com.llm.llm_knowledge.vo.UserInfoSearch;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -57,8 +51,11 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     List<UserScoreDTO> getScore(Integer userId, Integer communityId);
 
     Integer userFollow(Integer userId, Integer followeeUserId);
-    
-    List<Course> getCourseView(Integer userId);
-    
-    List<Post> getPostView(Integer userId);
+
+    //查询课程记录
+    List<CourseViewVO> getCourseView(Integer userId);
+
+    //查询帖子记录
+    List<PostViewVO> getPostView(Integer userId);
+
 }
