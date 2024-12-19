@@ -169,6 +169,13 @@ public class PostServiceImpl implements PostService {
     }
     
     
+    //根据用户查询出用户喜欢的帖子
+    @Override
+    public List<Post> getUserPostLike(Integer userId) {
+        return postMapper.getUserPostLike(userId);
+    }
+    
+    
     //用户帖子浏览记录
     @Override
     public Integer postView(Integer userId, Integer postId) {

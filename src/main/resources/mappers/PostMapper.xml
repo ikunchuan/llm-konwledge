@@ -329,9 +329,9 @@
                  LEFT JOIN
              post_view AS pv ON p.post_id = pv.post_id
                  LEFT JOIN
-             post_like AS pl ON p.post_id = pl.post_id
+             post_like AS pl ON p.post_id = pl.post_id AND pl.deleted = 0 -- 只统计未删除的点赞
                  LEFT JOIN
-             post_favorite AS pf ON p.post_id = pf.post_id
+             post_favorite AS pf ON p.post_id = pf.post_id AND pf.deleted = 0 -- 只统计未删除的收藏
                  LEFT JOIN
              post_comment AS pc ON p.post_id = pc.post_id
         WHERE p.post_id = #{postId}
@@ -365,6 +365,20 @@
              ON
                  postf.post_id = post.post_id
         WHERE postf.user_id = #{userId}
+    </select>
+
+    <select id="getUserPostLike" resultType="com.llm.llm_knowledge.dto.PostDTO">
+        SELECT post.post_id,
+               post.post_title,
+               post.post_content,
+               postl.updated_time
+        FROM post_like
+                 AS postl
+                 INNER JOIN
+             post
+             ON
+                 postl.post_id = post.post_id
+        WHERE postl.user_id = #{userId}
     </select>
 
 </mapper>

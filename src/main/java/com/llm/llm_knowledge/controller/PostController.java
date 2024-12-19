@@ -92,7 +92,7 @@ public class PostController {
     }
     
     /**用户收藏帖子,只要根据userId和userId就可以往表里面添加数据,因此直接用get请求*/
-    @PostMapping("post/favorite")
+    @GetMapping("post/favorite")
     public Integer postFavorite(@RequestParam Integer userId,
                                 @RequestParam Integer postId){
         return postService.postFavorite(userId,postId);
@@ -113,7 +113,7 @@ public class PostController {
     
     
     /**帖子点赞,点击点赞会增加一条数据*/
-    @PostMapping("post/like")
+    @GetMapping("post/like")
     public Integer postLike(@RequestParam Integer userId,
                             @RequestParam Integer postId){
         return postService.postLike(userId,postId);
@@ -175,7 +175,7 @@ public class PostController {
     
     
     /**帖子评论 传入用户ID 帖子ID 评论内容*/
-    @PostMapping("post/usercomment")
+    @GetMapping("post/usercomment")
     public Integer addPostComment(@RequestParam Integer postId,
                                   @RequestParam Integer userId,
                                   @RequestParam String comment){
@@ -196,5 +196,11 @@ public class PostController {
     public List<Post> getUserPostFavorite(@PathVariable Integer userId){
         return postService.getUserFavorite(userId);
     };
+    
+    /**传入userId,查询这个用户喜欢的所有帖子*/
+    @GetMapping("userlike/{userId}")
+    public List<Post> getUserPostLike(@PathVariable Integer userId){
+        return postService.getUserPostLike(userId);
+    }
     
 }

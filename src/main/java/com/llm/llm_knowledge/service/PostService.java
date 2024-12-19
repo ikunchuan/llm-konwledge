@@ -71,4 +71,6 @@ public interface PostService {
     List<PostFavorite> getPostFavoriteByUserId(Integer userId);
     
     List<Post> getUserFavorite(Integer userId);
+    
+    List<Post> getUserPostLike(Integer userId);
 }
