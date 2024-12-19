@@ -321,7 +321,7 @@ public class UserInfoController {
     }
 
     //删除帖子浏览记录
-    @DeleteMapping("/postsView/del/{postViewId}")
+    @DeleteMapping("/postView/del/{postViewId}")
     public Integer delPostView(@PathVariable Integer postViewId) {
         return userInfoService.delPostViewById(postViewId);
     }
