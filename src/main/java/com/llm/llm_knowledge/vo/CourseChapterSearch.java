@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CourseChapterSearch {
     
-    private String CourseName;
+    private String courseName;
     
 }
