@@ -93,13 +93,12 @@
     <update id="updateFavoriteStatus" parameterType="map">
         UPDATE competition_favorite
         SET deleted = CASE
-                          WHEN deleted = 0 THEN 1   -- 如果当前是收藏（deleted=0），则取消收藏（设置为1）
-                          WHEN deleted = 1 THEN 0   -- 如果当前是取消收藏（deleted=1），则恢复收藏（设置为0）
-            END,
-            updated_time = CURRENT_TIMESTAMP  -- 更新竞赛收藏时间
+        WHEN deleted = 0 THEN 1
+        WHEN deleted = 1 THEN 0
+        END,
+        updated_time = CURRENT_TIMESTAMP
         WHERE user_id = #{userId} AND competition_id = #{competitionId};
     </update>
-
 
 
 

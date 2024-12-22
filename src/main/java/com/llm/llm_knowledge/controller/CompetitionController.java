@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CompetitionDTO;
 import com.llm.llm_knowledge.entity.Competition;
 
+import com.llm.llm_knowledge.entity.CompetitionFavorite;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CompetitionService;
 import com.llm.llm_knowledge.util.FileUtil;
@@ -95,7 +96,12 @@ public class CompetitionController {
         return competitionService.addCompetitionFavorite(userId,competitionId);
     }
 
-    
+
+    @GetMapping("compe/favorite")
+    public CompetitionFavorite getCompetitionFavorite(@RequestParam Integer userId,@RequestParam Integer competitionId){
+        return competitionService.getCompetitionFavorite(userId,competitionId);
+    }
+
     //传来一个category_id, 通过这个id找到所有的Competition
     @GetMapping("comp/byParentId")
     public List<Competition> getCompByParentId(@RequestParam Integer parentId){

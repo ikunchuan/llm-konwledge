@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CompetitionDTO;
-import com.llm.llm_knowledge.entity.Category;
 import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.CompetitionFavorite;
-import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.mapper.CompetitionMapper;
 import com.llm.llm_knowledge.service.CompetitionService;
 import com.llm.llm_knowledge.vo.CompetitionSearch;
@@ -87,17 +85,33 @@ public  class CompetitionServiceImpl implements CompetitionService {
 
         return new PageInfo<>(competitionDTOS);
     }
-    
-    
+
+    @Override
+    public CompetitionFavorite getCompetitionFavorite(Integer userId, Integer competitionId) {
+        return competitionMapper.searchCompetitionFavorite(userId, competitionId);
+    }
+
+
     //竞赛收藏记录,用户点击收藏后会收藏竞赛，再次点击取消收藏（逻辑删除）
     @Override
     public Integer addCompetitionFavorite(Integer userId, Integer competitionId) {
-        CompetitionFavorite competitionFavorite = competitionMapper.searchCompetitionFavorite(userId, competitionId);
-        if (competitionFavorite == null) {
-            return competitionMapper.addCompetitionFavorite(userId, competitionId);
-        } else {
-            return competitionMapper.updateFavoriteStatus(userId,competitionId);
+        CompetitionFavorite compFavoriteStatus  = competitionMapper.searchCompetitionFavorite(userId, competitionId);
+        Integer result = null;
+        if (compFavoriteStatus == null) {
+            result = competitionMapper.addCompetitionFavorite(userId, competitionId);
+        } else{
+            // 执行更新操作
+            competitionMapper.updateFavoriteStatus(userId, competitionId);
+            // 根据当前状态决定返回值，执行更新操作
+            if (compFavoriteStatus.getDeleted()== 0) {
+                // 如果当前是收藏状态（deleted=0），则取消收藏（updated deleted=1）
+                result = 2;  // 返回2表示取消收藏
+            } else if (compFavoriteStatus.getDeleted()== 1) {
+                // 如果当前是取消收藏状态（deleted=1），则恢复收藏（updated deleted=0）
+                result = 3;  // 返回3表示恢复收藏
+            }
         }
+        return result;
     }
     
     

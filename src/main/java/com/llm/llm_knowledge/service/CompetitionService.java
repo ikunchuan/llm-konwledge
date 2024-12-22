@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CompetitionDTO;
 import com.llm.llm_knowledge.entity.Competition;
+import com.llm.llm_knowledge.entity.CompetitionFavorite;
 import com.llm.llm_knowledge.vo.CompetitionSearch;
 
 import java.util.List;
@@ -26,9 +27,13 @@ public interface CompetitionService {
 
 
     PageInfo<CompetitionDTO> search(CompetitionSearch competitionSearch,Integer pageNum,Integer pageSize);
-    
+
+    CompetitionFavorite getCompetitionFavorite(Integer userId,Integer competitionId);
+
     Integer addCompetitionFavorite(Integer userId, Integer competitionId);
     
     List<Competition> getCompByParentId(Integer parentId);
+
+
 }
 
