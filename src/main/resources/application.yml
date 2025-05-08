@@ -30,7 +30,7 @@ spring:
       api-key: ${OPENAI_API_KEY}
   web:
     resources:
-      static-locations: file:/F:/llm-vue/src/assets/img/, classpath:/static/
+      static-locations: file:/D:/Desktop/llm-vue/src/assets/img/, classpath:/static/
   mvc:
     static-path-pattern: /images/upload/**    # 配置映射的 URL 路径前缀
 
@@ -75,3 +75,16 @@ pagehelper:
 dify:
   apiKey: ${DIFY_APIKEY}
   apiHost: 'http://localhost/v1'
+
+hbase:
+  zookeeper:
+    quorum: master,slave1
+#    ,slave2  # ZK集群节点
+    port: 2181
+  master: master:16000           # HBase Master地址
+  rootdir: hdfs://master:9000/hbase  # HDFS存储路径
+
+hadoop:
+  core-site:
+    fs.defaultFS: hdfs://master:9000  # Hadoop核心配置
+
