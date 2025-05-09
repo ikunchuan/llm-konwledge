@@ -12,14 +12,20 @@ import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.entity.PostLike;
 import com.llm.llm_knowledge.mapper.PostMapper;
+import com.llm.llm_knowledge.service.OpenAiService;
 import com.llm.llm_knowledge.service.PostService;
 import com.llm.llm_knowledge.vo.PostSearch;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
+import java.util.Map;
 //import java.util.stream.Collectors;
 
 @Transactional
@@ -28,6 +34,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostMapper postMapper;
+
+    @Autowired
+    private OpenAiService openAiService;
 
     //查询所有帖子
     @Override
@@ -174,8 +183,16 @@ public class PostServiceImpl implements PostService {
     public List<Post> getUserPostLike(Integer userId) {
         return postMapper.getUserPostLike(userId);
     }
-    
-    
+
+    @Override
+    public Flux<ChatResponse> postAi(Integer postId) {
+        String postContent = postMapper.selectById(postId).getPostContent();
+        PromptTemplate promptTemplate = new PromptTemplate("请根据以下内容生成一段简洁的总结，在2句话之内: {query}");
+        Prompt prompt = promptTemplate.create(Map.of("query", postContent));
+        return openAiService.stream(prompt);
+    }
+
+
     //用户帖子浏览记录
     @Override
     public Integer postView(Integer userId, Integer postId) {

@@ -12,10 +12,10 @@ import java.io.IOException;
 @Configuration
 public class HBaseConfig {
 
-    @Value("${hbase.zookeeper.quorum}")
+    @Value("${hbase.zookeeper.quorum:master,slave1,slave2}")
     private String quorum;
 
-    @Value("${hbase.zookeeper.port}")
+    @Value("${hbase.zookeeper.port:2181}")
     private String port;
 
     @Bean

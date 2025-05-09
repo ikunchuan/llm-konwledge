@@ -28,7 +28,7 @@
                 AND `user`.user_name LIKE CONCAT('%', #{userName}, '%')
             </if>
             <if test="communityDescription !=null and communityDescription != ''">
-                AND cmn.community_description LIKE CONCAT( '%', '#{communityDescription}', '%' )
+                AND cmn.community_description LIKE CONCAT( '%', #{communityDescription}, '%' )
             </if>
             <if test="popular != null">
                 AND cmn.popular = #{popular}

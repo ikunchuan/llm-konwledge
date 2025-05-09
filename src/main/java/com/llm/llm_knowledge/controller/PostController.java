@@ -11,8 +11,10 @@ import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.PostService;
 import com.llm.llm_knowledge.vo.PostSearch;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -39,7 +41,13 @@ public class PostController {
         return postService.postById(postId);
     }
 
-    
+    /**给每个帖子ai生成总结*/
+    @GetMapping("post/ai/{postId}")
+    public Flux<ChatResponse> postAi(@PathVariable Integer postId){
+        return postService.postAi(postId);
+    }
+
+
     /**删除帖子*/
     @DeleteMapping("post/{postId}")
     public Integer delPost(@PathVariable Integer postId){
@@ -202,5 +210,7 @@ public class PostController {
     public List<Post> getUserPostLike(@PathVariable Integer userId){
         return postService.getUserPostLike(userId);
     }
-    
+
+
+
 }

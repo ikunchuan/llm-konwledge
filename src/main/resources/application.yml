@@ -27,7 +27,7 @@ spring:
         base-url: https://openai.maosuyu.com
         options:
           model: gpt-4o
-      api-key: ${OPENAI_API_KEY}
+      api-key:
   web:
     resources:
       static-locations: file:/D:/Desktop/llm-vue/src/assets/img/, classpath:/static/
@@ -37,7 +37,7 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl       # 显示sql日志
-#    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl  # 不显示SQL
+  #    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl  # 不显示SQL
   global-config:
     db-config:
       logic-delete-value: 1 # 逻辑删除值
@@ -76,15 +76,14 @@ dify:
   apiKey: ${DIFY_APIKEY}
   apiHost: 'http://localhost/v1'
 
-hbase:
-  zookeeper:
-    quorum: master,slave1
-#    ,slave2  # ZK集群节点
-    port: 2181
-  master: master:16000           # HBase Master地址
-  rootdir: hdfs://master:9000/hbase  # HDFS存储路径
 
-hadoop:
-  core-site:
-    fs.defaultFS: hdfs://master:9000  # Hadoop核心配置
+  hbase:
+    zookeeper:
+      quorum: master,slave1,slave2  # ZK集群节点
+      port: 2181
+    master: master:16000           # HBase Master地址
+    rootdir: hdfs://master:9000/hbase  # HDFS存储路径
 
+  hadoop:
+    core-site:
+      fs.defaultFS: hdfs://master:9000  # Hadoop核心配置

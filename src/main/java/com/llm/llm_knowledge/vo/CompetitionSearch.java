@@ -5,11 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CompetitionSearch {
+
+    private List<Integer> categoryIds;
 
     private Integer categoryId;
     private String categoryName;

@@ -7,6 +7,8 @@ import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.vo.PostSearch;
+import org.springframework.ai.chat.model.ChatResponse;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -73,4 +75,6 @@ public interface PostService {
     List<Post> getUserFavorite(Integer userId);
     
     List<Post> getUserPostLike(Integer userId);
+
+    Flux<ChatResponse> postAi(Integer postId);
 }

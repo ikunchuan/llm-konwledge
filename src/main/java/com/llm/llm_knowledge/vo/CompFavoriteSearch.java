@@ -12,3 +12,7 @@ public class CompFavoriteSearch {
     private String competitionStatus;
     private String levelName;
 }
+
+
+
+

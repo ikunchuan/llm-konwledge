@@ -21,7 +21,7 @@ public class FileUtil {
     }
 
     public static String getUpLoadFilePath() {
-        return "F:/llm-vue/src/assets/img";
+        return "D:/Desktop/llm-vue/src/assets/img";
 
     }
 }

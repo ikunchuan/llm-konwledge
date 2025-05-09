@@ -119,7 +119,7 @@ public class CourseServiceImpl implements CourseService {
     
     @Override
     public List<Course> getCourseByParentId(Integer parentId) {
-        //listComp 用来返回查到的数据
+        //listCour 用来返回查到的数据
         List<Course> listCour = new ArrayList<>();
         
         //先查到传来的id的所有子id
