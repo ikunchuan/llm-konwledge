@@ -9,24 +9,13 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class HBaseService {
 
     @Resource
     private Connection hbaseConnection;
-
-//    public void putData(String tableName, String rowKey, String family, String qualifier, String value) throws IOException {
-//        Table table = hbaseConnection.getTable(TableName.valueOf(tableName));
-//        Put put = new Put(Bytes.toBytes(rowKey));
-//        put.addColumn(Bytes.toBytes(family), Bytes.toBytes(qualifier), Bytes.toBytes(value));
-//        table.put(put);
-//        table.close();
-//    }
 
     /**
      * 获取指定表的指定行、列族和列的值
@@ -50,30 +39,6 @@ public class HBaseService {
     }
 
     /**
-     * 扫描指定表，返回所有行
-     *
-     * @param tableName
-     * @return 全表数据
-     */
-    public List<Map<String, Object>> scanTable(String tableName) throws IOException {
-        List<Map<String, Object>> results = new ArrayList<>();
-        TableName tName = TableName.valueOf(tableName);
-        Table table = hbaseConnection.getTable(tName);
-
-        Scan scan = new Scan();
-        ResultScanner scanner = table.getScanner(scan);
-
-        for (Result result : scanner) {
-            Map<String, Object> formattedResult = resultToMap(result, tableName);
-            results.add(formattedResult);
-        }
-        table.close();
-
-        return results;
-    }
-
-
-    /**
      * 将 Result 转换为 Map，用于返回查询结果
      *
      * @param result    Result 对象
@@ -81,11 +46,11 @@ public class HBaseService {
      * @return Map 对象
      */
     private Map<String, Object> resultToMap(Result result, String tableName) {
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         List<Map<String, String>> dataList = new ArrayList<>();
 
         for (Cell cell : result.rawCells()) {
-            Map<String, String> cellMap = new HashMap<>();
+            Map<String, String> cellMap = new LinkedHashMap<>();
             cellMap.put("family", Bytes.toString(CellUtil.cloneFamily(cell)));
             cellMap.put("column", Bytes.toString(CellUtil.cloneQualifier(cell)));
             cellMap.put("value", Bytes.toString(CellUtil.cloneValue(cell)));
@@ -98,11 +63,65 @@ public class HBaseService {
         return response;
     }
 
-//    public void deleteData(String tableName, String rowKey) throws IOException {
-//        Table table = hbaseConnection.getTable(TableName.valueOf(tableName));
-//        Delete delete = new Delete(Bytes.toBytes(rowKey));
-//        table.delete(delete);
-//        table.close();
-//    }
+    /**
+     * 扫描指定表，返回所有行
+     *
+     * @param tableName
+     * @return 全表数据
+     */
+    public Map<String, Object> scanTable(String tableName) throws IOException {
+        TableName tName = TableName.valueOf(tableName);
+        Table table = hbaseConnection.getTable(tName);
 
+        Scan scan = new Scan();
+        ResultScanner scanner = table.getScanner(scan);
+
+        List<Result> resultList = new ArrayList<>();
+        for (Result result : scanner) {
+            resultList.add(result);
+        }
+
+        table.close();
+        return formatResultsToFlatMap(resultList, tableName);
+    }
+
+    /**
+     * 将多个 Result 扁平化输出，统一格式为：
+     * {
+     *   "table": "tableName",
+     *   "family": "familyName",
+     *   "rows": [
+     *     {"rowKey": "...", "col1": "...", "col2": "..."},
+     *     ...
+     *   ]
+     * }
+     */
+    private Map<String, Object> formatResultsToFlatMap(List<Result> results, String tableName) {
+        Map<String, Object> response = new LinkedHashMap<>();// 有序 Map
+        List<Map<String, String>> rowList = new ArrayList<>();
+        String familyName = "";
+
+        for (Result result : results) {
+            Map<String, String> rowMap = new LinkedHashMap<>();
+            rowMap.put("rowKey", Bytes.toString(result.getRow()));
+
+            for (Cell cell : result.rawCells()) {
+                // 只记录第一个 cell 的 family（假设全表统一）
+                if (familyName.isEmpty()) {
+                    familyName = Bytes.toString(CellUtil.cloneFamily(cell));
+                }
+
+                String column = Bytes.toString(CellUtil.cloneQualifier(cell));
+                String value = Bytes.toString(CellUtil.cloneValue(cell));
+                rowMap.put(column, value);
+            }
+
+            rowList.add(rowMap);
+        }
+        System.out.println("tableName:" + tableName);
+        response.put("table", tableName);
+        response.put("family", familyName);
+        response.put("rows", rowList);
+        return response;
+    }
 }

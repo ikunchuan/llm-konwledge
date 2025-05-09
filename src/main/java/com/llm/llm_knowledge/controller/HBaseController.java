@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -30,7 +29,7 @@ public class HBaseController {
     @GetMapping("/scan")
     public ResponseEntity<?> scanTable(@RequestParam String table) {
         try {
-            List<Map<String, Object>> result = hBaseService.scanTable(table);
+            Map<String, Object> result = hBaseService.scanTable(table);
             return ResponseEntity.ok(result);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
