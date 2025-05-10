@@ -10,12 +10,19 @@ import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CompetitionService;
 import com.llm.llm_knowledge.util.FileUtil;
 import com.llm.llm_knowledge.vo.CompetitionSearch;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.Result;
+import org.neo4j.driver.Session;
+import org.neo4j.driver.Values;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.neo4j.driver.Record; // 明确指定使用Neo4j的Record
+
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -24,7 +31,13 @@ public class CompetitionController {
     
     @Autowired
     private CompetitionService competitionService;
-    
+
+    private final Driver neo4jDriver;
+
+    public CompetitionController(Driver neo4jDriver) {
+        this.neo4jDriver = neo4jDriver;
+    }
+
     //查看所有的比赛
     @GetMapping("compe")
     public List<Competition> allCompe() {return competitionService.allCompe();}
@@ -107,11 +120,40 @@ public class CompetitionController {
     public List<Competition> getCompByParentId(@RequestParam Integer parentId){
         return competitionService.getCompByParentId(parentId);
     }
+
     
-    
-    
-    
-    
+    //neo4j 根据传来的竞赛id，name查询竞赛 通过知识图谱的形式展现
+
+    @GetMapping("/graph")
+    public Map<String, Object> getCompetitionGraph(
+            @RequestParam String name,
+            @RequestParam(defaultValue = "2") int depth) {
+
+        String cypher = """
+            MATCH path = (c:Competition {name: $name})-[:REQUIRES_SKILL*1..%d]-(related)
+            UNWIND nodes(path) as n
+            UNWIND relationships(path) as r
+            RETURN 
+               [n in collect(DISTINCT n) | {id: id(n), label: labels(n)[0], name: n.name}] as nodes,
+               [r in collect(DISTINCT r) | {source: id(startNode(r)), target: id(endNode(r)), type: type(r)}] as links
+            """.formatted(depth);
+
+        try (Session session = neo4jDriver.session()) {
+            return session.readTransaction(tx -> {
+                Result result = tx.run(cypher, Values.parameters("name", name));
+                Record record = result.single();
+
+                // 显式类型转换
+                List<Map<String, Object>> nodes = record.get("nodes").asList(v -> v.asMap());
+                List<Map<String, Object>> links = record.get("links").asList(v -> v.asMap());
+
+                return Map.of(
+                        "nodes", nodes,
+                        "links", links
+                );
+            });
+        }
+    }
     
     
     
