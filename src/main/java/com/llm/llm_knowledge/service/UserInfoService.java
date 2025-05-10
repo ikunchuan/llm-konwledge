@@ -80,5 +80,6 @@ public interface UserInfoService {
 
     List<PostViewVO> getPostView(Integer userId);
 
+    void updateKnowledgeNetwork(Integer userId, List<String> knowledge);
 }
 

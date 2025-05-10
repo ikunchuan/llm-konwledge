@@ -14,6 +14,7 @@ import com.llm.llm_knowledge.vo.CourseViewVO;
 import com.llm.llm_knowledge.vo.PostViewVO;
 import com.llm.llm_knowledge.vo.UserInfoSearch;
 import com.llm.llm_knowledge.vo.UserLoginInfoVO;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -331,5 +333,25 @@ public class UserInfoController {
     public List<PostViewVO> getPostView(@PathVariable Integer userId) {
         return userInfoService.getPostView(userId);
     }
+    // 获取知识网
+    @GetMapping("/user/knowledge/{userId}")
+    public ResponseEntity<List<String>> getKnowledgeNetwork(@PathVariable Integer userId) {
+        UserInfo user = userInfoService.userInfoById(userId);
+        return ResponseEntity.ok(user.getKnowledgeNetwork() != null ?
+                user.getKnowledgeNetwork() : Collections.emptyList());
+    }
 
+    // 更新知识网
+    @PutMapping("/user/knowledge")
+    public ResponseEntity<Void> updateKnowledgeNetwork(
+            @RequestBody KnowledgeUpdateRequest request) {
+        userInfoService.updateKnowledgeNetwork(request.getUserId(), request.getKnowledge());
+        return ResponseEntity.ok().build();
+    }
+
+    @Data
+    public static class KnowledgeUpdateRequest {
+        private Integer userId;
+        private List<String> knowledge;
+    }
 }

@@ -1,11 +1,13 @@
 package com.llm.llm_knowledge.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,4 +31,6 @@ public class UserInfo {
     private Date createdTime;
     @TableField(fill= FieldFill.INSERT_UPDATE)
     private Date updatedTime;
+    @TableField(typeHandler = JacksonTypeHandler.class) // 使用Jackson处理JSON
+    private List<String> knowledgeNetwork; // 知识网数据
 }

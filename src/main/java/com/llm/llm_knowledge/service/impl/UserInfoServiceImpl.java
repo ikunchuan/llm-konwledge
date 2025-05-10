@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Map;
 
+import static com.baomidou.mybatisplus.extension.toolkit.Db.updateById;
+
 @Slf4j
 @Service
 @Transactional
@@ -211,7 +213,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoMapper.insert(userInfo);
     }
 
-
+    @Override
+    @Transactional
+    public void updateKnowledgeNetwork(Integer userId, List<String> knowledge) {
+        UserInfo user = new UserInfo();
+        user.setUserId(userId);
+        user.setKnowledgeNetwork(knowledge);
+        updateById(user);
+    }
 }
 
 
