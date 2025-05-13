@@ -333,6 +333,7 @@ public class UserInfoController {
     public List<PostViewVO> getPostView(@PathVariable Integer userId) {
         return userInfoService.getPostView(userId);
     }
+
     // 获取知识网
     @GetMapping("/user/knowledge/{userId}")
     public ResponseEntity<List<String>> getKnowledgeNetwork(@PathVariable Integer userId) {
@@ -344,14 +345,9 @@ public class UserInfoController {
     // 更新知识网
     @PutMapping("/user/knowledge")
     public ResponseEntity<Void> updateKnowledgeNetwork(
-            @RequestBody KnowledgeUpdateRequest request) {
+            @RequestBody KnowledgeUpdateDTO request) {
         userInfoService.updateKnowledgeNetwork(request.getUserId(), request.getKnowledge());
         return ResponseEntity.ok().build();
     }
 
-    @Data
-    public static class KnowledgeUpdateRequest {
-        private Integer userId;
-        private List<String> knowledge;
-    }
 }

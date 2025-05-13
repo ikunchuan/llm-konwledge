@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -32,5 +33,6 @@ public class Competition {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updatedTime;
 
+    private List<String> knowledgeNetwork;
 
 }

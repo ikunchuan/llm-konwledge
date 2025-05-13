@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -33,5 +34,7 @@ public class Course {
     private Date createdTime; // 记录创建时间
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updatedTime; // 记录最后更新时间
+
+    private List<String> knowledgeNetwork;
 
 }
