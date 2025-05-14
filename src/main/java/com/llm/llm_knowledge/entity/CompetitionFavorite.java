@@ -18,6 +18,7 @@ public class CompetitionFavorite {
     private Integer competitionFavoriteId;
     private Integer competitionId;
     private Integer userId;
+    private String isFavorite;
 
     @TableLogic(value = "0",delval = "1")
     private Integer deleted;

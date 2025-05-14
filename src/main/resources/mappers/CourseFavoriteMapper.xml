@@ -6,7 +6,6 @@
     <!-- 根据课程名搜索收藏记录 -->
     <select id="selectFavoritesByCourseName" resultType="com.llm.llm_knowledge.dto.CourseFavoriteDTO">
         SELECT
-        cf.course_favorite_id,
         cf.course_id,
         cf.user_id,
         cf.deleted,
@@ -29,21 +28,26 @@
     </select>
 
 
-    <select id="getCourseFavoriteByUserId" resultType="com.llm.llm_knowledge.entity.Course">
-        SELECT
-        cr.course_id,
-        cr.course_img_url,
-        cr.course_name,
-        cr.course_description,
-        crf.updated_time
-        FROM
-        course AS cr
-        INNER JOIN
-        course_favorite
-        AS crf
-        ON cr.course_id = crf.course_id
-        WHERE
-        crf.user_id = #{userId}
+    <select id="getCourseFavoriteByUserId" resultType="com.llm.llm_knowledge.dto.CourseFavoriteDTO">
+        SELECT cr.course_id,
+               cr.course_img_url,
+               cr.course_name,
+               crf.course_favorite_id,
+               crf.updated_time
+        FROM course AS cr
+                 INNER JOIN
+             course_favorite AS crf
+             ON cr.course_id = crf.course_id
+        WHERE crf.user_id = #{userId}
+          AND crf.is_favorite = 1
+          AND crf.deleted = 0
     </select>
+
+    <update id="updateCourseFavorite" parameterType="map">
+        UPDATE course_favorite
+        SET is_favorite = IF(is_favorite = 0, 1, 0)
+        WHERE user_id = #{userId}
+          AND course_id = #{courseId}
+    </update>
 
 </mapper>

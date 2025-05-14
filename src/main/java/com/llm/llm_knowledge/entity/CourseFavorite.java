@@ -17,6 +17,7 @@ public class CourseFavorite {
 
     private Integer courseId;
     private Integer userId;
+    private String isFavorite;
 
     @TableLogic(value = "0",delval = "1")
     private Integer deleted;

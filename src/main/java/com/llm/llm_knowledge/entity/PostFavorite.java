@@ -18,6 +18,7 @@ public class PostFavorite {
     
     private Integer userId;
     private Integer postId;
+    private String isFavorite;
     
     @TableField(fill= FieldFill.INSERT)
     private Date updatedTime;

@@ -2,8 +2,6 @@ package com.llm.llm_knowledge.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.CourseFavoriteDTO;
-import com.llm.llm_knowledge.entity.Course;
-import com.llm.llm_knowledge.entity.CourseFavorite;
 import com.llm.llm_knowledge.exception.BizException;
 import com.llm.llm_knowledge.service.CourseFavoriteService;
 import com.llm.llm_knowledge.vo.CourseFavoriteSearch;
@@ -11,22 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
 @RequestMapping("crs/v1")
 public class CourseFavoriteController {
-    
+
     @Autowired
     private CourseFavoriteService courseFavoriteService;
 
-    //收藏课程
-    @PostMapping("favorite")
-    public Integer addCourseFavorite(@RequestBody CourseFavorite courseFavorite) {
-        return courseFavoriteService.addCourseFavorite(courseFavorite);
-    }
-
-    //
     @DeleteMapping("favorite/{id}")
     public Integer delCourseFavorite(@PathVariable Integer id) {
         return courseFavoriteService.delCourseFavorite(id);
@@ -48,7 +40,19 @@ public class CourseFavoriteController {
 
     //查看某用户收藏的所有课程  传入userId
     @GetMapping("favorite/{userId}")
-    public List<Course> getCourseFavoriteByUserId(@PathVariable Integer userId) {
+    public List<CourseFavoriteDTO> getCourseFavoriteByUserId(@PathVariable Integer userId) {
         return courseFavoriteService.getCourseFavoriteByUserId(userId);
+    }
+
+    @PostMapping("toggleFavorite")
+    public Integer toggleFavorite(@RequestBody Map<String, Object> params) {
+        Integer userId = Integer.valueOf(params.get("userId").toString());
+        Integer courseId = Integer.valueOf(params.get("courseId").toString());
+        return courseFavoriteService.updateCourseFavorite(userId, courseId);
+    }
+
+    @GetMapping("favorite/isCollected")
+    public boolean isCollected(@RequestParam Integer userId, @RequestParam Integer courseId) {
+        return courseFavoriteService.isCollected(userId, courseId);
     }
 }
