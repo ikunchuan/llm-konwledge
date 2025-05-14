@@ -36,6 +36,7 @@ spring:
 
 mybatis-plus:
   configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl       # 显示sql日志
   #    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl  # 不显示SQL
   global-config:
