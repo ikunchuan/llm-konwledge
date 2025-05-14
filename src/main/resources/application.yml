@@ -27,14 +27,20 @@ spring:
         base-url: https://openai.maosuyu.com
         options:
           model: gpt-4o
-      api-key:
+      api-key: ${OPENAI_API_KEY}
   web:
     resources:
       static-locations: file:/D:/Desktop/llm-vue/src/assets/img/, classpath:/static/
   mvc:
     static-path-pattern: /images/upload/**    # 配置映射的 URL 路径前缀
+  neo4j:
+    uri: bolt://47.113.204.84:7687
+    authentication:
+      username: neo4j
+      password: 12345678
 
 mybatis-plus:
+  type-handlers-package: com.llm.llm_knowledge.handler
   configuration:
     map-underscore-to-camel-case: true # 开启驼峰命名
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl       # 显示sql日志
