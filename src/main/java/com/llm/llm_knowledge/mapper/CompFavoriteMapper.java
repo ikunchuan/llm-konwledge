@@ -13,5 +13,7 @@ import java.util.List;
 public interface CompFavoriteMapper extends BaseMapper<CompetitionFavorite> {
     List<CompFavoriteDTO> selectFavoritesByCompetitionName(CompFavoriteSearch compFavoriteSearch);
     
-    List<Competition> getCompFavoriteByUserId(Integer userId);
+    List<CompFavoriteDTO> getCompFavoriteByUserId(Integer userId);
+
+    Integer updateCompFavorite(Integer userId, Integer compId);
 }

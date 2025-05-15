@@ -41,13 +41,6 @@
         WHERE crf.user_id = #{userId}
           AND crf.is_favorite = 1
           AND crf.deleted = 0
+        ORDER BY crf.updated_time DESC
     </select>
-
-    <update id="updateCourseFavorite" parameterType="map">
-        UPDATE course_favorite
-        SET is_favorite = IF(is_favorite = 0, 1, 0)
-        WHERE user_id = #{userId}
-          AND course_id = #{courseId}
-    </update>
-
 </mapper>

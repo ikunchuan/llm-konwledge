@@ -73,7 +73,8 @@ public class CourseFavoriteServiceImpl implements CourseFavoriteService {
             return courseFavoriteMapper.insert(courseFavorite);
         }else {
             // 有记录，更新 isFavorite 字段（0 -> 1 / 1 -> 0）
-            return courseFavoriteMapper.updateCourseFavorite(userId, courseId);
+            record .setIsFavorite("1".equals(record.getIsFavorite()) ? "0" : "1");
+            return courseFavoriteMapper.updateById(record);
         }
     }
 

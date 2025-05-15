@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -20,13 +21,7 @@ public class CompFavoriteController {
     @Autowired
     private CompFavoriteService compFavoriteService;
 
-    //用户收藏竞赛  传入竞赛Id和用户的Id
-    @PostMapping("favorite")
-    public Integer addCompFavorite(@RequestBody CompetitionFavorite competitionFavorite) {
-        return compFavoriteService.addCompFavorite(competitionFavorite);
-    }
-
-    //删除(真删)
+    //取消收藏
     @DeleteMapping("favorite/{id}")
     public Integer delCompFavorite(@PathVariable Integer id) {
         return compFavoriteService.delCompFavorite(id);
@@ -39,13 +34,7 @@ public class CompFavoriteController {
         return compFavoriteService.delCompFavoriteByIds(ids);
     }
 
-    //更新
-    @PutMapping("favorite")
-    public Integer updCompFavorite(@RequestBody CompetitionFavorite competitionFavorite) {
-        return compFavoriteService.updCompFavorite(competitionFavorite);
-    }
-
-    //分页查询
+    //比赛名分页查询
     @PostMapping("favorite/search")
     public PageInfo<CompFavoriteDTO> search(
             @RequestBody CompFavoriteSearch compFavoriteSearch,
@@ -56,7 +45,20 @@ public class CompFavoriteController {
 
     //根据userId查询这个用户收藏的帖子
     @GetMapping("favorite/{userId}")
-    public List<Competition> getCompFavoriteByUserId(@PathVariable Integer userId) {
+    public List<CompFavoriteDTO> getCompFavoriteByUserId(@PathVariable Integer userId) {
         return compFavoriteService.getCompFavoriteByUserId(userId);
+    }
+
+    //处理是否收藏
+    @PostMapping("toggleFavorite")
+    public Integer toggleFavorite(@RequestBody Map<String, Object> params) {
+        Integer userId = Integer.valueOf(params.get("userId").toString());
+        Integer compId = Integer.valueOf(params.get("compId").toString());
+        return compFavoriteService.updateCompFavorite(userId, compId);
+    }
+
+    @GetMapping("favorite/isCollected")
+    public boolean isCollected(@RequestParam Integer userId, @RequestParam Integer compId) {
+        return compFavoriteService.isCollected(userId, compId);
     }
 }
