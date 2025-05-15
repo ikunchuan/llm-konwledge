@@ -3,6 +3,10 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.llm.llm_knowledge.mapper.CompetitionMapper">
 
+    <select id="getCompByName">
+        SELECT * FROM competition WHERE competition_name = #{competitionName}
+    </select>
+
     <select id="selectCompetitionWithFilters" resultType="com.llm.llm_knowledge.dto.CompetitionDTO">
         SELECT
         cg.category_name,

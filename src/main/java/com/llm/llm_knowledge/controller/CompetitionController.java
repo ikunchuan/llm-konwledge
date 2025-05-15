@@ -7,6 +7,7 @@ import com.llm.llm_knowledge.entity.Competition;
 
 import com.llm.llm_knowledge.entity.CompetitionFavorite;
 import com.llm.llm_knowledge.exception.BizException;
+import com.llm.llm_knowledge.mapper.CompetitionMapper;
 import com.llm.llm_knowledge.service.CompetitionService;
 import com.llm.llm_knowledge.util.FileUtil;
 import com.llm.llm_knowledge.vo.CompetitionSearch;
@@ -31,6 +32,9 @@ public class CompetitionController {
     
     @Autowired
     private CompetitionService competitionService;
+
+    @Autowired
+    private CompetitionMapper competitionMapper;
 
     private final Driver neo4jDriver;
 
@@ -154,10 +158,13 @@ public class CompetitionController {
             });
         }
     }
-    
-    
-    
-    
+
+
+
+    @GetMapping("comp/competitionName")
+    public List<Competition> getCompByName(@RequestParam String competitionName){
+        return competitionMapper.getCompByName(competitionName);
+    }
     
     
     

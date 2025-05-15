@@ -33,4 +33,6 @@ public interface CompetitionMapper extends BaseMapper<Competition> {
     List<Integer> getChildByParent(Integer parentId);
     
     List<Competition> getCompeByIds(Integer childId);
+
+    List<Competition> getCompByName(String competitionName);
 }
