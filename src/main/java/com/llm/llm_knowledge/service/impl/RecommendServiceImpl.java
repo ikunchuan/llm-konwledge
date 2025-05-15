@@ -3,7 +3,10 @@ package com.llm.llm_knowledge.service.impl;
 import com.llm.llm_knowledge.entity.*;
 import com.llm.llm_knowledge.mapper.*;
 import com.llm.llm_knowledge.service.RecommendService;
+import com.llm.llm_knowledge.util.UserBasedRecommender;
+import com.llm.llm_knowledge.util.UserCompetitionMatrixBuilder;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,9 +17,15 @@ import static cn.dev33.satoken.SaManager.log;
 @Transactional // 添加类级别注解
 public class RecommendServiceImpl implements RecommendService {
 
-    private final UserInfoMapper userInfoMapper;
-    private final CourseMapper courseMapper;
-    private final CompetitionMapper competitionMapper;
+    @Autowired
+    private CompetitionFavoriteMapper favoriteMapper;
+
+    @Autowired
+    private  UserInfoMapper userInfoMapper;
+    @Autowired
+    private  CourseMapper courseMapper;
+    @Autowired
+    private CompetitionMapper competitionMapper;
 
     public RecommendServiceImpl(UserInfoMapper userInfoMapper,
                                 CourseMapper courseMapper,
@@ -123,5 +132,14 @@ public class RecommendServiceImpl implements RecommendService {
 
         userSet.retainAll(new HashSet<>(targetKeywords));
         return (userSet.size() * 100.0) / totalKeywords;
+    }
+    public List<Integer> recommendForUser(int userId) {
+        List<CompetitionFavorite> favorites = favoriteMapper.getAllFavorites();
+
+        UserCompetitionMatrixBuilder matrixBuilder = new UserCompetitionMatrixBuilder();
+        Map<Integer, Set<Integer>> matrix = matrixBuilder.build(favorites);
+
+        UserBasedRecommender recommender = new UserBasedRecommender(matrix);
+        return recommender.recommend(userId, 5); // top 5
     }
 }
