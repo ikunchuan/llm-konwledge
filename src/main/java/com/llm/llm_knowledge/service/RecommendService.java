@@ -1,10 +1,11 @@
 package com.llm.llm_knowledge.service;
 
 import com.llm.llm_knowledge.entity.Course;
+import com.llm.llm_knowledge.entity.Competition;
 
 import java.util.List;
 
 public interface RecommendService {
-    // 根据用户ID推荐课程
-    List<Course> recommendCoursesByUserId(Long userId);
+    List<Course> recommendCoursesByKnowledge(Integer userId);
+    List<Competition> recommendCompetitionsByKnowledge(Integer userId);
 }

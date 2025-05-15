@@ -7,10 +7,15 @@ import com.llm.llm_knowledge.entity.Course;
 import com.llm.llm_knowledge.entity.CourseComment;
 import com.llm.llm_knowledge.vo.CourseChapterSearch;
 import com.llm.llm_knowledge.vo.CourseSearch;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
-
+@Mapper
 public interface CourseMapper extends BaseMapper<Course> {
+
+    List<Course> selectTopMatches(@Param("keywords") String keywordsJson);
     
     List<CourseDTO> selectCoursesWithFilters(CourseSearch courseSearch);
     

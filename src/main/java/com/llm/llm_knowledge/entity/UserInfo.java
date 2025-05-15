@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("user_info")
+@TableName(value = "user_info", autoResultMap = true)
 public class UserInfo {
     @TableId(type = IdType.AUTO)
     private Integer userId;//用户id
@@ -31,6 +31,10 @@ public class UserInfo {
     private Date createdTime;
     @TableField(fill= FieldFill.INSERT_UPDATE)
     private Date updatedTime;
-    @TableField(typeHandler = JacksonTypeHandler.class) // 使用Jackson处理JSON
-    private List<String> knowledgeNetwork; // 知识网数据
+    // UserInfo.java
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<String> knowledgeNetwork;
+    @TableField(exist = false) // 表示非数据库字段
+    private Integer matchScore;
+
 }

@@ -1,9 +1,7 @@
 package com.llm.llm_knowledge.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName(value = "course", autoResultMap = true) // 确保表名正确
 public class Course {
 
     @TableId(type= IdType.AUTO)
@@ -34,7 +33,9 @@ public class Course {
     private Date createdTime; // 记录创建时间
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updatedTime; // 记录最后更新时间
-
+    @TableField(typeHandler = JacksonTypeHandler.class)
     private List<String> knowledgeNetwork;
+    @TableField(exist = false) // 表示非数据库字段
+    private Double matchScore;
 
 }

@@ -8,11 +8,16 @@ import com.llm.llm_knowledge.entity.Category;
 import com.llm.llm_knowledge.entity.Competition;
 import com.llm.llm_knowledge.entity.CompetitionFavorite;
 import com.llm.llm_knowledge.vo.CompetitionSearch;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.ArrayList;
 import java.util.List;
+@Mapper
+public interface CompetitionMapper extends BaseMapper<Competition> {
 
-public interface CompetitionMapper  extends BaseMapper<Competition> {
+    List<Competition> selectTopMatches(@Param("keywords") String keywordsJson);
 
 
     List<CompetitionDTO> selectCompetitionWithFilters(CompetitionSearch competitionSearch);
