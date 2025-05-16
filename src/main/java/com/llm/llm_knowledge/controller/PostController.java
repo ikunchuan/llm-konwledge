@@ -137,22 +137,23 @@ public class PostController {
     }
 
     /*帖子点赞,点击点赞会增加一条数据，可以取消点赞*/
-    @GetMapping("like")
-    public Integer toggleLike(@RequestParam Integer userId,
-                              @RequestParam Integer postId){
+    @PostMapping("like")
+    public Integer toggleLike(@RequestBody Map<String, Object> params) {
+        Integer userId = Integer.valueOf(params.get("userId").toString());
+        Integer postId = Integer.valueOf(params.get("postId").toString());
         return postLikeService.updatePostLike(userId,postId);
     }
 
     /*传入userId,查询这个用户点赞的所有帖子*/
-    @GetMapping("userlike/{userId}")
-    public List<Post> getUserPostLike(@PathVariable Integer userId){
+    @GetMapping("like/{userId}")
+    public List<Post> getPostLikeByUserId(@PathVariable Integer userId){
         return postService.getUserPostLike(userId);
     }
 
     //判断用户是否点赞帖子
     @GetMapping("isLiked")
-    public boolean isLiked(@Param("userId") Integer userId,
-                                @Param("postId") Integer postId){
+    public boolean isLiked(@RequestParam Integer userId,
+                           @RequestParam Integer postId){
         return postLikeService.isLiked(userId, postId);
     }
 
@@ -164,8 +165,8 @@ public class PostController {
 
     /*id删收藏的帖子*/
     @DeleteMapping("favorite/{id}")
-    public Integer delCompFavorite(@PathVariable Integer id) {
-        return postFavoriteService.delCompFavorite(id);
+    public Integer delPostFavorite(@PathVariable Integer id) {
+        return postFavoriteService.delPostFavorite(id);
     }
 
     /*处理是否收藏*/

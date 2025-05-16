@@ -12,5 +12,5 @@ public interface PostFavoriteService {
 
     boolean isCollected(Integer userId, Integer postId);
 
-    Integer delCompFavorite(Integer id);
+    Integer delPostFavorite(Integer id);
 }

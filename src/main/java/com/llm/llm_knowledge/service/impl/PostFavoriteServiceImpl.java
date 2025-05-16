@@ -53,7 +53,7 @@ public class PostFavoriteServiceImpl implements PostFavoriteService {
     }
 
     @Override
-    public Integer delCompFavorite(Integer id) {
+    public Integer delPostFavorite(Integer id) {
         PostFavorite record = postFavoriteMapper.selectById(id);
         if (record == null) {
             return 0; // 如果没有找到记录，返回 0
