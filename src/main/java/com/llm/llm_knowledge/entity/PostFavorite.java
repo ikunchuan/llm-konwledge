@@ -19,10 +19,14 @@ public class PostFavorite {
     private Integer userId;
     private Integer postId;
     private String isFavorite;
-    
+
     @TableField(fill= FieldFill.INSERT)
+    private Date createdTime;
+
+    @TableField(fill= FieldFill.INSERT_UPDATE)
     private Date updatedTime;
-    
+
+    @TableLogic(value = "0",delval = "1")
     private Integer deleted;
     
 }

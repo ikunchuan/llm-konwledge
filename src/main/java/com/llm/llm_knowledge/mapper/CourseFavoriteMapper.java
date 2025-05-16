@@ -12,5 +12,4 @@ import java.util.List;
 public interface CourseFavoriteMapper extends BaseMapper<CourseFavorite> {
     List<CourseFavoriteDTO> selectFavoritesByCourseName(CourseFavoriteSearch courseFavoriteSearch);
     List<CourseFavoriteDTO> getCourseFavoriteByUserId(Integer userId);
-    Integer updateCourseFavorite(Integer userId, Integer courseId);
 }

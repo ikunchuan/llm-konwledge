@@ -12,8 +12,5 @@ import java.util.List;
 @Repository
 public interface CompFavoriteMapper extends BaseMapper<CompetitionFavorite> {
     List<CompFavoriteDTO> selectFavoritesByCompetitionName(CompFavoriteSearch compFavoriteSearch);
-    
     List<CompFavoriteDTO> getCompFavoriteByUserId(Integer userId);
-
-    Integer updateCompFavorite(Integer userId, Integer compId);
 }

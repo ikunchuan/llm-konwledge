@@ -3,6 +3,7 @@ package com.llm.llm_knowledge.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.llm.llm_knowledge.dto.PostCommentDTO;
 import com.llm.llm_knowledge.dto.PostDTO;
+import com.llm.llm_knowledge.dto.PostFavoriteDTO;
 import com.llm.llm_knowledge.entity.Post;
 import com.llm.llm_knowledge.entity.PostFavorite;
 import com.llm.llm_knowledge.entity.PostLike;
@@ -16,32 +17,14 @@ public interface PostMapper extends BaseMapper<Post> {
 
     List<PostDTO> selectPostsWithFilters(PostSearch postSearch);
 
-
     List<PostCommentDTO> selectPostCommentsWithFilters(Integer postId);
-
 
     //根据传来的帖子id隐藏帖子
     Integer delPostLogic(Integer postId);
 
-
     Integer delPostCommentLogic(Integer commentId);
 
-
     Integer addPostView(Integer userId, Integer postId);
-
-
-    PostLike searchPostLike(Integer userId, Integer postId);
-
-    Integer addPostLike(Integer userId, Integer postId);
-
-    Integer updateLikeStatus(Integer userId, Integer postId);
-
-
-    Integer addPostFavorite(Integer userId, Integer postId);
-
-    PostFavorite searchPostFavorite(Integer userId, Integer postId);
-
-    Integer updateFavoriteStatus(Integer userId, Integer postId);
 
     List<PostDTO> getTopPosts();
 
@@ -67,9 +50,5 @@ public interface PostMapper extends BaseMapper<Post> {
 
     List<Post> getPostsUser(Integer userId);
 
-    List<PostFavorite> getPostFavoriteByUserId(Integer userId);
-    
-    List<Post> getUserFavorite(Integer userId);
-    
     List<Post> getUserPostLike(Integer userId);
 }

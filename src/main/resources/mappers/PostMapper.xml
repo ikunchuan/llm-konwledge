@@ -70,7 +70,6 @@
         WHERE comment_id = #{commentId}
     </update>
 
-
     <!--用户浏览帖子后要把帖子浏览表更新,时间更新,view_count + 1-->
     <insert id="addPostView" parameterType="com.llm.llm_knowledge.entity.PostView">
         INSERT INTO post_view (user_id, post_id, updated_time, view_count)
@@ -78,59 +77,6 @@
         ON DUPLICATE KEY UPDATE updated_time = CURRENT_TIMESTAMP,
                                 view_count   = view_count + 1;
     </insert>
-
-
-    <!--用户点赞帖子后会在帖子点赞表增加一条点赞记录-->
-    <!--插入新记录-->
-    <insert id="addPostLike" parameterType="map">
-        INSERT INTO post_like (user_id, post_id, updated_time, deleted)
-        VALUES (#{userId}, #{postId}, CURRENT_TIMESTAMP, 0)
-    </insert>
-    <!--查询记录-->
-    <select id="searchPostLike" parameterType="map" resultType="com.llm.llm_knowledge.entity.PostLike">
-        SELECT *
-        FROM post_like
-        WHERE user_id = #{userId}
-          AND post_id = #{postId}
-    </select>
-    <!--更新记录-->
-    <update id="updateLikeStatus" parameterType="map">
-        UPDATE post_like
-        SET deleted      = CASE
-                               WHEN deleted = 0 THEN 1 -- 如果当前是点赞（deleted=0），则取消点赞（设置为1）
-                               WHEN deleted = 1 THEN 0 -- 如果当前是取消点赞（deleted=1），则恢复点赞（设置为0）
-            END,
-            updated_time = CURRENT_TIMESTAMP -- 更新点赞时间
-        WHERE user_id = #{userId}
-          AND post_id = #{postId};
-    </update>
-
-
-    <!--用户收藏帖子后会在帖子收藏表增加一条点赞记录-->
-    <!--插入新记录-->
-    <insert id="addPostFavorite" parameterType="map">
-        INSERT INTO post_favorite (user_id, post_id, updated_time, deleted)
-        VALUES (#{userId}, #{postId}, CURRENT_TIMESTAMP, 0)
-    </insert>
-    <!--查询记录-->
-    <select id="searchPostFavorite" parameterType="map" resultType="com.llm.llm_knowledge.entity.PostFavorite">
-        SELECT *
-        FROM post_favorite
-        WHERE user_id = #{userId}
-          AND post_id = #{postId}
-    </select>
-    <!--更新记录-->
-    <update id="updateFavoriteStatus" parameterType="map">
-        UPDATE post_favorite
-        SET deleted      = CASE
-                               WHEN deleted = 0 THEN 1 -- 如果当前是收藏（deleted=0），则取消收藏（设置为1）
-                               WHEN deleted = 1 THEN 0 -- 如果当前是取消收藏（deleted=1），则恢复收藏（设置为0）
-            END,
-            updated_time = CURRENT_TIMESTAMP -- 更新点赞时间
-        WHERE user_id = #{userId}
-          AND post_id = #{postId};
-    </update>
-
 
     <!--最火帖子-->
     <select id="getTopPosts" resultType="com.llm.llm_knowledge.dto.PostDTO">
@@ -178,7 +124,6 @@
         favorite_count DESC -- 如果评论数相同，按收藏数降序排列
     </select>
 
-
     <!--最新帖子-->
     <select id="getLatestPosts" resultType="com.llm.llm_knowledge.dto.PostDTO">
         SELECT
@@ -219,7 +164,6 @@
         p.post_id
     </select>
 
-
     <!--推荐帖子-->
     <select id="getRecommendPosts" resultType="com.llm.llm_knowledge.dto.PostDTO">
         SELECT p.post_id,
@@ -250,7 +194,6 @@
         GROUP BY p.post_id
     </select>
 
-
     <!--查询某个用户的帖子的浏览总数-->
     <select id="getUserPostViewCount" resultType="integer">
         SELECT COALESCE(SUM(pv.view_count), 0) AS total_views
@@ -270,7 +213,7 @@
              post_like pl
              ON
                  p.post_id = pl.post_id
-        WHERE p.user_id = #{userId}
+        WHERE p.user_id = #{userId} AND pl.deleted = 0 AND pl.is_liked = 1
     </select>
 
     <!--查询某个用户的帖子的总收藏数-->
@@ -281,13 +224,7 @@
              post_favorite pf
              ON
                  p.post_id = pf.post_id
-        WHERE p.user_id = #{userId}
-    </select>
-
-    <select id="getPostFavoriteByUserId" resultType="com.llm.llm_knowledge.entity.PostFavorite">
-        SELECT *
-        FROM post_favorite pf
-        WHERE pf.user_id = #{userId}
+        WHERE p.user_id = #{userId} AND pf.deleted = 0 AND pf.is_favorite = 1
     </select>
 
     <!--查询某个用户的帖子的总评论数-->
@@ -301,7 +238,6 @@
         WHERE p.user_id = #{userId}
     </select>
 
-
     <!--用户发帖后执行下面的sql语句 往帖子表里面加一条数据 并更新用户的score-->
     <insert id="insertPost" parameterType="map">
         <![CDATA[
@@ -309,6 +245,7 @@
         VALUES (#{communityId}, #{userId}, #{postTitle}, #{postContent}, NOW(), NOW());
         ]]>
     </insert>
+
     <update id="updateUserScoreForPost" parameterType="map">
         <![CDATA[
         UPDATE user_community_score
@@ -318,19 +255,18 @@
         ]]>
     </update>
 
-
     <select id="getPostAllCount" resultType="com.llm.llm_knowledge.dto.PostDTO">
         SELECT p.post_id,
                COALESCE(SUM(pv.view_count), 0) AS view_count, -- 总浏览数
                (
                    SELECT COUNT(DISTINCT pl.post_like_id)
                    FROM post_like pl
-                   WHERE pl.post_id = p.post_id AND pl.deleted = 0
+                   WHERE pl.post_id = p.post_id AND pl.deleted = 0 AND pl.is_liked = 1
                ) AS like_count,  -- 点赞数
                (
                    SELECT COUNT(DISTINCT pf.post_favorite_id)
                    FROM post_favorite pf
-                   WHERE pf.post_id = p.post_id AND pf.deleted = 0
+                   WHERE pf.post_id = p.post_id AND pf.deleted = 0 AND pf.is_favorite = 1
                ) AS favorite_count,  -- 收藏数
                (
                    SELECT COUNT(DISTINCT pc.comment_id)
@@ -342,7 +278,6 @@
              post_view AS pv ON p.post_id = pv.post_id
         WHERE p.post_id = #{postId}
     </select>
-
 
     <insert id="addPostComment">
         INSERT INTO post_comment (user_id, post_id, comment_content, created_time, deleted, updated_time)
@@ -358,22 +293,7 @@
         ORDER BY updated_time DESC
     </select>
 
-
-    <select id="getUserFavorite" resultType="com.llm.llm_knowledge.dto.PostDTO">
-        SELECT post.post_id,
-               post.post_title,
-               post.post_content,
-               postf.updated_time
-        FROM post_favorite
-                 AS postf
-                 INNER JOIN
-             post
-             ON
-                 postf.post_id = post.post_id
-        WHERE postf.user_id = #{userId}
-    </select>
-
-    <select id="getUserPostLike" resultType="com.llm.llm_knowledge.dto.PostDTO">
+    <select id="getUserPostLike" resultType="com.llm.llm_knowledge.entity.Post">
         SELECT post.post_id,
                post.post_title,
                post.post_content,
@@ -385,6 +305,8 @@
              ON
                  postl.post_id = post.post_id
         WHERE postl.user_id = #{userId}
+          AND postl.deleted = 0
+          AND postl.is_liked = 1
     </select>
 
 </mapper>

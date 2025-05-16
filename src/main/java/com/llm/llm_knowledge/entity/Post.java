@@ -19,10 +19,10 @@ public class Post {
     
     @TableLogic(value = "0",delval = "1")
     private Integer deleted;
-    
-    
+
     @TableField(fill= FieldFill.INSERT)
     private Date createdTime;
+
     @TableField(fill= FieldFill.INSERT_UPDATE)
     private Date updatedTime;
     

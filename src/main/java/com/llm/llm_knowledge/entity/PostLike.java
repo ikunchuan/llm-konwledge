@@ -1,9 +1,6 @@
 package com.llm.llm_knowledge.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +17,15 @@ public class PostLike {
     
     private Integer postId;
     private Integer userId;
-    
+    private String isLiked;
+
+    @TableField(fill= FieldFill.INSERT)
+    private Date createdTime;
+
     @TableField(fill= FieldFill.INSERT_UPDATE)
     private Date updatedTime;
-    
+
+    @TableLogic(value = "0",delval = "1")
     private Integer deleted;
     
 }

@@ -1,16 +1,11 @@
 package com.llm.llm_knowledge.service.impl;
 
-//import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.llm.llm_knowledge.dto.PostCommentDTO;
 import com.llm.llm_knowledge.dto.PostDTO;
 import com.llm.llm_knowledge.entity.Post;
-import com.llm.llm_knowledge.entity.PostFavorite;
-import com.llm.llm_knowledge.entity.PostLike;
+import com.llm.llm_knowledge.mapper.PostLikeMapper;
 import com.llm.llm_knowledge.mapper.PostMapper;
 import com.llm.llm_knowledge.service.OpenAiService;
 import com.llm.llm_knowledge.service.PostService;
@@ -37,14 +32,8 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private OpenAiService openAiService;
-
-    //查询所有帖子
-    @Override
-    public IPage<Post> allPost(Integer pageNum, Integer pageSize) {
-        Page<Post> page = new Page<>(pageNum, pageSize);
-        return postMapper.selectPage(page, null);
-    }
-
+    @Autowired
+    private PostLikeMapper postLikeMapper;
 
     //条件查询帖子 可以根据社区名,帖子名
     @Override
@@ -54,13 +43,11 @@ public class PostServiceImpl implements PostService {
         return new PageInfo<>(postDTOS);
     }
 
-
     //根据帖子id删除帖子
     @Override
     public Integer delPost(Integer postId) {
         return postMapper.deleteById(postId);
     }
-
 
     //传来帖子的id,根据id来逻辑删除(隐藏)
     @Override
@@ -68,36 +55,11 @@ public class PostServiceImpl implements PostService {
         return postMapper.delPostLogic(postId);
     }
 
-
     //传来帖子评论的id,根据id来逻辑删除(隐藏)
     @Override
     public Integer delPostCommentLogic(Integer commentId) {
         return postMapper.delPostCommentLogic(commentId);
     }
-
-    //用户收藏帖子
-    @Override
-    public Integer postFavorite(Integer userId, Integer postId) {
-        PostFavorite postFavorite = postMapper.searchPostFavorite(userId, postId);
-        if (postFavorite == null) {
-            return postMapper.addPostFavorite(userId, postId);
-        } else {
-            return postMapper.updateFavoriteStatus(userId, postId);
-        }
-    }
-
-
-    //用户帖子喜欢
-    @Override
-    public Integer postLike(Integer userId, Integer postId) {
-        PostLike postLike = postMapper.searchPostLike(userId, postId);
-        if (postLike == null) {
-            return postMapper.addPostLike(userId, postId);
-        } else {
-            return postMapper.updateLikeStatus(userId, postId);
-        }
-    }
-
 
     //查找最火的几个帖子
     @Override
@@ -105,37 +67,43 @@ public class PostServiceImpl implements PostService {
         return postMapper.getTopPosts();
     }
 
+    //查找最新的几个帖子
     @Override
     public List<PostDTO> postEarlyLike() {
         return postMapper.getLatestPosts();
     }
 
+    //推荐帖子
     @Override
     public List<PostDTO> postRecommend() {
         return postMapper.getRecommendPosts();
     }
 
+    //用户发帖浏览数
     @Override
     public Integer getUserPostViewCount(Integer userId) {
         return postMapper.getUserPostViewCount(userId);
     }
 
+    //用户发帖点赞数
     @Override
     public Integer getUserPostLikeCount(Integer userId) {
         return postMapper.getUserPostLikeCount(userId);
     }
 
+    //用户发帖收藏数
     @Override
     public Integer getUserPostFavoriteCount(Integer userId) {
         return postMapper.getUserPostFavoriteCount(userId);
     }
 
+    //用户发帖评论数
     @Override
     public Integer getUserPostCommentCount(Integer userId) {
         return postMapper.getUserPostCommentCount(userId);
     }
 
-
+    //发帖积分
     @Override
     public Integer insertPostAndUpdateScore(Post post) throws Exception {
 
@@ -148,37 +116,25 @@ public class PostServiceImpl implements PostService {
         return 1;
     }
 
-
     //传入帖子的Id,查询这个帖子的所有浏览数,点赞数....
     @Override
     public PostDTO getPostAllCount(Integer postId) {
         return postMapper.getPostAllCount(postId);
     }
 
+    //用户评论帖子
     @Override
     public Integer addPostComment(Integer postId, Integer userId, String comment) {
         return postMapper.addPostComment(postId, userId, comment);
     }
 
+    //查询用户的发帖
     @Override
     public List<Post> getPostsUser(Integer userId) {
         return postMapper.getPostsUser(userId);
     }
 
-    //userId查询收藏的帖子
-    @Override
-    public List<PostFavorite> getPostFavoriteByUserId(Integer userId) {
-        return postMapper.getPostFavoriteByUserId(userId);
-    }
-    
-    //根据用户查询出用户收藏的帖子
-    @Override
-    public List<Post> getUserFavorite(Integer userId) {
-        return postMapper.getUserFavorite(userId);
-    }
-    
-    
-    //根据用户查询出用户喜欢的帖子
+    //根据用户id查询出用户点赞的帖子
     @Override
     public List<Post> getUserPostLike(Integer userId) {
         return postMapper.getUserPostLike(userId);
@@ -191,7 +147,6 @@ public class PostServiceImpl implements PostService {
         Prompt prompt = promptTemplate.create(Map.of("query", postContent));
         return openAiService.stream(prompt);
     }
-
 
     //用户帖子浏览记录
     @Override
